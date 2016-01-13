@@ -1,0 +1,7 @@
+*.pyc
+*.npp
+*.db
+**.__pycache__
+dist
+SimPyLC.egg-info
+

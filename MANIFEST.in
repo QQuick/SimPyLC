@@ -1,0 +1,2 @@
+global-include *.py *.txt *.html *.docx *.jpg *.cpp
+global-exclude *.pyc *.ino
