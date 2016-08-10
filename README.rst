@@ -6,6 +6,11 @@
 	**Simulate your PLC controls and controlled systems to save lots of commissioning time**
 
 PLC?
+
+.. figure:: http://www.qquick.org/simpylc/robotvisualisation.jpg
+	:alt: Screenshot of SimPyLC
+	
+	**Simulate your PLC controls and controlled systems to save lots of commissioning time**
 		
 Real world industrial control systems DO NOT consist of a bunch of communicating sequential processes. Semaphores, threads and priority jugling are far too error prone to control anything else but a model railway. Most control systems are surprisingly simple, consisting of only one program loop that nevertheless seems to do many things in parallel and with reliable timing. Such a control system is called a PLC (Programmable Logic Controller) and all major industries rely on it. PLC's control trains, cranes, ships and your washing machine.
 		
