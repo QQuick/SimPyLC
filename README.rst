@@ -1,6 +1,6 @@
 === ANNOUNCEMENT: You can now use the SimPyLC `FORUM <http://simpylc.freeforums.net/>`_ to share knowledge and ask questions about SimPyLC. ===
 
-.. figure:: http://www.qquick.org/simpylc/robotvisualisation2.jpg
+.. figure:: http://www.qquick.org/simpylc/robotvisualisation.jpg
 	:alt: Screenshot of SimPyLC
 	
 	**Simulate your PLC controls and controlled systems to save lots of commissioning time**
