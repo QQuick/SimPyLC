@@ -28,14 +28,14 @@ from datetime import *
 from time import *
 from threading import *
 from traceback import *
-import __builtin__
+import builtins
 
-from base import *
-from gui import *
-from graphics import *
-from scene import *
-from chart import *
-from coder import *
+from .base import *
+from .gui import *
+from .graphics import *
+from .scene import *
+from .chart import *
+from .coder import *
 			
 class _Functor:
 	def __init__  (self, state):
@@ -83,10 +83,10 @@ class _Functor:
 	def __rmul__ (self, other):
 		return evaluate (other) * self ()
 	
-	def __div__ (self, other):
+	def __truediv__ (self, other):
 		return self () / evaluate (other)
 		
-	def __rdiv__ (self, other):
+	def __rtruediv__ (self, other):
 		return float (evaluate (other)) / self ()
 		
 	def __mod__ (self, other):
@@ -389,16 +389,16 @@ class World (Thread):
 			World.period.reset (True)
 			sleep (World.sleep ())
 			
-world = World	# Pretent this class is a singleton object	
+world = World	# Pretend this class is a singleton object	
 				
 def abs (anObject):
-	return __builtin__.abs (evaluate (anObject))
+	return builtins.abs (evaluate (anObject))
 	
 def max (object0, object1):
-	return __builtin__.max (evaluate (object0), evaluate (object1))
+	return builtins.max (evaluate (object0), evaluate (object1))
 
 def min (object0, object1):
-	return __builtin__.min (evaluate (object0), evaluate (object1))
+	return builtins.min (evaluate (object0), evaluate (object1))
 
 def pow (object0, object1):
 	return math.pow (evaluate (object0), evaluate (object1))
@@ -407,13 +407,13 @@ def sqrt (anObject):
 	return math.sqrt (evaluate (anObject))
 
 def exp (anObject):
-	return math.exp (evalate (anObject))
+	return math.exp (evaluate (anObject))
 	
 def log (anObject):
-	return math.log (evalate (anObject))
+	return math.log (evaluate (anObject))
 	
 def log10 (anObject):
-	return math.log10 (evalate (anObject))
+	return math.log10 (evaluate (anObject))
 	
 def sin (anObject):
 	return math.sin (evaluate (anObject))

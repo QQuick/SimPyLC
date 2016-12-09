@@ -27,7 +27,7 @@
 import os
 
 programName = 'SimPyLC'
-programVersion = '2.1.1'
+programVersion = '3.5.0'
 programNameAndVersion = '{0} {1}'.format (programName, programVersion)
 programDir = os.getcwd () .replace ('\\', '/') .rsplit ('/', 3) [-1]
 
@@ -99,6 +99,6 @@ def decapitalize (aString):
 	return aString [0] .lower () + aString [1:] if aString else ''
 	
 def underConstruction ():
-	print 'THIS SIMULATION IS UNDER CONSTRUCTION'
+	print ('THIS SIMULATION IS UNDER CONSTRUCTION')
 	raw_input ()
 	exit ()

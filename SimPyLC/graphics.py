@@ -24,15 +24,15 @@
 # Removing this header ends your licence.
 #
 
-from threading import Thread, Lock
+from threading import Thread
 from time import *
-import __builtin__
+import builtins
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
-from base import *
+from .base import *
 
 class Graphics (Thread):
 	def __init__ (self, world):

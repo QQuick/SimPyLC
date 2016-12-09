@@ -24,6 +24,6 @@
 # Removing this header ends your licence.
 #
 
-from base import *
-from engine import *
-from graphics import *
+from .base import *
+from .engine import *
+from .graphics import *

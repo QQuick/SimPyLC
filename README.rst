@@ -28,6 +28,7 @@ Are you looking for impressive graphics: Look elsewhere. Do you want to gain inv
 
 What's new:
 
+- Adapted for Python 3.5 (SimPyLC 2.1.2 is last version running with Python 2.7)
 - Development status bumped to production / stable.
 - Native.py files replaced by native.cpp files, which are plain C++, hence benefit from syntax highlighting. You'll have to adapt your existing code to this (by merely leaving things out).
 - Code now generated in a separate subdirectory to avoid confusion, especially with native.cpp.
@@ -42,13 +43,13 @@ Bugs fixed: None
 		
 Requirements for Windows:
 
-1. Install WinPython 2.7, e.g. from https://winpython.github.io
+1. Install WinPython 3.5, e.g. from https://winpython.github.io
 2. (Optional) Copy SimPyLC\\SimPyLC\\QuartzMS.TTF to C:\\Windows\\Fonts
 3. (Optional) You can may also add SimPyLC\\SimPyLC to your PYTHONPATH
 
 Requirements for Linux:
 
-1. Install Python 2.7 and PyOpenGL
+1. Install Python 3.5 and PyOpenGL
 
 Usage:
 
@@ -76,5 +77,7 @@ If you want to experiment yourself, read `SimPyLCHowTo <http://www.qquick.org/si
 
 Other packages you might like:
 
+- Lean and mean Python to JavaScript transpiler featuring multiple inheritance https://pypi.python.org/pypi/Transcrypt
 - Multi-module Python source code obfuscator https://pypi.python.org/pypi/Opy
 - Event driven evaluation nodes https://pypi.python.org/pypi/Eden
+- A lightweight Python course taking beginners seriously (under construction): https://pypi.python.org/pypi/LightOn

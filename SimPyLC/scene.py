@@ -26,7 +26,7 @@
 
 from time import *
 from math import *
-import __builtin__
+import builtins
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
@@ -34,7 +34,7 @@ from OpenGL.GLU import *
 
 from numpy import *
 
-from base import *
+from .base import *
 
 useTexture = False
 if useTexture:
@@ -48,7 +48,7 @@ class Scene:
 		
 	def _createWindow (self):
 		glutInitWindowSize (self.width, self.height)
-		self.window = glutCreateWindow (getTitle (self.name))
+		self.window = glutCreateWindow (getTitle (self.name) .encode ('ascii'))
 		
 		glEnable (GL_LINE_SMOOTH)
 		glEnable(GL_BLEND);

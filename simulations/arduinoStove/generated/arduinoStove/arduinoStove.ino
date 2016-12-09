@@ -16,8 +16,8 @@
 
 
 
-// Generator: SimPyLC 2.1.1
-// Generated: 2015-11-06 13:07:06.109000
+// Generator: SimPyLC 2.1.2
+// Generated: 2016-12-09 19:46:06.772271
 // Target platform: Arduino
 
 
@@ -244,7 +244,7 @@ void cycle () {
 	mark2 (plate2Selected, (plateSelectNr == 2));
 	mark2 (plate3Selected, (plateSelectNr == 3));
 	mark2 (tempChange, (unlocked && (!alarmSelected) && (spiked1 (upEdge) || spiked1 (downEdge))));
-	set4 (tempDelta, -1, ((!alarmSelected) && downButton), 1);
+	set4 (tempDelta, (-1), ((!alarmSelected) && downButton), 1);
 	set3 (plate0Temp, limit3 ((plate0Temp + tempDelta), 0, 9), (tempChange && plate0Selected));
 	set3 (plate1Temp, limit3 ((plate1Temp + tempDelta), 0, 9), (tempChange && plate1Selected));
 	set3 (plate2Temp, limit3 ((plate2Temp + tempDelta), 0, 9), (tempChange && plate2Selected));
@@ -274,8 +274,8 @@ void cycle () {
 	mark3 (digitDot, plate1Selected, (digitIndex == 2));
 	mark3 (digitDot, plate2Selected, (digitIndex == 1));
 	mark3 (digitDot, plate3Selected, (digitIndex == 0));
-	mark3 (digitDot, True, childLock);
-	mark3 (digitDot, False, alarmSelected);
+	mark3 (digitDot, , childLock);
+	mark3 (digitDot, , alarmSelected);
 
 	// Part: Sweep time measurement
 

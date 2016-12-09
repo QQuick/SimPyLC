@@ -24,18 +24,18 @@
 # Removing this header ends your licence.
 #
 
-from threading import Thread, Lock
+from threading import Thread
 from time import *
 from collections import deque
 from itertools import islice
 from copy import copy
-import __builtin__
+import builtins
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
-from base import *
+from .base import *
 
 class Entry:
 	def __init__ (self, chart, index, height):
@@ -89,7 +89,7 @@ class Channel (Entry):
 		glEnd ()
 		
 		glColor (*self.circuit.color)
-		glBegin (GL_LINE_STRIP);
+		glBegin (GL_LINE_STRIP)
 		for iValue, value in enumerate (values):
 			if value != None:
 				value = max (min (value, self.max), self.min)
@@ -97,7 +97,7 @@ class Channel (Entry):
 		glEnd ()
 		
 		glRasterPos (2, self.middle + 5)
-		glutBitmapString (GLUT_BITMAP_HELVETICA_12, self.circuit._name)	
+		glutBitmapString (GLUT_BITMAP_HELVETICA_12, self.circuit._name.encode ('ascii'))	
 
 class Chart:
 	def __init__ (self, name = None, width = 600, height = 400):
@@ -108,7 +108,7 @@ class Chart:
 		
 	def _createWindow (self):
 		glutInitWindowSize (self.width, self.height)
-		self.window = glutCreateWindow (getTitle (self.name))
+		self.window = glutCreateWindow (getTitle (self.name) .encode ('ascii'))
 		
 		glEnable (GL_LINE_SMOOTH)
 		glEnable(GL_BLEND);

@@ -26,9 +26,9 @@
 
 import os
 from time import *
-from Tkinter import *
+from tkinter import *
 
-from base import *
+from .base import *
 
 class Cell:
 	pageCaption, groupCaption, circuit, filler = range (4)

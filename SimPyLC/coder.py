@@ -32,7 +32,7 @@ import os
 from os.path import *
 from re import *
 
-from base import programDir, decapitalize, programNameAndVersion
+from .base import programDir, decapitalize, programNameAndVersion
 
 def generateCode (world):
 	return coder.code (world)	
@@ -52,7 +52,7 @@ class Coder:
 		if len (argv) < 2:
 			return False
 
-		print 'Code generation started'
+		print ('Code generation started')
 		tailArgs = argv [1:]
 		self.moduleNameList = [module._name for module in modules] if '*' in tailArgs else [arg for arg in tailArgs if not '=' in arg]
 
@@ -72,7 +72,7 @@ class Coder:
 		# self.dump ()	# Leave in for debugging purposes
 		self.generate ()
 		
-		print 'Code generation ready'
+		print ('Code generation ready')
 		return True
 
 	def parse (self):
@@ -370,7 +370,7 @@ class GeneratingVisitor (NodeVisitor):
 				
 				if node.value.func.id in ('Marker', 'Latch'):
 					if node.value.args:
-						self.emit ('{0}{1}'.format (coder.plcPrefix, node.value.args [0] .id))
+						self.emit ('{0}{1}'.format (coder.plcPrefix, node.value.args [0] .value))
 					else:
 						self.emit ('{0}False'.format (coder.plcPrefix))
 				elif node.value.func.id == 'Oneshot':
