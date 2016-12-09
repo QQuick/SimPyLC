@@ -28,6 +28,7 @@ Are you looking for impressive graphics: Look elsewhere. Do you want to gain inv
 
 What's new:
 
+- Spaces rather than tabs are now used in the sourcecode.
 - Adapted for Python 3.5 (SimPyLC 2.1.2 is last version running with Python 2.7)
 - Development status bumped to production / stable.
 - Native.py files replaced by native.cpp files, which are plain C++, hence benefit from syntax highlighting. You'll have to adapt your existing code to this (by merely leaving things out).
