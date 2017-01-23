@@ -27,20 +27,20 @@
 from SimPyLC import *
 
 class BlinkingLight (Module):
-	def __init__ (self):
-		Module.__init__ (self)
-		self.blinkingTimer = Timer ()
-		self.blinkingLight = Marker ()
-		self.pulse = Oneshot ()
-		self.counter = Register ()
-		self.run = Runner ()
-		
-	def input (self):	
-		pass
-	
-	def sweep (self):
-		self.blinkingTimer.reset (self.blinkingTimer > 8)
-		self.blinkingLight.mark (not self.blinkingLight, not self.blinkingTimer)
-		self.pulse.trigger (self.blinkingTimer > 3)
-		self.counter.set (self.counter + 1, self.pulse)
-		
+    def __init__ (self):
+        Module.__init__ (self)
+        self.blinkingTimer = Timer ()
+        self.blinkingLight = Marker ()
+        self.pulse = Oneshot ()
+        self.counter = Register ()
+        self.run = Runner ()
+        
+    def input (self):   
+        pass
+    
+    def sweep (self):
+        self.blinkingTimer.reset (self.blinkingTimer > 8)
+        self.blinkingLight.mark (not self.blinkingLight, not self.blinkingTimer)
+        self.pulse.trigger (self.blinkingTimer > 3)
+        self.counter.set (self.counter + 1, self.pulse)
+        

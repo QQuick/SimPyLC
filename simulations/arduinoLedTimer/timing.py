@@ -27,14 +27,14 @@
 from SimPyLC import *
 
 class Timing (Chart):
-	def __init__ (self):
-		Chart.__init__ (self)
-		
-	def define (self):
-		self.channel (world.ledTimer.rampTimer, red, 0, 9, 180)
-		self.channel (world.ledTimer.direction, white, 0, 1, 20)
-		self.channel (world.ledTimer.oneshot, aqua, 0, 1, 20)
-		self.channel (world.ledTimer.blinkTime, blue, 0, 3, 60)
-		self.channel (world.ledTimer.blinkTimer, yellow, 0, 3, 60)
-		self.channel (world.ledTimer.led, green, 0, 1, 20)
-		
+    def __init__ (self):
+        Chart.__init__ (self)
+        
+    def define (self):
+        self.channel (world.ledTimer.rampTimer, red, 0, 9, 180)
+        self.channel (world.ledTimer.direction, white, 0, 1, 20)
+        self.channel (world.ledTimer.oneshot, aqua, 0, 1, 20)
+        self.channel (world.ledTimer.blinkTime, blue, 0, 3, 60)
+        self.channel (world.ledTimer.blinkTimer, yellow, 0, 3, 60)
+        self.channel (world.ledTimer.led, green, 0, 1, 20)
+        

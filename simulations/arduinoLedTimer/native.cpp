@@ -24,11 +24,11 @@ Removing this header ends your licence.
 */
 
 void setup () {
-	pinMode  (13, OUTPUT);
+    pinMode  (13, OUTPUT);
 }
 
 void loop () {
-	cycle ();
-	digitalWrite  (13, led);  
-}		
+    cycle ();
+    digitalWrite  (13, led);  
+}       
 

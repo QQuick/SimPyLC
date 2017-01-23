@@ -27,17 +27,17 @@
 from SimPyLC import *
 
 class Timing (Chart):
-	def __init__ (self):
-		Chart.__init__ (self)
-		
-	def define (self):
-		self.channel (world.control.digitIndex, olive, 0, 3, 40)
-		self.channel (world.control.digitValue, olive)
-		self.channel (world.control.digitDot, olive, 0, 3, 40)
-		self.channel (world.control.buzzerPitchTimer, aqua, 0, 1, 40)
-		self.channel (world.control.buzzer, aqua)
-		self.channel (world.control.upButton, red)
-		self.channel (world.control.downButton, red)
-		self.channel (world.control.plateSelectNr, red, 0, 3, 40)
-		self.channel (world.control.alarmTimeLeft, green, 0, 300, 90)
-		
+    def __init__ (self):
+        Chart.__init__ (self)
+        
+    def define (self):
+        self.channel (world.control.digitIndex, olive, 0, 3, 40)
+        self.channel (world.control.digitValue, olive)
+        self.channel (world.control.digitDot, olive, 0, 3, 40)
+        self.channel (world.control.buzzerPitchTimer, aqua, 0, 1, 40)
+        self.channel (world.control.buzzer, aqua)
+        self.channel (world.control.upButton, red)
+        self.channel (world.control.downButton, red)
+        self.channel (world.control.plateSelectNr, red, 0, 3, 40)
+        self.channel (world.control.alarmTimeLeft, green, 0, 300, 90)
+        

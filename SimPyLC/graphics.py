@@ -35,37 +35,37 @@ from OpenGL.GLU import *
 from .base import *
 
 class Graphics (Thread):
-	def __init__ (self, world):
-		if world._scenes or world._charts:
-			Thread.__init__ (self)
-			self.world = world
-			self.daemon = True
-			self.start ()
-				
-	def idle (self):
-		for scene in self.world._scenes:
-			glutSetWindow (scene.window)
-			glutPostRedisplay ()
-	
-		for chart in self.world._charts:
-			glutSetWindow (chart.window)
-			glutPostRedisplay ()
+    def __init__ (self, world):
+        if world._scenes or world._charts:
+            Thread.__init__ (self)
+            self.world = world
+            self.daemon = True
+            self.start ()
+                
+    def idle (self):
+        for scene in self.world._scenes:
+            glutSetWindow (scene.window)
+            glutPostRedisplay ()
+    
+        for chart in self.world._charts:
+            glutSetWindow (chart.window)
+            glutPostRedisplay ()
 
-		sleep (self.world.refresh ())
-				
-	def run (self):	
-		glutInit ()
-		glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE)
+        sleep (self.world.refresh ())
+                
+    def run (self): 
+        glutInit ()
+        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE)
 
-		for scene in self.world._scenes:
-			scene._graphics= self
-			scene._createWindow ()		
-		
-		for chart in self.world._charts:
-			chart._graphics = self
-			chart._createWindow ()
-			
-		glutIdleFunc (self.idle)
-		glutMainLoop ()
+        for scene in self.world._scenes:
+            scene._graphics= self
+            scene._createWindow ()      
+        
+        for chart in self.world._charts:
+            chart._graphics = self
+            chart._createWindow ()
+            
+        glutIdleFunc (self.idle)
+        glutMainLoop ()
 
-		
+        

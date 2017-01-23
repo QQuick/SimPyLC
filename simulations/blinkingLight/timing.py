@@ -27,12 +27,12 @@
 from SimPyLC import *
 
 class Timing (Chart):
-	def __init__ (self):
-		Chart.__init__ (self)
-		
-	def define (self):
-		self.channel (world.blinkingLight.blinkingTimer, red, 0, 12, 50)
-		self.channel (world.blinkingLight.blinkingLight, lime, 0, 1, 50)
-		self.channel (world.blinkingLight.pulse, blue, 0, 1, 50)
-		self.channel (world.blinkingLight.counter, yellow, 0, 20, 100)
-		
+    def __init__ (self):
+        Chart.__init__ (self)
+        
+    def define (self):
+        self.channel (world.blinkingLight.blinkingTimer, red, 0, 12, 50)
+        self.channel (world.blinkingLight.blinkingLight, lime, 0, 1, 50)
+        self.channel (world.blinkingLight.pulse, blue, 0, 1, 50)
+        self.channel (world.blinkingLight.counter, yellow, 0, 20, 100)
+        
