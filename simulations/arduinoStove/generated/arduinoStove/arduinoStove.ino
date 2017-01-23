@@ -4,7 +4,7 @@
 
 // ====== BEGIN OF LICENCE COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 //
-// I M P O R T A N T   S A F E T Y   N O T I C E
+// I M P O R T A N T   S A F E T Y	 N O T I C E
 //
 // THIS CODE IS INTENDED SOLELY FOR EDUCATIONAL PURPOSES AND IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS.
 // IT IS STRICKTLY PROHIBITED TO USE THIS GENERATED CODE IN ANY SITUATION THAT ENTAILS RISK OF DAMAGE OR INJURIES.
@@ -16,8 +16,8 @@
 
 
 
-// Generator: SimPyLC 2.1.2
-// Generated: 2016-12-09 19:46:06.772271
+// Generator: SimPyLC 3.5.0
+// Generated: 2017-01-23 12:26:00.389172
 // Target platform: Arduino
 
 
@@ -88,14 +88,14 @@
 #define abs1(value) fabs (value)
 #define max2(value0, value1) fmax (value0, value1)
 #define min2(value0, value1) fmin (value0, value1)
-#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1) 	
+#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1)	
 #define limit2(value, aLimit) limit3 (value, -aLimit, aLimit)
 #define digit2(value, index) getDigit (int (value), index)
 
 // ____________ General functions ____________
 
 int getDigit (int value, int index) {
-    return (index == 0) ? value % 10 : getDigit (value / 10, --index);
+	return (index == 0) ? value % 10 : getDigit (value / 10, --index);
 }
 
 // ____________ General variables ____________
@@ -274,8 +274,8 @@ void cycle () {
 	mark3 (digitDot, plate1Selected, (digitIndex == 2));
 	mark3 (digitDot, plate2Selected, (digitIndex == 1));
 	mark3 (digitDot, plate3Selected, (digitIndex == 0));
-	mark3 (digitDot, , childLock);
-	mark3 (digitDot, , alarmSelected);
+	mark3 (digitDot, True, childLock);
+	mark3 (digitDot, False, alarmSelected);
 
 	// Part: Sweep time measurement
 

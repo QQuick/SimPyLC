@@ -117,7 +117,7 @@ class Coder:
 
 '''
 			) + 
-			initCode +  (
+			initCode +	(
 '''
 
 
@@ -157,7 +157,7 @@ void {0}cycle () {{
 
 // ====== BEGIN OF LICENCE COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 //
-// I M P O R T A N T   S A F E T Y   N O T I C E
+// I M P O R T A N T   S A F E T Y	 N O T I C E
 //
 // THIS CODE IS INTENDED SOLELY FOR EDUCATIONAL PURPOSES AND IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS.
 // IT IS STRICKTLY PROHIBITED TO USE THIS GENERATED CODE IN ANY SITUATION THAT ENTAILS RISK OF DAMAGE OR INJURIES.
@@ -238,14 +238,14 @@ void {0}cycle () {{
 #define {0}abs1(value) fabs (value)
 #define {0}max2(value0, value1) fmax (value0, value1)
 #define {0}min2(value0, value1) fmin (value0, value1)
-#define {0}limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1) 	
+#define {0}limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1)	
 #define {0}limit2(value, aLimit) {0}limit3 (value, -aLimit, aLimit)
 #define {0}digit2(value, index) getDigit (int (value), index)
 
 // ____________ General functions ____________
 
 int {0}getDigit (int value, int index) {{
-    return (index == 0) ? value % 10 : {0}getDigit (value / 10, --index);
+	return (index == 0) ? value % 10 : {0}getDigit (value / 10, --index);
 }}
 
 // ____________ General variables ____________
@@ -457,6 +457,9 @@ class GeneratingVisitor (NodeVisitor):
 
 	def visit_Name (self, node):
 		self.emit (node.id if not node.id in (True, False) else '{0}{1}'.format (coder.plcPrefix, node.id))
+
+	def visit_NameConstant (self, node):
+		self.emit ('{0}'.format (node.value))
 		
 	def visit_UnaryOp (self, node):
 		self.emit('(')
