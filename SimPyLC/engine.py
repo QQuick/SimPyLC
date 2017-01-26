@@ -95,7 +95,7 @@ class _Functor:
     def __rmod__ (self, other):
         return evaluate (other) % self ()
         
-    def __nonzero__ (self):
+    def __bool__ (self):
         return not not self ()
         
 class _Element:

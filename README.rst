@@ -38,7 +38,11 @@ What's new:
 
 REMARK: All complete Arduino examples were tested on the Arduino Due, since that's the one I own, but they should run on the One with only slight I/O modifications (PWM instead of true analog output, using a shift register if you run short of I/O pins etc.)
 
-Bugs fixed: None
+Bugs fixed:
+
+- __nonzero__ changed to __bool__, as required by the move from Python 2.7 to Python 3.5. The blinkingLight demo will now work again.
+- Sidewalks raised above road in arduinoTrafficLights example.
+- Unused circuit group 'Lights' deleted from control in arduinoTrafficLights example.
 
 **Bug reports and feature requests are most welcome and will be taken under serious consideration on a non-committal basis**
 		

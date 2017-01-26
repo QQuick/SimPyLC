@@ -48,9 +48,9 @@ class Visualisation (Scene):
     def __init__ (self):
         Scene.__init__ (self)
         
-        self.crossing = Beam (size = (3, 3, 0.1), pivot = (0, 1, 0), color = (0, 0.3, 0))
-        self.leg = Beam (size = (1.5, 1.5, 0.1), center = (0.75, 0, 0.1), joint = (-0.75, 0, 0), color = (0.1, 0.1, 0.1))   
-        self.pole = Cylinder (size = (0.05, 0.05, 1), center = (0.7, 0.775, 0.45), color = (1, 1, 1))
+        self.crossing = Beam (size = (3, 3, 0.1), pivot = (0, 1, 0), color = (0.1, 0.1, 0.1))
+        self.leg = Beam (size = (1, 1, 0.1), center = (-1, -1, 0.1), joint = (1, 1, 0), color = (0, 0.3, 0)) 
+        self.pole = Cylinder (size = (0.05, 0.05, 1), center = (0, 0.45, 0.45), color = (1, 1, 1))
         
         self.redLamp = TrafficLamp ()
         self.greenLamp = TrafficLamp (True)

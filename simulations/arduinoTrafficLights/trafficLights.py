@@ -39,17 +39,7 @@ class TrafficLights (Module):
         self.blinkTimer = Timer ()
         self.blinkPulse = Oneshot ()
         self.blink = Marker ()
-        
-        self.group ('Lights')
-        self.redNorth = Marker ()
-        self.greenNorth = Marker ()
-        self.redSouth = Marker ()
-        self.greenSouth = Marker ()
-        self.redEast = Marker ()
-        self.greenEast = Marker ()
-        self.redWest = Marker ()
-        self.greenWest = Marker ()
-        
+                
         self.group ('Mode switching')
         self.modeButton = Marker ()
         self.modePulse = Oneshot ()
