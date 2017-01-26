@@ -49,7 +49,7 @@ class Visualisation (Scene):
         Scene.__init__ (self)
         
         self.crossing = Beam (size = (3, 3, 0.1), pivot = (0, 1, 0), color = (0.1, 0.1, 0.1))
-        self.leg = Beam (size = (1, 1, 0.1), center = (-1, -1, 0.1), joint = (1, 1, 0), color = (0, 0.3, 0)) 
+        self.sidewalk = Beam (size = (1, 1, 0.1), center = (-1, -1, 0.1), joint = (1, 1, 0), color = (0, 0.3, 0)) 
         self.pole = Cylinder (size = (0.05, 0.05, 1), center = (0, 0.45, 0.45), color = (1, 1, 1))
         
         self.redLamp = TrafficLamp ()
@@ -60,26 +60,26 @@ class Visualisation (Scene):
         control = world.trafficLights
         
         self.crossing (angle = 30, parts = lambda:
-            self.leg (angle = 0, parts = lambda:
+            self.sidewalk (angle = 0, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.northRedLamp) +
                     self.greenLamp (control.northGreenLamp)
                 )
             ) +
-            self.leg (angle = -90, parts = lambda:
+            self.sidewalk (angle = -90, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.eastRedLamp) +
                     self.greenLamp (control.eastGreenLamp)
                 )
         
             ) +
-            self.leg (angle = -180, parts = lambda:
+            self.sidewalk (angle = -180, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.southRedLamp) +
                     self.greenLamp (control.southGreenLamp)
                 )
             ) +
-            self.leg (angle = -270, parts = lambda:
+            self.sidewalk (angle = -270, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.westRedLamp) +
                     self.greenLamp (control.westGreenLamp)
