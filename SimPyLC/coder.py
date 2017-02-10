@@ -498,7 +498,3 @@ class GeneratingVisitor (NodeVisitor):
             left = right
         self.emit(')')
         
-class Code:
-    def __init__ (self):
-        pass
-    

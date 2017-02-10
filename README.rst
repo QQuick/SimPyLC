@@ -28,6 +28,7 @@ Are you looking for impressive graphics: Look elsewhere. Do you want to gain inv
 
 What's new:
 
+- Comments in code of SimPyLC/scene.py adapted to clarify different purpose of axis and pivot, and of passing angle to __init__ versus passing it to __call__
 - Spaces rather than tabs are now used in the sourcecode.
 - Adapted for Python 3.5 (SimPyLC 2.1.2 is last version running with Python 2.7)
 - Development status bumped to production / stable.

@@ -1,6 +1,5 @@
 *.pyc
-*.npp
-*.db
+*.ino
 **.__pycache__
 dist
 SimPyLC.egg-info

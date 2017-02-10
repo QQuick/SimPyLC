@@ -24,7 +24,6 @@
 # Removing this header ends your licence.
 #
 
-from threading import Thread
 from time import *
 from collections import deque
 from itertools import islice
@@ -174,6 +173,4 @@ class Chart:
     def channel (self, circuit, color = None, minimum = 0, maximum = 1, height = 15):
         circuit.color = color
         self.entries.append (Channel (self, len (self.entries), circuit, minimum, maximum, height))
-        
-
         

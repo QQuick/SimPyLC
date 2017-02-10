@@ -16,8 +16,8 @@
 
 
 
-// Generator: SimPyLC 2.1.2
-// Generated: 2016-12-09 19:44:39.725046
+// Generator: SimPyLC 3.5.3
+// Generated: 2017-01-27 16:34:56.042887
 // Target platform: Arduino
 
 
@@ -66,9 +66,9 @@
 // Support operations
 
 #define update()\
-	thenExact = nowExact; nowExact = getNowExact(); period = 1e-6 * (nowExact - thenExact);\
-	nowInexact = getNowInexact();\
-	first = False;
+    thenExact = nowExact; nowExact = getNowExact(); period = 1e-6 * (nowExact - thenExact);\
+    nowInexact = getNowInexact();\
+    first = False;
 
 // Types
 
@@ -88,7 +88,7 @@
 #define abs1(value) fabs (value)
 #define max2(value0, value1) fmax (value0, value1)
 #define min2(value0, value1) fmin (value0, value1)
-#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1) 	
+#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1)  
 #define limit2(value, aLimit) limit3 (value, -aLimit, aLimit)
 #define digit2(value, index) getDigit (int (value), index)
 
@@ -122,17 +122,6 @@ Register tBlink = 0.3;
 Timer blinkTimer = {nowExact, nowInexact};
 Oneshot blinkPulse = {False, False};
 Marker blink = False;
-
-// Group: Lights
-
-Marker redNorth = False;
-Marker greenNorth = False;
-Marker redSouth = False;
-Marker greenSouth = False;
-Marker redEast = False;
-Marker greenEast = False;
-Marker redWest = False;
-Marker greenWest = False;
 
 // Group: Mode switching
 
@@ -276,9 +265,9 @@ void cycle () {
 	set4 (brightDelta, ((-brightFluxus) * period), brightDirection, (brightFluxus * period));
 	set3 (streetLamp, limit3 ((streetLamp + brightDelta), brightMin, brightMax), brightButton);
 
-	// ______ System ______
+    // ______ System ______
 
-	update ();
+    update ();
 }
 
 
@@ -288,22 +277,22 @@ void cycle () {
 
 
 void setup () {
-	analogWriteResolution (12);
+    analogWriteResolution (12);
 
-	pinMode (33, OUTPUT); pinMode (35, OUTPUT); pinMode (37, OUTPUT); pinMode (39, OUTPUT);
-	pinMode (41, OUTPUT); pinMode (43, OUTPUT); pinMode (45, OUTPUT); pinMode (47, OUTPUT);
-	pinMode (49, INPUT); pinMode (51, INPUT);
+    pinMode (33, OUTPUT); pinMode (35, OUTPUT); pinMode (37, OUTPUT); pinMode (39, OUTPUT);
+    pinMode (41, OUTPUT); pinMode (43, OUTPUT); pinMode (45, OUTPUT); pinMode (47, OUTPUT);
+    pinMode (49, INPUT); pinMode (51, INPUT);
 }
 
 void loop () {
-	modeButton = !digitalRead (49); brightButton = !digitalRead (51);
+    modeButton = !digitalRead (49); brightButton = !digitalRead (51);
 
-	cycle ();
+    cycle ();
 
-	digitalWrite (39, northGreenLamp); digitalWrite (41, northRedLamp);
-	digitalWrite (35, eastGreenLamp); digitalWrite (37, eastRedLamp);
-	digitalWrite (47, southGreenLamp); digitalWrite (33, southRedLamp);
-	digitalWrite (43, westGreenLamp); digitalWrite (45, westRedLamp);
+    digitalWrite (39, northGreenLamp); digitalWrite (41, northRedLamp);
+    digitalWrite (35, eastGreenLamp); digitalWrite (37, eastRedLamp);
+    digitalWrite (47, southGreenLamp); digitalWrite (33, southRedLamp);
+    digitalWrite (43, westGreenLamp); digitalWrite (45, westRedLamp);
 
-	analogWrite (DAC0, streetLamp);
-}		
+    analogWrite (DAC0, streetLamp);
+}       

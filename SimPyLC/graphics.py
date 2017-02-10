@@ -67,5 +67,4 @@ class Graphics (Thread):
             
         glutIdleFunc (self.idle)
         glutMainLoop ()
-
         

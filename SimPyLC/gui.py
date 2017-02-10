@@ -183,5 +183,4 @@ class Gui:
                 moduleWindow.update ()
                 
             sleep (0.1)
-                
-
+            
