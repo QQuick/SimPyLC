@@ -143,11 +143,11 @@ class _Thing:
             self.color = color
         glPushMatrix ()
         glTranslate (*tAdd (self.center, self.joint))   # Put joint at correct position
-        glRotate (evaluate (angle), *self.pivot)        # Rotate over varying angle parameter, so NOT the fixed self.angle attribute, around self.pivot to move
+        glRotate (evaluate (angle), *self.pivot)        # Rotate over varying angle parameter, so NOT fixed self.angle attribute, around self.pivot to move
         glTranslate (*shift)                            # Put joint at correct position
         glTranslate (*tNeg (self.joint))                # Put joint in origin
         glPushMatrix ()
-        glRotate (self.angle, *self.axis)               # Rotate over fixed the self.angle attribute, set by the constructor, around self.axis to achieve intial attitude
+        glRotate (self.angle, *self.axis)               # Rotate over fixed self.angle attribute, set by the constructor, around self.axis to achieve intial attitude
         glColor (*self.color)
         self._draw ()
         glPopMatrix ()
