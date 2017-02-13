@@ -32,7 +32,7 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
-from numpy import *
+# from numpy import *
 
 from .base import *
 
@@ -147,7 +147,7 @@ class _Thing:
         glTranslate (*shift)                            # Put joint at correct position
         glTranslate (*tNeg (self.joint))                # Put joint in origin
         glPushMatrix ()
-        glRotate (self.angle, *self.axis)               # Rotate over fixed self.angle attribute, set by the constructor, around self.axis to achieve intial attitude
+        glRotate (self.angle, *self.axis)               # Rotate over fixed self.angle attribute, set by the constructor, around self.axis to achieve initial attitude
         glColor (*self.color)
         self._draw ()
         glPopMatrix ()
