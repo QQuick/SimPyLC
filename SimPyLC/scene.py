@@ -3,14 +3,14 @@
 # Copyright (C) 2013 GEATEC engineering
 #
 # This program is free software.
-# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicence.
+# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY, without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the QQuickLicence for details.
+# See the QQuickLicense for details.
 #
-# The QQuickLicense can be accessed at: http://www.geatec.com/qqLicence.html
+# The QQuickLicense can be accessed at: http://www.geatec.com/qqLicense.html
 #
 # __________________________________________________________________________
 #
@@ -21,7 +21,7 @@
 #
 # It is meant for training purposes only.
 #
-# Removing this header ends your licence.
+# Removing this header ends your license.
 #
 
 from time import *
@@ -142,18 +142,18 @@ class _Thing:
         if color != None:
             self.color = color
         glPushMatrix ()
-        glTranslate (*tAdd (self.center, self.joint))   # Put joint at correct position
-        glRotate (evaluate (angle), *self.pivot)        # Rotate over varying angle parameter, so NOT fixed self.angle attribute, around self.pivot to move
-        glTranslate (*shift)                            # Put joint at correct position
-        glTranslate (*tNeg (self.joint))                # Put joint in origin
+        glTranslate (*tAdd (self.center, self.joint))                                   # Put joint at correct position
+        glRotate (evaluate (angle), *self.pivot)                                        # Rotate over varying angle parameter, so NOT fixed self.angle attribute, around self.pivot to move
+        glTranslate (evaluate (shift [0]), evaluate (shift [1]), evaluate (shift [2]))  # Put joint at correct position
+        glTranslate (*tNeg (self.joint))                                                # Put joint in origin
         glPushMatrix ()
-        glRotate (self.angle, *self.axis)               # Rotate over fixed self.angle attribute, set by the constructor, around self.axis to achieve initial attitude
+        glRotate (self.angle, *self.axis)                                               # Rotate over fixed self.angle attribute, set by the constructor, around self.axis to achieve initial attitude
         glColor (*self.color)
         self._draw ()
         glPopMatrix ()
         parts ()
         glPopMatrix ()
-        return 0                                        # Make concatenable by e.g. + operator
+        return 0                                                                        # Make concatenable by e.g. + operator
         
 class Beam (_Thing):
     def __init__ (self, **arguments):

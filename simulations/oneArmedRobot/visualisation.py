@@ -57,7 +57,7 @@ class Visualisation (Scene):
         self.base (parts = lambda:
             self.torso (angle = world.robot.torAng, parts = lambda:
                 self.upperArm (angle = world.robot.uppAng, parts = lambda:
-                    self.foreArm (angle = world.robot.forAng, parts = lambda:
+                    self.foreArm (angle = world.robot.forAng, shift = (world.robot.forShift, 0, 0), parts = lambda:
                         self.wrist (angle = world.robot.wriAng, parts = lambda:
                             self.handCenter (angle = world.robot.hanAng, parts = lambda:
                                 self.handSide0 () +

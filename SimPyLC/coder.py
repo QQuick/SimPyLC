@@ -3,14 +3,14 @@
 # Copyright (C) 2013 GEATEC engineering
 #
 # This program is free software.
-# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicence.
+# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY, without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the QQuickLicence for details.
+# See the QQuickLicense for details.
 #
-# The QQuickLicense can be accessed at: http://www.geatec.com/qqLicence.html
+# The QQuickLicense can be accessed at: http://www.geatec.com/qqLicense.html
 #
 # __________________________________________________________________________
 #
@@ -21,7 +21,7 @@
 #
 # It is meant for training purposes only.
 #
-# Removing this header ends your licence.
+# Removing this header ends your license.
 #
 
 from sys import *
@@ -155,7 +155,7 @@ void {0}cycle () {{
 
 
 
-// ====== BEGIN OF LICENCE COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
+// ====== BEGIN OF License COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 //
 // I M P O R T A N T   S A F E T Y   N O T I C E
 //
@@ -165,7 +165,7 @@ void {0}cycle () {{
 // USE OF THIS CODE IS GOVERNED BY THE QQUICK LICENSE (WWW.QQUICK.ORG/LICENSE).
 // YOUR LICENSE TO USE THIS GENERATED CODE AUTOMATICALLY ENDS IF YOU REMOVE OR LEAVE OUT THIS LICENSE COMMENT BLOCK OR THE CODE THAT GENERATED IT. 
 //
-// ====== END OF LICENCE COMMENT BLOCK, INCLUDE IN COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
+// ====== END OF License COMMENT BLOCK, INCLUDE IN COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 
 
 

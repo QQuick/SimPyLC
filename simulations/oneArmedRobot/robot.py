@@ -73,6 +73,7 @@ class Robot (Module):
         self.forAccel = Register ()
         self.forSpeed = Register ()
         self.forAng = Register ()
+        self.forShift = Register ()
         
         self.group ('wrist electronics', True)
         self.wriVolt = Register ()
