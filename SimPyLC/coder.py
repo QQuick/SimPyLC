@@ -224,6 +224,7 @@ void {0}cycle () {{
 
 #define {0}False 0
 #define {0}True 1
+#define {0}Bool bool
 #define {0}UInt unsigned long
 #define {0}Int long
 #define {0}Float double

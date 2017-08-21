@@ -2,9 +2,9 @@
 
 
 
-// ====== BEGIN OF LICENCE COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
+// ====== BEGIN OF License COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 //
-// I M P O R T A N T   S A F E T Y	 N O T I C E
+// I M P O R T A N T   S A F E T Y   N O T I C E
 //
 // THIS CODE IS INTENDED SOLELY FOR EDUCATIONAL PURPOSES AND IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS.
 // IT IS STRICKTLY PROHIBITED TO USE THIS GENERATED CODE IN ANY SITUATION THAT ENTAILS RISK OF DAMAGE OR INJURIES.
@@ -12,12 +12,12 @@
 // USE OF THIS CODE IS GOVERNED BY THE QQUICK LICENSE (WWW.QQUICK.ORG/LICENSE).
 // YOUR LICENSE TO USE THIS GENERATED CODE AUTOMATICALLY ENDS IF YOU REMOVE OR LEAVE OUT THIS LICENSE COMMENT BLOCK OR THE CODE THAT GENERATED IT. 
 //
-// ====== END OF LICENCE COMMENT BLOCK, INCLUDE IN COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
+// ====== END OF License COMMENT BLOCK, INCLUDE IN COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 
 
 
-// Generator: SimPyLC 3.5.0
-// Generated: 2017-01-23 12:26:00.389172
+// Generator: SimPyLC 3.6.0
+// Generated: 2017-08-21 18:45:36.728265
 // Target platform: Arduino
 
 
@@ -66,14 +66,15 @@
 // Support operations
 
 #define update()\
-	thenExact = nowExact; nowExact = getNowExact(); period = 1e-6 * (nowExact - thenExact);\
-	nowInexact = getNowInexact();\
-	first = False;
+    thenExact = nowExact; nowExact = getNowExact(); period = 1e-6 * (nowExact - thenExact);\
+    nowInexact = getNowInexact();\
+    first = False;
 
 // Types
 
 #define False 0
 #define True 1
+#define Bool bool
 #define UInt unsigned long
 #define Int long
 #define Float double
@@ -88,14 +89,14 @@
 #define abs1(value) fabs (value)
 #define max2(value0, value1) fmax (value0, value1)
 #define min2(value0, value1) fmin (value0, value1)
-#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1)	
+#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1)  
 #define limit2(value, aLimit) limit3 (value, -aLimit, aLimit)
 #define digit2(value, index) getDigit (int (value), index)
 
 // ____________ General functions ____________
 
 int getDigit (int value, int index) {
-	return (index == 0) ? value % 10 : getDigit (value / 10, --index);
+    return (index == 0) ? value % 10 : getDigit (value / 10, --index);
 }
 
 // ____________ General variables ____________
@@ -285,9 +286,9 @@ void cycle () {
 	set3 (sweepMin, 1000, (!elapsed1 (sweepWatch)));
 	set3 (sweepMax, 0, (!elapsed1 (sweepWatch)));
 
-	// ______ System ______
+    // ______ System ______
 
-	update ();
+    update ();
 }
 
 
@@ -297,7 +298,7 @@ void cycle () {
  
 
 // Pins configured for Arduino Due, adapt for Uno
-		
+        
 int dataPin = 22, clockPin = 24, latchPin = 26;
 int powerPin = 28, childLockPin = 30, plateSelectPin = 32;
 int upPin = 34, downPin = 36, alarmSelectPin = 38;
@@ -309,44 +310,44 @@ int gain = 255 / 9;
 int dark = 0, g = 1, f = 2, e = 4, d = 8, c = 16, b = 32, a = 64, dot = 128;
 
 int segments [] = {
-	a + b + c + d + e + f,
-	b + c,
-	a + b + g + e + d,
-	a + b + g + c + d,
-	f + g + b + c,
-	a + f + g + c + d,
-	a + f + e + d + c + g,
-	a + b + c,
-	a + b + c + d + e + f + g,
-	g + f + a + b + c + d
+    a + b + c + d + e + f,
+    b + c,
+    a + b + g + e + d,
+    a + b + g + c + d,
+    f + g + b + c,
+    a + f + g + c + d,
+    a + f + e + d + c + g,
+    a + b + c,
+    a + b + c + d + e + f + g,
+    g + f + a + b + c + d
 };
 
 void setup () {
-	pinMode (dataPin, OUTPUT); pinMode(clockPin, OUTPUT); pinMode(latchPin, OUTPUT);
-	pinMode (powerPin, INPUT); pinMode (childLockPin, INPUT); pinMode (plateSelectPin, INPUT);
-	pinMode (upPin, INPUT); pinMode (downPin, INPUT); pinMode (alarmSelectPin, INPUT);
-	pinMode (plate0Pin, OUTPUT); pinMode (plate1Pin, OUTPUT); pinMode (plate2Pin, OUTPUT); pinMode (plate3Pin, OUTPUT);
-	pinMode (buzzerPin, OUTPUT);
+    pinMode (dataPin, OUTPUT); pinMode(clockPin, OUTPUT); pinMode(latchPin, OUTPUT);
+    pinMode (powerPin, INPUT); pinMode (childLockPin, INPUT); pinMode (plateSelectPin, INPUT);
+    pinMode (upPin, INPUT); pinMode (downPin, INPUT); pinMode (alarmSelectPin, INPUT);
+    pinMode (plate0Pin, OUTPUT); pinMode (plate1Pin, OUTPUT); pinMode (plate2Pin, OUTPUT); pinMode (plate3Pin, OUTPUT);
+    pinMode (buzzerPin, OUTPUT);
 }
 
 void readInputs () {
-	powerButton = digitalRead (powerPin); childLockButton = digitalRead (childLockPin); plateSelectButton = digitalRead (plateSelectPin);
-	upButton = digitalRead (upPin); downButton = digitalRead (downPin); alarmSelectButton = digitalRead (alarmSelectPin);
+    powerButton = digitalRead (powerPin); childLockButton = digitalRead (childLockPin); plateSelectButton = digitalRead (plateSelectPin);
+    upButton = digitalRead (upPin); downButton = digitalRead (downPin); alarmSelectButton = digitalRead (alarmSelectPin);
 }
 
-void writeOutputs () {	
-	analogWrite (plate0Pin, gain * plate0Temp); analogWrite (plate1Pin, gain * plate1Temp);
-	analogWrite (plate2Pin, gain * plate2Temp); analogWrite (plate3Pin, gain * plate3Temp);
-	digitalWrite (buzzerPin, buzzer);
-	
-	digitalWrite (latchPin, 0);
-	shiftOut (dataPin, clockPin, LSBFIRST, 1 << int (3 - digitIndex));
-	shiftOut (dataPin, clockPin, LSBFIRST, ~(power ? (segments [int (digitValue)] + (digitDot ? dot : dark)) : dark)); // Active low	
-	digitalWrite (latchPin, 1);
+void writeOutputs () {  
+    analogWrite (plate0Pin, gain * plate0Temp); analogWrite (plate1Pin, gain * plate1Temp);
+    analogWrite (plate2Pin, gain * plate2Temp); analogWrite (plate3Pin, gain * plate3Temp);
+    digitalWrite (buzzerPin, buzzer);
+    
+    digitalWrite (latchPin, 0);
+    shiftOut (dataPin, clockPin, LSBFIRST, 1 << int (3 - digitIndex));
+    shiftOut (dataPin, clockPin, LSBFIRST, ~(power ? (segments [int (digitValue)] + (digitDot ? dot : dark)) : dark)); // Active low    
+    digitalWrite (latchPin, 1);
 }
 
 void loop () {
-	readInputs ();
-	cycle ();
-	writeOutputs ();
+    readInputs ();
+    cycle ();
+    writeOutputs ();
 }

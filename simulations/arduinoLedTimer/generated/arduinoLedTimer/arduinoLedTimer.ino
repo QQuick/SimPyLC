@@ -2,7 +2,7 @@
 
 
 
-// ====== BEGIN OF LICENCE COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
+// ====== BEGIN OF License COMMENT BLOCK, INCLUDE IN ANY COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 //
 // I M P O R T A N T   S A F E T Y   N O T I C E
 //
@@ -12,12 +12,12 @@
 // USE OF THIS CODE IS GOVERNED BY THE QQUICK LICENSE (WWW.QQUICK.ORG/LICENSE).
 // YOUR LICENSE TO USE THIS GENERATED CODE AUTOMATICALLY ENDS IF YOU REMOVE OR LEAVE OUT THIS LICENSE COMMENT BLOCK OR THE CODE THAT GENERATED IT. 
 //
-// ====== END OF LICENCE COMMENT BLOCK, INCLUDE IN COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
+// ====== END OF License COMMENT BLOCK, INCLUDE IN COPY OF THIS GENERATED CODE AND DO NOT REMOVE ======
 
 
 
-// Generator: SimPyLC 2.1.2
-// Generated: 2016-12-09 19:38:24.144225
+// Generator: SimPyLC 3.6.0
+// Generated: 2017-08-21 18:50:37.930289
 // Target platform: Arduino
 
 
@@ -66,14 +66,15 @@
 // Support operations
 
 #define update()\
-	thenExact = nowExact; nowExact = getNowExact(); period = 1e-6 * (nowExact - thenExact);\
-	nowInexact = getNowInexact();\
-	first = False;
+    thenExact = nowExact; nowExact = getNowExact(); period = 1e-6 * (nowExact - thenExact);\
+    nowInexact = getNowInexact();\
+    first = False;
 
 // Types
 
 #define False 0
 #define True 1
+#define Bool bool
 #define UInt unsigned long
 #define Int long
 #define Float double
@@ -88,7 +89,7 @@
 #define abs1(value) fabs (value)
 #define max2(value0, value1) fmax (value0, value1)
 #define min2(value0, value1) fmin (value0, value1)
-#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1) 	
+#define limit3(value, aLimit0, aLimit1) min (max (value, aLimit0), aLimit1)  
 #define limit2(value, aLimit) limit3 (value, -aLimit, aLimit)
 #define digit2(value, index) getDigit (int (value), index)
 
@@ -134,9 +135,9 @@ void cycle () {
 	reset2 (blinkTimer, (elapsed1 (blinkTimer) > blinkTime));
 	mark2 (led, (elapsed1 (blinkTimer) < 0.2));
 
-	// ______ System ______
+    // ______ System ______
 
-	update ();
+    update ();
 }
 
 
@@ -169,11 +170,11 @@ Removing this header ends your licence.
 */
 
 void setup () {
-	pinMode  (13, OUTPUT);
+    pinMode  (13, OUTPUT);
 }
 
 void loop () {
-	cycle ();
-	digitalWrite  (13, led);  
-}		
+    cycle ();
+    digitalWrite  (13, led);  
+}       
 

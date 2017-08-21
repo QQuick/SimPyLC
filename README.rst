@@ -30,7 +30,7 @@ What's new:
 
 - Comments in code of SimPyLC/scene.py adapted to clarify different purpose of axis and pivot, and of passing angle to __init__ versus passing it to __call__
 - Spaces rather than tabs are now used in the sourcecode.
-- Adapted for Python 3.5 (SimPyLC 2.1.2 is last version running with Python 2.7)
+- Adapted for Python 3.6 (SimPyLC 2.1.2 is last version running with Python 2.7)
 - Development status bumped to production / stable.
 - Native.py files replaced by native.cpp files, which are plain C++, hence benefit from syntax highlighting. You'll have to adapt your existing code to this (by merely leaving things out).
 - Code now generated in a separate subdirectory to avoid confusion, especially with native.cpp.
@@ -41,7 +41,8 @@ REMARK: All complete Arduino examples were tested on the Arduino Due, since that
 
 Bugs fixed:
 
-- __nonzero__ changed to __bool__, as required by the move from Python 2.7 to Python 3.5. The blinkingLight demo will now work again.
+- Type Bool added, needed for Arduino Uno.
+- __nonzero__ changed to __bool__, as required by the move from Python 2.7 to Python 3.6. The blinkingLight demo will now work again.
 - Sidewalks raised above road in arduinoTrafficLights example.
 - Unused circuit group 'Lights' deleted from control in arduinoTrafficLights example.
 
@@ -49,13 +50,13 @@ Bugs fixed:
 		
 Requirements for Windows:
 
-1. Install WinPython 3.5, e.g. from https://winpython.github.io
+1. Install WinPython 3.6, e.g. from https://winpython.github.io
 2. (Optional) Copy SimPyLC\\SimPyLC\\QuartzMS.TTF to C:\\Windows\\Fonts
 3. (Optional) You can may also add SimPyLC\\SimPyLC to your PYTHONPATH
 
 Requirements for Linux:
 
-1. Install Python 3.5 and PyOpenGL
+1. Install Python 3.6 and PyOpenGL
 
 Usage:
 
