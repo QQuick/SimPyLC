@@ -27,7 +27,7 @@
 import os
 
 programName = 'SimPyLC'
-programVersion = '3.6.1'
+programVersion = '3.6.2'
 programNameAndVersion = '{0} {1}'.format (programName, programVersion)
 programDir = os.getcwd () .replace ('\\', '/') .rsplit ('/', 3) [-1]
 

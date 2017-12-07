@@ -32,9 +32,9 @@ import sys
 sys.path.append (os.path.abspath ('../..')) # If you want to store your simulations somewhere else, put SimPyLC in your PYTHONPATH environment variable
 
 from SimPyLC import *
-from robot import *
+from rocket import *
 from control import *
 from visualisation import *
 from timing import *
 
-World (Control (), Robot (), Visualisation (), Timing ())
+World (Rocket (), Control (), Visualisation (), Timing ())

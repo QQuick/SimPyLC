@@ -171,7 +171,7 @@ class Cylinder (_Thing):
         glTranslate (0, 0, -0.5)
         glutSolidCylinder (0.5, 1, 100, 1)
         
-class Spere (_Thing):
+class Ellipsoid (_Thing):
     def __init__ (self, **arguments):
         _Thing.__init__ (self, **arguments)
 
