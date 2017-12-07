@@ -128,7 +128,6 @@ def tUni (v):
     return divide (v, norm (v))
     
 class _Thing:
-
     def __init__ (self, size = (0, 0, 0), axis = (0, 0, 1), angle = 0, center = (0, 0, 0), joint = (0, 0, 0), pivot = (0, 0, 1), color = (1, 1, 1)):
         self.size = size
         self.axis = axis
@@ -171,3 +170,21 @@ class Cylinder (_Thing):
         glScale (*self.size)
         glTranslate (0, 0, -0.5)
         glutSolidCylinder (0.5, 1, 100, 1)
+        
+class Spere (_Thing):
+    def __init__ (self, **arguments):
+        _Thing.__init__ (self, **arguments)
+
+    def _draw (self):
+        glScale (*self.size)
+        glutSolidSphere (0.5, 100, 100)
+        
+        
+class Cone (_Thing):
+    def __init__ (self,  **arguments):
+        _Thing.__init__ (self, **arguments)
+        
+    def _draw (self):
+        glScale (*self.size)
+        glTranslate (0, 0, -0.5)
+        glutSolidCone (0.5, 1, 100, 100)
