@@ -32,7 +32,7 @@ class TrafficLamp (Cylinder):
         self.originalColor = self.color
 
     def __call__ (self, on):
-        self.color = self.originalColor if on else tMul (0.2, self.originalColor)
+        self.color = self.originalColor if on else tsMul (self.originalColor, 0.2)
         return Cylinder.__call__ (self)
 
 class StreetLamp (Cylinder):
@@ -41,7 +41,7 @@ class StreetLamp (Cylinder):
         self.originalColor = self.color
 
     def __call__ (self, brightness):
-        self.color = tMul (0.2 + 0.8 * brightness, self.originalColor)
+        self.color = tsMul (self.originalColor, 0.2 + 0.8 * brightness)
         return Cylinder.__call__ (self)
 
 class Visualisation (Scene):

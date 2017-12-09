@@ -37,4 +37,4 @@ from control import *
 from visualisation import *
 from timing import *
 
-World (Rocket (), Control (), Visualisation (), Timing ())
+World (Rocket (), Control (), Visualisation ()) #, Timing ())

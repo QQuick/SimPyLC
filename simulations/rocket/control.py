@@ -35,7 +35,11 @@ class Control (Module):
         self.group ('thruster', True)
         self.greenRed = Register ()
         self.blueYellow = Register ()
-        self.force = Register () 
+        self.force = Register ()
+        
+        self.group ('test')
+        self.shift = Register ()
+        self.angle = Register ()
         
     def input (self):
         pass

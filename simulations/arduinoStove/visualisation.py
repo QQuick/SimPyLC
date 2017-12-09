@@ -54,7 +54,7 @@ class Visualisation (Scene):
         
     def display (self):
         def getPlateColor (temperature):
-            return tMul ((1 + temperature) / 10., (1, 0.7, 0))
+            return tsMul ((1, 0.7, 0), (1 + temperature) / 10.)
             
         def getDigit (shift, digitValue, dotOn, active):
             def getColor (on):

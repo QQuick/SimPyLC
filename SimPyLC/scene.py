@@ -84,6 +84,15 @@ class Scene:
         glutReshapeFunc (self._reshape)
         
     def _display (self):
+        # [object coords] > (model view matrix) > [eye coords] (projection matrix) > [clip coords]
+        
+        # Operations related to model view matrix: glTranslate, glRotate, glScale.
+        # They will work on the objects
+        
+        # Operations related to projection matrix: gluPerspective, gluLookat
+        # They will work on the camera
+
+        
         glMatrixMode (GL_MODELVIEW)
         glLoadIdentity ()
         glClearColor (0, 0, 0, 0)   
@@ -91,7 +100,7 @@ class Scene:
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
         
         glPushMatrix ()
-        self.display ()
+        self.display () # Since we're in GL_MODELVIEW mode, operations in self.display () will move the objects
         glPopMatrix ()
         
         glFlush ()
@@ -103,7 +112,10 @@ class Scene:
         glMatrixMode (GL_PROJECTION)
         glLoadIdentity()
         gluPerspective (45, width / float (height), 2, 10)      
-        gluLookAt (5, 0, 0, 0, 0, 0.7, 0, 0, 1) 
+        gluLookAt (5, 0, 0, 0, 0, 0, 0, 0, 1)
+        
+def tEvaluate (v):
+    return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
                 
 def tNeg (v):
     return (-v [0], -v [1], -v [2])
@@ -114,13 +126,18 @@ def tAdd (v0, v1):
 def tSub (v0, v1):
     return (v0 [0] - v1 [0], v0 [1] - v1 [1], v0 [2] - v1 [2])
         
-def tMul (s, v):
-    return (s * v [0], s * v [1], s * v [2])
+def tMul (v0, v1):
+    return (x [0] * v [0], x [1] * v [1], x [2] * v [2])
+
+def tsMul (v, x):
+    return (v [0] * x, v [1] * x, v [2] * x)
     
-def tDiv (v, s):
-    s = float (s)
-    return (v [0] / s, v [1] / s, v [2] / s)
-    
+def tDiv (v, x):
+    return (v [0] / x [0], v [1] / x [1], v [2] / x [2])
+
+def tsDiv (v, x):
+    return (v [0] / x, v [1] / x, v [2] / x)
+   
 def tNor (v):
     return sqrt (v [0] * v [0] + v [1] * v[1] + v [2] * v [2])
     
@@ -128,7 +145,21 @@ def tUni (v):
     return divide (v, norm (v))
     
 class _Thing:
-    def __init__ (self, size = (0, 0, 0), axis = (0, 0, 1), angle = 0, center = (0, 0, 0), joint = (0, 0, 0), pivot = (0, 0, 1), color = (1, 1, 1)):
+    def __init__ (
+        self,
+        size = (0, 0, 0),   # Initial size of the initial bounding box
+        
+        center = (0, 0, 0), # Initial position of the center with respect to (0, 0, 0) or to the center of the containing element
+        axis = (0, 0, 1),   # Initial attitude of the axis of inital rotation around the center
+        angle = 0,          # Initial rotation angle
+        
+        joint = (0, 0, 0),  # Initial position of the axis of dynamical rotation with respect to the center
+        pivot = (0, 0, 1),  # Initial attitude of the axis of dynamical rotation around the joint
+
+        rest = (0, 0, 0),   # Inital position of the point that stays at rest when scaling dynamically
+        
+        color = (1, 1, 1)   # Initial color
+    ):
         self.size = size
         self.axis = axis
         self.angle = angle
@@ -137,21 +168,40 @@ class _Thing:
         self.pivot = pivot
         self.color = color
         
-    def __call__ (self, angle = 0, shift = (0, 0, 0), color = None, parts = lambda: None):
-        if color != None:
-            self.color = color
+    def __call__ (
+        self,
+        
+        angle = 0,          # Dynamical rotation angle around pivot through joint
+        shift = (0, 0, 0),  # Dynamic shift of the joint with respect to local coordinates of the part
+        scale = (1, 1, 1),  # Dynamic multiplication of the part with respect to local orientation and rest
+        color = None,       # Dynamical color
+        
+        parts = lambda: None
+    ):
+        # We are in GL_MODELVIEW mode, so the transformations conceptually are performed upon the objects
+        #
+        # If you think in the global coordinate system then:
+        #   - Transformations appear in the code in opposite order, so the first transformation that affects the object is the nearest to drawing the object in the code
+        #   - Transformations move the object in the normal direction
+        #
+        # If you think in the local coordinate system then:
+        #   - Transformations appear in the code in normal order, so the last transformation that affecs the object is the nearest to drawing the object in the code
+        #   - Transformations move the  coordinate frame in the opposite direction
+    
+        if color != None:                                                               # If there's a dynamical color
+            self.color = color                                                          #   replace the original static color by it
+            
+        glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
+        glTranslate (*tAdd (self.center, self.joint))                                   # 6.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
+        glRotate (evaluate (angle), *self.pivot)                                        # 5.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
+        glTranslate (*tSub (tEvaluate (shift), self.joint))                             # 3.    Translate object to put shifted joint in the origin
         glPushMatrix ()
-        glTranslate (*tAdd (self.center, self.joint))                                   # Put joint at correct position
-        glRotate (evaluate (angle), *self.pivot)                                        # Rotate over varying angle parameter, so NOT fixed self.angle attribute, around self.pivot to move
-        glTranslate (evaluate (shift [0]), evaluate (shift [1]), evaluate (shift [2]))  # Put joint at correct position
-        glTranslate (*tNeg (self.joint))                                                # Put joint in origin
-        glPushMatrix ()
-        glRotate (self.angle, *self.axis)                                               # Rotate over fixed self.angle attribute, set by the constructor, around self.axis to achieve initial attitude
+        glRotate (self.angle, *self.axis)                                               # 2.    Rotate object over initial angle to put it in natural position
         glColor (*self.color)
-        self._draw ()
+        self._draw ()                                                                   # 1.    Place object with center in origin
         glPopMatrix ()
-        parts ()
-        glPopMatrix ()
+        parts ()                                                                        # Draw parts in local coord frame
+        glPopMatrix ()                                                                  # Restore transformation state from before drawing this _thing
         return 0                                                                        # Make concatenable by e.g. + operator
         
 class Beam (_Thing):
