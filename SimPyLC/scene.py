@@ -112,7 +112,7 @@ class Scene:
         glMatrixMode (GL_PROJECTION)
         glLoadIdentity()
         gluPerspective (45, width / float (height), 2, 10)      
-        gluLookAt (5, 0, 0, 0, 0, 0, 0, 0, 1)
+        gluLookAt (5, 0, 0, 0, 0, 0.7, 0, 0, 1)
         
 def tEvaluate (v):
     return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
@@ -171,10 +171,10 @@ class _Thing:
     def __call__ (
         self,
         
-        angle = 0,          # Dynamical rotation angle around pivot through joint
-        shift = (0, 0, 0),  # Dynamic shift of the joint with respect to local coordinates of the part
-        scale = (1, 1, 1),  # Dynamic multiplication of the part with respect to local orientation and rest
-        color = None,       # Dynamical color
+        shift = (0, 0, 0),  # Dynamic shift of the joint in natural position, so before dynamic rotation
+        scale = (1, 1, 1),  # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
+        angle = 0,          # Dynamic rotation angle around pivot through joint
+        color = None,       # Dynamic color
         
         parts = lambda: None
     ):
@@ -192,12 +192,16 @@ class _Thing:
             self.color = color                                                          #   replace the original static color by it
             
         glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
-        glTranslate (*tAdd (self.center, self.joint))                                   # 6.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
-        glRotate (evaluate (angle), *self.pivot)                                        # 5.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
-        glTranslate (*tSub (tEvaluate (shift), self.joint))                             # 3.    Translate object to put shifted joint in the origin
+        glTranslate (*tAdd (self.center, self.joint))                                   # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
+        glRotate (evaluate (angle), *self.pivot)                                        # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
+        glTranslate (*tEvaluate (shift))                                                # 6.    Translate object to put shifted joint in the origin
+        glScale (*tEvaluate (scale))                                                    # 5.    Scale with respect to joint that's in the origin
+        glTranslate (*tNeg (self.joint))                                                # 4.    Translate object to put joint in the origin
         glPushMatrix ()
-        glRotate (self.angle, *self.axis)                                               # 2.    Rotate object over initial angle to put it in natural position
+        glRotate (self.angle, *self.axis)                                               # 3.    Rotate object over initial angle to put it in natural position
+        glScale (*self.size)                                                            # 2.    Scale to natural size
         glColor (*self.color)
+
         self._draw ()                                                                   # 1.    Place object with center in origin
         glPopMatrix ()
         parts ()                                                                        # Draw parts in local coord frame
@@ -209,7 +213,6 @@ class Beam (_Thing):
         _Thing.__init__ (self, **arguments)
         
     def _draw (self):
-        glScale (*self.size)
         glutSolidCube (1)
             
 class Cylinder (_Thing):
@@ -217,7 +220,6 @@ class Cylinder (_Thing):
         _Thing.__init__ (self, **arguments)
         
     def _draw (self):
-        glScale (*self.size)
         glTranslate (0, 0, -0.5)
         glutSolidCylinder (0.5, 1, 100, 1)
         
@@ -226,7 +228,6 @@ class Ellipsoid (_Thing):
         _Thing.__init__ (self, **arguments)
 
     def _draw (self):
-        glScale (*self.size)
         glutSolidSphere (0.5, 100, 100)
         
         
@@ -235,6 +236,5 @@ class Cone (_Thing):
         _Thing.__init__ (self, **arguments)
         
     def _draw (self):
-        glScale (*self.size)
         glTranslate (0, 0, -0.5)
         glutSolidCone (0.5, 1, 100, 100)
