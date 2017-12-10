@@ -36,10 +36,10 @@ class Visualisation (Scene):
         self.body = Cylinder (size = (0.3, 0.3, 1), center = (0, 0, 1), pivot = (0, 0, 1), color = (1, 1, 0.2))
         self.nose = Cone (size = (0.3, 0.3, 0.5), center = (0, 0, 0.75), color = (1, 1, 0.2))
         self.bracket = Cylinder (size = (0.1, 0.1, 0.1), center = (0, 0, -0.55), color = (1, 1, 0.2))
-        self.gimbal = Ellipsoid (size = (0.12, 0.12, 0.12), center = (0, 0, -0.05), pivot = (1, 0, 0), color = (1, 1, 0.2))
-        self.thruster = Cone (size = (0.2, 0.2, 0.2), center = (0, 0, -0.1), pivot = (0, 1, 0), color = (1, 1, 0.2))
-        self.flame = Cone (size = (0.15, 0.15, 1), center = (0, 0, -0.6), joint = (0, 0, 0.5), axis = (0, 1, 0), angle = 180, color = (1, 0.7, 0))
-        self.tankRed = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0.15, 0, 0), color = (1, 0, 0))
+        self.gimbal = Beam (size = (0.12, 0.12, 0.12), center = (0, 0, -0.05), pivot = (1, 0, 0), color = (1, 1, 0.2))
+        self.thruster = Cone (size = (0.2, 0.2, 0.2), center = (0, 0, -0.1), pivot = (0, -1, 0), color = (1, 1, 0.2))   # See thruster_rotation.jpg for pivot
+        self.flame = Cone (size = (0.1, 0.1, 1), center = (0, 0, -0.6), joint = (0, 0, 0.5), axis = (0, 1, 0), angle = 180, color = (1, 0.7, 0))
+        self.tankRed = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0.1, 0, 0), color = (1, 0, 0))
         self.tankGreen = Ellipsoid (size = (0.1, 0.1, 0.1), center = (-0.1, 0, 0), color = (0, 1, 0))
         self.tankYellow = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, 0.1, 0), color = (1, 1, 0))
         self.tankBlue = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, -0.1, 0), color = (0, 0, 1))
@@ -52,9 +52,9 @@ class Visualisation (Scene):
                 self.tankRed () +
                 self.tankBlue () +            
                 self.tankYellow () +
-                self.gimbal (angle = world.rocket.greenRed, parts = lambda:
-                    self.thruster (angle = world.rocket.blueYellow, parts = lambda:
-                        self.flame (scale = tsMul ((1, 1, 1), world.rocket.force), color = (1, 0.3 + 0.7 * random (), 0))
+                self.gimbal (angle = world.rocket.blueYellowAngle, parts = lambda:
+                    self.thruster (angle = world.rocket.greenRedAngle, parts = lambda:
+                        self.flame (scale = tsMul ((1, 1, 1), world.rocket.thrusterForce / world.rocket.thrusterMaxForce * (0.9 + 0.1 * random ())), color = (1, 0.3 + 0.7 * random (), 0))
                     )
                 )
             )

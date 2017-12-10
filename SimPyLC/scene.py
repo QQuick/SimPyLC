@@ -112,7 +112,11 @@ class Scene:
         glMatrixMode (GL_PROJECTION)
         glLoadIdentity()
         gluPerspective (45, width / float (height), 2, 10)      
-        gluLookAt (5, 0, 0, 0, 0, 0.7, 0, 0, 1)
+        gluLookAt (
+            5, 0, 0,    # Camera position
+            0, 0, 0.7,  # Point looked at
+            0, 0, 1     # Up in the image
+        )
         
 def tEvaluate (v):
     return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))

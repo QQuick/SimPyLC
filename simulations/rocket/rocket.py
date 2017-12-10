@@ -32,23 +32,61 @@ class Rocket (Module):
 
         self.page ('rocket physics')
         
-        self.group ('thruster', True)
-        self.greenRed = Register ()
-        self.blueYellow = Register ()
-        self.force = Register ()
+        self.group ('thruster angle green/red', True) 
+        self.greenRedDelta = Register ()
+        self.greenRedAngle = Register ()
+        
+        self.group ('thruster angle blue/yellow')
+        self.blueYellowDelta = Register ()
+        self.blueYellowAngle = Register ()
+        
+        self.group ('fuel throttle')
+        self.throttleDelta = Register ()
+        self.throttlePercent = Register ()
+        self.thrusterForce = Register ()      
         
         self.group ('ship')
-        self.mass = Register ()
+        self.mass = Register (5000)
+        self.thrusterTiltSpeed = Register (30)
+        self.thrusterMaxAngle = Register (90)
+        self.throttleSpeed = Register (20)
+        self.thrusterMaxForce = Register (10000)
         
     def input (self):   
-        self.part ('thruster control')
-        self.greenRed.set (world.control.greenRed)
-        self.blueYellow.set (world.control.blueYellow)
-        self.force.set (world.control.force)
+        self.part ('thruster angle green/red')
+        self.greenRedDelta.set (world.control.greenRedDelta)
+        
+        self.part ('thruster angle blue/yellow')
+        self.blueYellowDelta.set (world.control.blueYellowDelta)
+        
+        self.part ('fuel throttle')
+        self.throttleDelta.set (world.control.throttleDelta)
         
     def sweep (self):
-        pass
-        #self.part ('Torso')
-        #self.torTorq.set (limit (self.torGain * self.torVolt, self.torMax), self.torEnab, 0)
+        self.part ('thruster angle green/red')
+        self.greenRedAngle.set (
+            limit (
+                self.greenRedAngle + self.greenRedDelta * self.thrusterTiltSpeed * world.period,
+                self.thrusterMaxAngle
+            )
+        )
         
+        self.part ('thruster angle blue/yellow')
+        self.blueYellowAngle.set (
+            limit (
+                self.blueYellowAngle + self.blueYellowDelta * self.thrusterTiltSpeed * world.period,
+                self.thrusterMaxAngle
+            )
+        )
+        
+        self.part ('fuel throttle')
+        self.throttlePercent.set (
+            limit (
+                self.throttlePercent + self.throttleDelta * self.throttleSpeed * world.period,
+                0,
+                100
+            )
+        )
+        self.thrusterForce.set (self.throttlePercent * self.thrusterMaxForce / 100)
+                
         

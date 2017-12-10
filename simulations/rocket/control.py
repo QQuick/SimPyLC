@@ -32,17 +32,43 @@ class Control (Module):
         
         self.page ('rocket control')
         
-        self.group ('thruster', True)
-        self.greenRed = Register ()
-        self.blueYellow = Register ()
-        self.force = Register ()
+        self.group ('thruster angle green/red', True)
+        self.toGreen = Marker ()
+        self.toRed = Marker ()
+        self.greenRedDelta = Register ()
+        self.greenRedAngle = Register ()
         
-        self.group ('test')
-        self.shift = Register ()
-        self.angle = Register ()
+        self.group ('thruster angle blue/yellow')
+        self.toBlue = Marker ()
+        self.toYellow = Marker ()
+        self.blueYellowDelta = Register ()
+        self.blueYellowAngle = Register ()
+        
+        self.group ('fuel throttle')
+        self.throttleClose = Marker ()
+        self.throttleOpen = Marker ()
+        self.throttleDelta = Register ()
+        self.throttlePercent = Register ()
         
     def input (self):
-        pass
+        self.part ('thruster angle green/red')
+        self.greenRedAngle = world.rocket.greenRedAngle
+        
+        self.part ('thruster angle blue/yellow')
+        self.blueYellowAngle = world.rocket.blueYellowAngle
+        
+        self.part ('fuel throttle')
+        self.throttlePercent = world.rocket.throttlePercent
         
     def sweep (self):
-        pass
+        self.part ('thruster angle green/red')
+        self.greenRedDelta.set (-1 if self.toGreen else 1 if self.toRed else 0)
+        
+        self.part ('thruster angle blue/yellow')
+        self.blueYellowDelta.set (-1 if self.toBlue else 1 if self.toYellow else 0)
+        
+        self.part ('fuel throttle')
+        self.throttleDelta.set (-1 if self.throttleClose else 1 if self.throttleOpen else 0)
+        
+        
+        
