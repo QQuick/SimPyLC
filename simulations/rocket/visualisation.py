@@ -38,7 +38,7 @@ class Visualisation (Scene):
         self.bracket = Cylinder (size = (0.1, 0.1, 0.1), center = (0, 0, -0.55), color = (1, 1, 0.2))
         self.gimbal = Ellipsoid (size = (0.12, 0.12, 0.12), center = (0, 0, -0.05), pivot = (1, 0, 0), color = (1, 1, 0.2))
         self.thruster = Cone (size = (0.2, 0.2, 0.2), center = (0, 0, -0.1), pivot = (0, 1, 0), color = (1, 1, 0.2))
-        self.flame = Cone (size = (0.15, 0.15, 1), center = (0, 0, -0.6), joint = (0, 0, -0.5), axis = (0, 1, 0), angle = 180, color = (1, 0.7, 0))
+        self.flame = Cone (size = (0.15, 0.15, 1), center = (0, 0, -0.6), joint = (0, 0, 0.5), axis = (0, 1, 0), angle = 180, color = (1, 0.7, 0))
         self.tankRed = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0.15, 0, 0), color = (1, 0, 0))
         self.tankGreen = Ellipsoid (size = (0.1, 0.1, 0.1), center = (-0.1, 0, 0), color = (0, 1, 0))
         self.tankYellow = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, 0.1, 0), color = (1, 1, 0))
@@ -54,7 +54,7 @@ class Visualisation (Scene):
                 self.tankYellow () +
                 self.gimbal (angle = world.rocket.greenRed, parts = lambda:
                     self.thruster (angle = world.rocket.blueYellow, parts = lambda:
-                        self.flame (scale = (1, 1, world.rocket.force), color = (1, 0.3 + 0.7 * random (), 0))
+                        self.flame (scale = tsMul ((1, 1, 1), world.rocket.force), color = (1, 0.3 + 0.7 * random (), 0))
                     )
                 )
             )
