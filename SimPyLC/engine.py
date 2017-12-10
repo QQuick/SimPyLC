@@ -111,8 +111,11 @@ class _Element:
         Module._current._maxNrOfRows = max (Module._current._maxNrOfRows, self._rowIndex + 2)  # Leave room for page caption
         Module._current._maxNrOfColumns = max (Module._current._maxNrOfColumns, self._columnIndex + 1)
             
-    def _isA (self, ClassName):         
-        return isinstance (self, eval (ClassName))
+    def _isA (self, *classNames):
+        for className in classNames:
+            if isinstance (self, eval (className)):
+                return True
+        return False
         
 class _Caption (_Element):
     def __init__ (self, text):

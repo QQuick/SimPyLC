@@ -24,7 +24,9 @@
 # Removing this header ends your license.
 #
 
-import os
+import sys
+import traceback
+
 from time import *
 from tkinter import *
 
@@ -59,13 +61,25 @@ class Cell:
             self.entry = Entry (self.moduleWindow, font = Gui.entryFont, width = Gui.entryWidth)
 
             self.entry.bind ('<ButtonPress-1>', self.force)
-            self.entry.bind ('<ButtonRelease-1>', self.select)  # Selecting at ButtonPress-1 has no effect
-            self.entry.bind ('<Return>', self.forceAndSelect)
+            self.entry.bind ('<ButtonRelease-1>', self.select)  # Selecting (highlighting) text at ButtonPress-1 has no effect, since it's too early
+            self.entry.bind ('<Return>', self.forceAndSelect)   # Select so it will be ready to be overwritten
             
             self.entry.bind ('<Key>', self.edit)
             
             self.entry.bind ('<ButtonRelease-3>', self.release)
             self.entry.bind ('<Escape>', self.release)
+            
+            self.entry.bind ('<ButtonPress-2>', self.set1)
+            self.entry.bind ('<ButtonRelease-2>', self.set0)
+            
+            if sys.platform in {'win32', 'darwin'}:
+                self.entry.bind ('<MouseWheel>', lambda event: self.adapt (1 if event.delta > 0 else -1))       # Windows, OsX
+            elif sys.platform in {'linux'}:
+                self.entry.bind ('<Button-4>', self.adapt (1))                                                  # Linux
+                self.entry.bind( '<Button-5>', self.adapt (-1))                                                 # Linux
+            else:
+                print ('Error: Unknown platform')
+                sys.exit (1)
             
             self.label.grid (row = self.element._rowIndex + 1, column = 2 * self.element._columnIndex, ipadx= 0.5, sticky = 'NEW')
             self.entry.grid (row = self.element._rowIndex + 1, column = 2 * self.element._columnIndex + 1, sticky = 'NEW')
@@ -106,13 +120,29 @@ class Cell:
         self.element._release ()
         self.entry.configure (foreground = entryReleasedForegroundColorHex, background = entryReleasedBackgroundColorHex)
     
+    def set1 (self, event):
+        if self.element._isA ('Marker', 'Runner', 'Oneshot', 'Latch'):
+            self.element._write (1)
+
+    def set0 (self, event):
+        if self.element._isA ('Marker', 'Runner', 'Oneshot', 'Latch'):
+            self.element._write (0)
+    
+    def adapt (self, delta):
+        if self.element._isA ('Register', 'Timer'):
+            try:
+                self.element._write (eval (self.entry.get ()) + delta)
+            except:
+                print (traceback.format_exc ())
+
+    
 class _Filler:
     def __init__ (self, columnIndex):
         self._columnIndex = columnIndex
         self._rowIndex = 2
         
-    def _isA (self, ClassName):
-        return ClassName == '_Filler'
+    def _isA (self, *ClassNames):
+        return '_Filler' in ClassNames
         
 class ModuleWindow (Toplevel):
     def __init__ (self, module):
