@@ -24,7 +24,10 @@
 # Removing this header ends your licence.
 #
 
+from numpy import *
+
 from SimPyLC import *
+from transform import *
 
 class Rocket (Module):
     def __init__ (self):
@@ -48,7 +51,10 @@ class Rocket (Module):
         self.thrusterForce = Register ()      
         
         self.group ('ship')
-        self.shipMass = Register (5000)
+        self.totalMass = Register (5000)
+        self.gyrationRadius = Register (0.15 / sqrt (12))
+        self.effectiveRadius = Register (0.15)
+        self.effectiveLength = Register (1.5)
         self.thrusterTiltSpeed = Register (30)
         self.thrusterMaxAngle = Register (90)
         self.throttleSpeed = Register (20)
@@ -84,17 +90,32 @@ class Rocket (Module):
         self.attitudeY = Register ()
         self.attitudeZ = Register ()
         
-        self.page ('Forces')
+        self.group ('sweep time measurement')
+        self.sweepMin = Register (1000)
+        self.sweepMax = Register ()
+        self.sweepWatch = Timer ()
+        self.run = Runner ()        
         
-        self.group ('Forces w.r.t. ship', True)
+        self.page ('Forces and torques')
+        
+        self.group ('Forces in ship frame', True)
         self.forwardForce = Register ()
         self.blueYellowForce = Register ()
         self.greenRedForce = Register ()
         
-        self.group ('Forces w.r.t. world')
+        self.group ('Forces in world frame')
         self.forceX = Register ()
         self.forceY = Register ()
         self.forceZ = Register ()
+        
+        self.group ('Torques in ship frame', True)
+        self.blueYellowTorque = Register ()
+        self.greenRedTorque = Register ()
+        
+        self.group ('Torques in world frame')
+        self.torqueX = Register ()
+        self.torqueY = Register ()
+        self.torqueZ = Register ()
         
     def input (self):   
         self.part ('gimbal angle blue/yellow')
@@ -135,20 +156,26 @@ class Rocket (Module):
         )
         self.thrusterForce.set (self.throttlePercent * self.thrusterMaxForce / 100)
         
+        self.part ('linear movement')
         
+        straightForceVec = numpy.matrix ([0, 0, evaluate (self.thrusterForce), 1]) .T
+        shipForceRotMat = getRotXMat (self.blueYellowAngle) * getRotYMat (-self.greenRedAngle)    # Local coord sys, so "forward" order
+        shipForceVec = shipForceRotMat * straightForceVec
         
-        self.part ('dynamics')
+        self.forwardForce.set (shipForceVec [2, 0])
+        self.blueYellowForce.set (shipForceVec [1, 0])
+        self.greenRedForce.set (shipForceVec [0, 0])
         
-        
-        self.part ('kinematics')
-
-        self.forwardForce.set (self.thrusterForce * cos (self.blueYellowAngle) * cos (self.greenRedAngle))
-        self.blueYellowForce.set (self.thrusterForce * sin (self.blueYellowAngle) * cos (self.greenRedAngle))
-        self.greenRedForce.set (self.thrusterForce * sin (self.greenRedAngle) * cos (self.blueYellowAngle))
+        worldRotMat = getRotXMat (self.attitudeX) * getRotYMat (self.attitudeY) * getRotZMat (self.attitudeZ)
+        worldForceVec = worldRotMat * shipForceVec
                 
-        self.linAccelX.set (self.forceX / self.shipMass)
-        self.linAccelY.set (self.forceY / self.shipMass)
-        self.linAccelZ.set (self.forceZ / self.shipMass)
+        self.forceX.set (worldForceVec [0, 0])
+        self.forceY.set (worldForceVec [1, 0])
+        self.forceZ.set (worldForceVec [2, 0])
+                
+        self.linAccelX.set (self.forceX / self.totalMass)
+        self.linAccelY.set (self.forceY / self.totalMass)
+        self.linAccelZ.set (self.forceZ / self.totalMass)
         
         self.linVelocX.set (self.linVelocX + self.linAccelX * world.period)
         self.linVelocY.set (self.linVelocY + self.linAccelY * world.period)
@@ -158,6 +185,49 @@ class Rocket (Module):
         self.positionY.set (self.positionY + self.linVelocY * world.period)
         self.positionZ.set (self.positionZ + self.linVelocZ * world.period)
         
+        self.part ('angular movement')
         
-                
+        self.blueYellowTorque.set (self.blueYellowForce * self.gyrationRadius)
+        self.greenRedTorque.set (self.blueYellowForce * self.gyrationRadius)
+        
+        shipTorqueVec = numpy.matrix ([self.blueYellowTorque, self.greenRedTorque, 0, 1]) .T
+        worldTorqueVec = worldRotMat * shipTorqueVec
+        
+        self.torqueX.set (worldTorqueVec [0, 0])
+        self.torqueY.set (worldTorqueVec [1, 0])
+        self.torqueZ.set (worldTorqueVec [2, 0])
+        
+        rSq = evaluate (self.effectiveRadius * self.effectiveRadius)
+        hSq = evaluate (self.effectiveLength * self.effectiveLength)
+        
+        # Source: https://en.wikipedia.org/wiki/List_of_moments_of_inertia#List_of_3D_inertia_tensors
+        # Homogenized
+        straightInertiaTensor = evaluate (self.totalMass) / 12 * numpy.matrix ([
+            [(3 * rSq + hSq) / 12   , 0                     , 0            , 0],
+            [0                      , (3 * rSq + hSq) / 12  , 0            , 0],
+            [0                      , 0                     , rSq / 6 * rSq, 0],
+            [0                      , 0                     , 0            , 1]
+        ])
+        
+        inertiaTensor = worldRotMat * straightInertiaTensor * worldRotMat.T
+        
+        worldAngAccelVec = inertiaTensor.I * worldTorqueVec
+        
+        self.angAccelX.set (degreesPerRadian * worldAngAccelVec [0, 0])
+        self.angAccelY.set (degreesPerRadian * worldAngAccelVec [1, 0])
+        self.angAccelZ.set (degreesPerRadian * worldAngAccelVec [2, 0])
+        
+        self.angVelocX.set (self.angVelocX + self.angAccelX * world.period)
+        self.angVelocY.set (self.angVelocY + self.angAccelY * world.period)
+        self.angVelocZ.set (self.angVelocZ + self.angAccelZ * world.period)
+        
+        self.attitudeX.set (self.attitudeX + self.angVelocX * world.period)
+        self.attitudeY.set (self.attitudeY + self.angVelocY * world.period)
+        self.attitudeZ.set (self.attitudeZ + self.angVelocZ * world.period)
+        
+        self.part ('sweep time measurement')
+        self.sweepMin.set (world.period, world.period < self.sweepMin)
+        self.sweepMax.set (world.period, world.period > self.sweepMax)
+        self.sweepWatch.reset (self.sweepWatch > 2)
+        self.sweepMin.set (1000, not self.sweepWatch)
         

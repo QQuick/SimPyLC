@@ -395,7 +395,8 @@ class World (Thread):
             
 world = World   # Pretend this class is a singleton object  
             
-_radiansPerDegree = math.pi / 180
+radiansPerDegree = math.pi / 180
+degreesPerRadian = 180 / math.pi
             
 def abs (anObject):
     return builtins.abs (evaluate (anObject))
@@ -422,13 +423,13 @@ def log10 (anObject):
     return math.log10 (evaluate (anObject))
     
 def sin (anObject):
-    return math.sin (evaluate (anObject) * _radiansPerDegree)
+    return math.sin (evaluate (anObject) * radiansPerDegree)
     
 def cos (anObject):
-    return math.cos (evaluate (anObject) * _radiansPerDegree)
+    return math.cos (evaluate (anObject) * radiansPerDegree)
     
 def tan (anObject):
-    return math.tan (evaluate (anObject) * _radiansPerDegree)
+    return math.tan (evaluate (anObject) * radiansPerDegree)
     
 def limit (anObject, limit0, limit1 = None):
     if limit1 is None:

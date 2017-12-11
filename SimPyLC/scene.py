@@ -148,7 +148,7 @@ def tNor (v):
 def tUni (v):
     return divide (v, norm (v))
     
-class _Thing:
+class Nothing:
     def __init__ (
         self,
         size = (0, 0, 0),   # Initial size of the initial bounding box
@@ -171,6 +171,9 @@ class _Thing:
         self.joint = joint
         self.pivot = pivot
         self.color = color
+        
+    def _draw (self):
+        pass
         
     def __call__ (
         self,
@@ -212,32 +215,32 @@ class _Thing:
         glPopMatrix ()                                                                  # Restore transformation state from before drawing this _thing
         return 0                                                                        # Make concatenable by e.g. + operator
         
-class Beam (_Thing):
+class Beam (Nothing):
     def __init__ (self, **arguments):
-        _Thing.__init__ (self, **arguments)
+        Nothing.__init__ (self, **arguments)
         
     def _draw (self):
         glutSolidCube (1)
             
-class Cylinder (_Thing):
+class Cylinder (Nothing):
     def __init__ (self, **arguments):
-        _Thing.__init__ (self, **arguments)
+        Nothing.__init__ (self, **arguments)
         
     def _draw (self):
         glTranslate (0, 0, -0.5)
         glutSolidCylinder (0.5, 1, 100, 1)
         
-class Ellipsoid (_Thing):
+class Ellipsoid (Nothing):
     def __init__ (self, **arguments):
-        _Thing.__init__ (self, **arguments)
+        Nothing.__init__ (self, **arguments)
 
     def _draw (self):
         glutSolidSphere (0.5, 100, 100)
         
         
-class Cone (_Thing):
+class Cone (Nothing):
     def __init__ (self,  **arguments):
-        _Thing.__init__ (self, **arguments)
+        Nothing.__init__ (self, **arguments)
         
     def _draw (self):
         glTranslate (0, 0, -0.5)
