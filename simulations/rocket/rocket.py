@@ -188,9 +188,9 @@ class Rocket (Module):
         self.part ('angular movement')
         
         self.blueYellowTorque.set (self.blueYellowForce * self.gyrationRadius)
-        self.greenRedTorque.set (self.blueYellowForce * self.gyrationRadius)
+        self.greenRedTorque.set (self.greenRedForce * self.gyrationRadius)
         
-        shipTorqueVec = numpy.matrix ([self.blueYellowTorque, self.greenRedTorque, 0, 1]) .T
+        shipTorqueVec = numpy.matrix ([evaluate (self.blueYellowTorque), evaluate (-self.greenRedTorque), 0, 1]) .T    
         worldTorqueVec = worldRotMat * shipTorqueVec
         
         self.torqueX.set (worldTorqueVec [0, 0])
@@ -203,14 +203,13 @@ class Rocket (Module):
         # Source: https://en.wikipedia.org/wiki/List_of_moments_of_inertia#List_of_3D_inertia_tensors
         # Homogenized
         straightInertiaTensor = evaluate (self.totalMass) / 12 * numpy.matrix ([
-            [(3 * rSq + hSq) / 12   , 0                     , 0            , 0],
-            [0                      , (3 * rSq + hSq) / 12  , 0            , 0],
-            [0                      , 0                     , rSq / 6 * rSq, 0],
-            [0                      , 0                     , 0            , 1]
+            [(3 * rSq + hSq) / 12   , 0                     , 0      , 0],
+            [0                      , (3 * rSq + hSq) / 12  , 0      , 0],
+            [0                      , 0                     , rSq / 6, 0],
+            [0                      , 0                     , 0      , 1]
         ])
         
-        inertiaTensor = worldRotMat * straightInertiaTensor * worldRotMat.T
-        
+        inertiaTensor = worldRotMat * straightInertiaTensor * worldRotMat  
         worldAngAccelVec = inertiaTensor.I * worldTorqueVec
         
         self.angAccelX.set (degreesPerRadian * worldAngAccelVec [0, 0])

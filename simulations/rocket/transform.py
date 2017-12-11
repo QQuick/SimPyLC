@@ -2,24 +2,9 @@ import numpy
 
 from SimPyLC import *
 
-# Angles are in degrees, sin and cos are defined accordingly in SimPyLC
+# Angles are in degrees, sin and cos are defined accordingly in SimPyLC,
+# and will also call evaluate
 	
-def getTranslMat (translVec):	
-	return numpy.matrix ([
-		[1, 0, 0, translVec [0]],
-		[0, 1, 0, translVec [1]],
-		[0, 0, 1, translVec [2]],
-		[0, 0, 0, 1],
-	])
-
-def getScalMat (scalVec):
-	return numpy.matrix ([
-		[scalVec [0], 0, 0, 0],
-		[0, scalVec [1], 0, 0],
-		[0, 0, scalVec [2], 0],
-		[0, 0, 0, 1],
-	])
-
 def getRotXMat (angle):
 	c = cos (angle)
 	s = sin (angle)
