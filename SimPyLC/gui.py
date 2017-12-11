@@ -131,11 +131,10 @@ class Cell:
     def adapt (self, delta):
         if self.element._isA ('Register', 'Timer'):
             try:
-                self.element._write (eval (self.entry.get ()) + delta)
+                self.element._write (round (eval (self.entry.get ())) + delta)
             except:
                 print (traceback.format_exc ())
 
-    
 class _Filler:
     def __init__ (self, columnIndex):
         self._columnIndex = columnIndex
@@ -192,7 +191,7 @@ class Gui:
     entryFont = ('Quartz MS', 10)
     
     windowWidth = 800
-    labelWidth = 15
+    labelWidth = 20
     entryWidth = 10
     
     rowHeight = 23

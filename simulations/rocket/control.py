@@ -32,40 +32,46 @@ class Control (Module):
         
         self.page ('rocket control')
         
-        self.group ('thruster angle green/red', True)
-        self.toGreen = Marker ()
-        self.toRed = Marker ()
-        self.greenRedDelta = Register ()
-        self.greenRedAngle = Register ()
-        
-        self.group ('thruster angle blue/yellow')
-        self.toBlue = Marker ()
+        self.group ('gimbal angle controls blue/yellow', True)
         self.toYellow = Marker ()
+        self.toBlue = Marker ()
+        
+        self.group ('gimbal angle state blue/yellow')
         self.blueYellowDelta = Register ()
         self.blueYellowAngle = Register ()
         
-        self.group ('fuel throttle')
-        self.throttleClose = Marker ()
+        self.group ('thruster angle controls green/red', True)
+        self.toRed = Marker ()
+        self.toGreen = Marker ()
+                
+        self.group ('thruster angle state green/red')
+        self.greenRedDelta = Register ()
+        self.greenRedAngle = Register ()
+        
+        self.group ('fuel throttle controls', True)
         self.throttleOpen = Marker ()
+        self.throttleClose = Marker ()
+        
+        self.group ('fuel throttle state')
         self.throttleDelta = Register ()
         self.throttlePercent = Register ()
         
     def input (self):
-        self.part ('thruster angle green/red')
-        self.greenRedAngle = world.rocket.greenRedAngle
+        self.part ('gimbal angle blue/yellow')
+        self.blueYellowAngle.set (world.rocket.blueYellowAngle)
         
-        self.part ('thruster angle blue/yellow')
-        self.blueYellowAngle = world.rocket.blueYellowAngle
+        self.part ('thruster angle green/red')
+        self.greenRedAngle.set (world.rocket.greenRedAngle)
         
         self.part ('fuel throttle')
-        self.throttlePercent = world.rocket.throttlePercent
+        self.throttlePercent.set (world.rocket.throttlePercent)
         
     def sweep (self):
+        self.part ('gimbal angle blue/yellow')
+        self.blueYellowDelta.set (-1 if self.toBlue else 1 if self.toYellow else 0)
+        
         self.part ('thruster angle green/red')
         self.greenRedDelta.set (-1 if self.toGreen else 1 if self.toRed else 0)
-        
-        self.part ('thruster angle blue/yellow')
-        self.blueYellowDelta.set (-1 if self.toBlue else 1 if self.toYellow else 0)
         
         self.part ('fuel throttle')
         self.throttleDelta.set (-1 if self.throttleClose else 1 if self.throttleOpen else 0)

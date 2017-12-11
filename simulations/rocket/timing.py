@@ -31,7 +31,7 @@ class Timing (Chart):
         Chart.__init__ (self)
         
     def define (self):
-        self.channel (world.rocket.greenRed, red, -120, 120, 120)
-        self.channel (world.rocket.blueYellow, yellow, -120, 120, 120)
-        self.channel (world.rocket.force, green, 0, 1000, 100)     
+        self.channel (world.rocket.blueYellowAngle, yellow, -120, 120, 120)
+        self.channel (world.rocket.greenRedAngle, red, -120, 120, 120)
+        self.channel (world.rocket.thrusterForce, green, 0, 1000, 100)     
                 

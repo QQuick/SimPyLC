@@ -394,7 +394,9 @@ class World (Thread):
             sleep (World.sleep ())
             
 world = World   # Pretend this class is a singleton object  
-                
+            
+_radiansPerDegree = math.pi / 180
+            
 def abs (anObject):
     return builtins.abs (evaluate (anObject))
     
@@ -420,19 +422,22 @@ def log10 (anObject):
     return math.log10 (evaluate (anObject))
     
 def sin (anObject):
-    return math.sin (evaluate (anObject))
+    return math.sin (evaluate (anObject) * _radiansPerDegree)
     
 def cos (anObject):
-    return math.cos (evaluate (anObject))
+    return math.cos (evaluate (anObject) * _radiansPerDegree)
     
 def tan (anObject):
-    return math.tan (evaluate (anObject))
+    return math.tan (evaluate (anObject) * _radiansPerDegree)
     
 def limit (anObject, limit0, limit1 = None):
     if limit1 is None:
         limit1 = limit0
         limit0 = -limit0
     return min (max (anObject, limit0), limit1)
+    
+def snap (anObject, target, margin):
+    return target if abs (anObject - target) < margin else anObject
     
 def digit (anObject, index):
     return int (('000000000000' + str (int (evaluate (anObject)))) [-evaluate (index + 1)])
