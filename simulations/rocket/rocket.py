@@ -52,13 +52,18 @@ class Rocket (Module):
         
         self.group ('ship')
         self.totalMass = Register (5000)
-        self.gyrationRadius = Register (0.15 / sqrt (12))
         self.effectiveRadius = Register (0.15)
-        self.effectiveLength = Register (1.5)
+        self.effectiveHeight = Register (1.5)
         self.thrusterTiltSpeed = Register (30)
         self.thrusterMaxAngle = Register (90)
         self.throttleSpeed = Register (20)
         self.thrusterMaxForce = Register (10000)
+        
+        self.group ('sweep time measurement')
+        self.sweepMin = Register (1000)
+        self.sweepMax = Register ()
+        self.sweepWatch = Timer ()
+        self.run = Runner ()        
         
         self.group ('linear accelleration', True)
         self.linAccelX = Register ()
@@ -75,6 +80,16 @@ class Rocket (Module):
         self.positionY = Register ()
         self.positionZ = Register ()
         
+        self.group ('Forces in ship frame')
+        self.forwardForce = Register ()
+        self.blueYellowForce = Register ()
+        self.greenRedForce = Register ()
+        
+        self.group ('Forces in world frame')
+        self.forceX = Register ()
+        self.forceY = Register ()
+        self.forceZ = Register ()        
+        
         self.group ('angular acceleration', True)
         self.angAccelX = Register ()
         self.angAccelY = Register ()
@@ -90,25 +105,7 @@ class Rocket (Module):
         self.attitudeY = Register ()
         self.attitudeZ = Register ()
         
-        self.group ('sweep time measurement')
-        self.sweepMin = Register (1000)
-        self.sweepMax = Register ()
-        self.sweepWatch = Timer ()
-        self.run = Runner ()        
-        
-        self.page ('Forces and torques')
-        
-        self.group ('Forces in ship frame', True)
-        self.forwardForce = Register ()
-        self.blueYellowForce = Register ()
-        self.greenRedForce = Register ()
-        
-        self.group ('Forces in world frame')
-        self.forceX = Register ()
-        self.forceY = Register ()
-        self.forceZ = Register ()
-        
-        self.group ('Torques in ship frame', True)
+        self.group ('Torques in ship frame')
         self.blueYellowTorque = Register ()
         self.greenRedTorque = Register ()
         
@@ -116,6 +113,15 @@ class Rocket (Module):
         self.torqueX = Register ()
         self.torqueY = Register ()
         self.torqueZ = Register ()
+        
+        # Auxiliary attributes
+        
+        # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
+        self._shipRotMat = numpy.array ([   # Columns are tangent (front), normal (up) and binormal (starboard) of ship
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+        ])
         
     def input (self):   
         self.part ('gimbal angle blue/yellow')
@@ -127,7 +133,7 @@ class Rocket (Module):
         self.part ('fuel throttle')
         self.throttleDelta.set (world.control.throttleDelta)
         
-    def sweep (self):        
+    def sweep (self):
         self.part ('gimbal angle blue/yellow')
         self.blueYellowRoughAngle.set (
             limit (
@@ -155,23 +161,21 @@ class Rocket (Module):
             )
         )
         self.thrusterForce.set (self.throttlePercent * self.thrusterMaxForce / 100)
-        
+
         self.part ('linear movement')
         
-        straightForceVec = numpy.matrix ([0, 0, evaluate (self.thrusterForce), 1]) .T
-        shipForceRotMat = getRotXMat (self.blueYellowAngle) * getRotYMat (-self.greenRedAngle)    # Local coord sys, so "forward" order
-        shipForceVec = shipForceRotMat * straightForceVec
-        
-        self.forwardForce.set (shipForceVec [2, 0])
-        self.blueYellowForce.set (shipForceVec [1, 0])
-        self.greenRedForce.set (shipForceVec [0, 0])
-        
-        worldRotMat = getRotXMat (self.attitudeX) * getRotYMat (self.attitudeY) * getRotZMat (self.attitudeZ)
-        worldForceVec = worldRotMat * shipForceVec
+        thrusterForceVec = numpy.array ([0, 0, self.thrusterForce ()])
+        thrusterRotMat = getRotXMat (self.blueYellowAngle) @ getRotYMat (-self.greenRedAngle)    # Local coord sys, so "forward" order
+        shipForceVec = thrusterRotMat @ thrusterForceVec
                 
-        self.forceX.set (worldForceVec [0, 0])
-        self.forceY.set (worldForceVec [1, 0])
-        self.forceZ.set (worldForceVec [2, 0])
+        self.forwardForce.set (shipForceVec [2])
+        self.blueYellowForce.set (shipForceVec [1])
+        self.greenRedForce.set (shipForceVec [0])
+        
+        worldForceVec = self._shipRotMat @ shipForceVec
+        self.forceX.set (worldForceVec [0])
+        self.forceY.set (worldForceVec [1])
+        self.forceZ.set (worldForceVec [2])
                 
         self.linAccelX.set (self.forceX / self.totalMass)
         self.linAccelY.set (self.forceY / self.totalMass)
@@ -187,46 +191,52 @@ class Rocket (Module):
         
         self.part ('angular movement')
         
-        self.blueYellowTorque.set (self.blueYellowForce * self.gyrationRadius)
-        self.greenRedTorque.set (self.greenRedForce * self.gyrationRadius)
-        
-        shipTorqueVec = numpy.matrix ([evaluate (self.blueYellowTorque), evaluate (-self.greenRedTorque), 0, 1]) .T    
-        worldTorqueVec = worldRotMat * shipTorqueVec
-        
-        self.torqueX.set (worldTorqueVec [0, 0])
-        self.torqueY.set (worldTorqueVec [1, 0])
-        self.torqueZ.set (worldTorqueVec [2, 0])
-        
-        rSq = evaluate (self.effectiveRadius * self.effectiveRadius)
-        hSq = evaluate (self.effectiveLength * self.effectiveLength)
-        
-        # Source: https://en.wikipedia.org/wiki/List_of_moments_of_inertia#List_of_3D_inertia_tensors
-        # Homogenized
-        straightInertiaTensor = evaluate (self.totalMass) / 12 * numpy.matrix ([
-            [(3 * rSq + hSq) / 12   , 0                     , 0      , 0],
-            [0                      , (3 * rSq + hSq) / 12  , 0      , 0],
-            [0                      , 0                     , rSq / 6, 0],
-            [0                      , 0                     , 0      , 1]
+        rSq = self.effectiveRadius * self.effectiveRadius
+        hSq = self.effectiveHeight * self.effectiveHeight
+
+        # Source: https://en.wikipedia.org/wiki/List_of_moments_of_inertia#List_of_3D_inertia_tensors        
+        shipInertiaTensor = self.totalMass () / 12 * numpy.array ([
+            [(3 * rSq + hSq) / 12   , 0                     , 0      ],
+            [0                      , (3 * rSq + hSq) / 12  , 0      ],
+            [0                      , 0                     , rSq / 6]
         ])
+
+        inertiaTensor = self._shipRotMat @ shipInertiaTensor @ self._shipRotMat.T
+
+        self.blueYellowTorque.set (self.blueYellowForce * self.effectiveHeight / 2)
+        self.greenRedTorque.set (-self.greenRedForce * self.effectiveHeight / 2)
+        shipTorqueVec = numpy.array ([self.blueYellowTorque (), self.greenRedTorque (), 0])   
         
-        inertiaTensor = worldRotMat * straightInertiaTensor * worldRotMat  
-        worldAngAccelVec = inertiaTensor.I * worldTorqueVec
+        rawTorqueVec = self._shipRotMat @ shipTorqueVec
+        self.torqueX.set (rawTorqueVec [0])
+        self.torqueY.set (rawTorqueVec [1])
+        self.torqueZ.set (rawTorqueVec [2])
+        torqueVec = numpy.array ([self.torqueX (), self.torqueY (), self.torqueZ ()])
         
-        self.angAccelX.set (degreesPerRadian * worldAngAccelVec [0, 0])
-        self.angAccelY.set (degreesPerRadian * worldAngAccelVec [1, 0])
-        self.angAccelZ.set (degreesPerRadian * worldAngAccelVec [2, 0])
+        rawAngAccelVec = degreesPerRadian * numpy.linalg.inv (inertiaTensor) @ torqueVec
+        self.angAccelX.set (rawAngAccelVec [0])
+        self.angAccelY.set (rawAngAccelVec [1])
+        self.angAccelZ.set (rawAngAccelVec [2])
         
         self.angVelocX.set (self.angVelocX + self.angAccelX * world.period)
         self.angVelocY.set (self.angVelocY + self.angAccelY * world.period)
         self.angVelocZ.set (self.angVelocZ + self.angAccelZ * world.period)
+        angVelocVec = radiansPerDegree * numpy.array ([self.angVelocX (), self.angVelocY (), self.angVelocZ ()])
+                
+        # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
+        # N.B. The rotation matrix cannot be found by applying angular velocity in x, y and z direction successively
+        # self._shipRotMat = numpy.linalg.qr (self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat) * world.period ()) [0]
+        self._shipRotMat = self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat) * world.period ()
+
         
-        self.attitudeX.set (self.attitudeX + self.angVelocX * world.period)
-        self.attitudeY.set (self.attitudeY + self.angVelocY * world.period)
-        self.attitudeZ.set (self.attitudeZ + self.angVelocZ * world.period)
+        rawAttitudeVec = getXyzAngles (self._shipRotMat)
+        self.attitudeX.set (rawAttitudeVec [0])
+        self.attitudeY.set (rawAttitudeVec [1])
+        self.attitudeZ.set (rawAttitudeVec [2])
+        self._shipRotMat = getRotZMat (self.attitudeZ ()) @ getRotYMat (self.attitudeY ()) @ getRotXMat (self.attitudeX())
         
         self.part ('sweep time measurement')
         self.sweepMin.set (world.period, world.period < self.sweepMin)
         self.sweepMax.set (world.period, world.period > self.sweepMax)
         self.sweepWatch.reset (self.sweepWatch > 2)
         self.sweepMin.set (1000, not self.sweepWatch)
-        
