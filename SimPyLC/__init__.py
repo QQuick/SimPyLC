@@ -27,3 +27,5 @@
 from .base import *
 from .engine import *
 from .graphics import *
+from .quaternions import *
+

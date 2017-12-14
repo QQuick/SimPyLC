@@ -33,7 +33,6 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
 # from numpy import *
-
 from .base import *
 
 useTexture = False
@@ -118,7 +117,7 @@ class Scene:
             0, 1, 0     # Up in the image
         )
         
-def tEvaluate (v):
+def tEva (v):
     return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
                 
 def tNeg (v):
@@ -201,8 +200,8 @@ class Nothing:
         glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
         glTranslate (*tAdd (self.center, tAdd (position, self.joint)))                  # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
         glRotate (evaluate (angle), *self.pivot)                                        # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
-        glTranslate (*tEvaluate (shift))                                                # 6.    Translate object to put shifted joint in the origin
-        glScale (*tEvaluate (scale))                                                    # 5.    Scale with respect to joint that's in the origin
+        glTranslate (*tEva (shift))                                                     # 6.    Translate object to put shifted joint in the origin
+        glScale (*tEva (scale))                                                         # 5.    Scale with respect to joint that's in the origin
         glTranslate (*tNeg (self.joint))                                                # 4.    Translate object to put joint in the origin
         glPushMatrix ()
         glRotate (self.angle, *self.axis)                                               # 3.    Rotate object over initial angle to put it in natural position
