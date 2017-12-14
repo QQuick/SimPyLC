@@ -222,12 +222,17 @@ class Rocket (Module):
         self.angVelocY.set (self.angVelocY + self.angAccelY * world.period)
         self.angVelocZ.set (self.angVelocZ + self.angAccelZ * world.period)
         angVelocVec = radiansPerDegree * numpy.array ([self.angVelocX (), self.angVelocY (), self.angVelocZ ()])
-                
+
+        
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
         # N.B. The rotation matrix cannot be found by applying angular velocity in x, y and z direction successively
-        # self._shipRotMat = numpy.linalg.qr (self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat) * world.period ()) [0]
-        self._shipRotMat = self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat) * world.period ()
+        self._shipRotMat = self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat, axisb = 0, axisc = 0) * world.period ()
 
+        print (self._shipRotMat)
+        modifiedGramSchmidt (self._shipRotMat)
+        print ()
+        print (self._shipRotMat)
+        print ('=======================')
         
         rawAttitudeVec = getXyzAngles (self._shipRotMat)
         self.attitudeX.set (rawAttitudeVec [0])

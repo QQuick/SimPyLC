@@ -52,3 +52,22 @@ def getXyzAngles (rotMat):  # rotMat == rotMatZ @ rotMatY @ rotMatX
         angleZ = atan2 (rotMat [1, 0] / cosAngleY, rotMat [0, 0] / cosAngleY)
     return numpy.array ([angleX, angleY, angleZ])
     
+def modifiedGramSchmidt (rotMat): # Numpy QR factorization can't be used, since it gives a Q with a changed orientation
+    
+    # Create references to column vectors
+    t = rotMat [ : , 0]
+    n = rotMat [ : , 1]
+    b = rotMat [ : , 2]
+    
+    # Normalize T
+    t /= numpy.linalg.norm (t)
+    
+    # Remove projection of T from N and normalize
+    n -= t * numpy.dot (n, t)
+    n /= numpy.linalg.norm (n)
+    
+    # Compute B perpendicular to T and N with right orientation
+    # Remove projection of 
+    b -= t * numpy.dot (b, t)
+    b -= n * numpy.dot (b, n)
+    b /= numpy.linalg.norm (b)

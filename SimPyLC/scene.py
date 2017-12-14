@@ -113,9 +113,9 @@ class Scene:
         glLoadIdentity()
         gluPerspective (45, width / float (height), 2, 10)      
         gluLookAt (
-            5, 0, 0,    # Camera position
+            0, 0, 5,    # Camera position
             0, 0, 0.7,  # Point looked at
-            0, 0, 1     # Up in the image
+            0, 1, 0     # Up in the image
         )
         
 def tEvaluate (v):
@@ -164,10 +164,10 @@ class Nothing:
         
         color = (1, 1, 1)   # Initial color
     ):
+        self.center = center
         self.size = size
         self.axis = axis
         self.angle = angle
-        self.center = center
         self.joint = joint
         self.pivot = pivot
         self.color = color
@@ -177,11 +177,11 @@ class Nothing:
         
     def __call__ (
         self,
-        
-        shift = (0, 0, 0),  # Dynamic shift of the joint in natural position, so before dynamic rotation
-        scale = (1, 1, 1),  # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
-        angle = 0,          # Dynamic rotation angle around pivot through joint
-        color = None,       # Dynamic color
+        position = (0, 0, 0),   # Dynamic distance traveled by center
+        shift = (0, 0, 0),      # Dynamic shift of the joint in natural position, so before dynamic rotation
+        scale = (1, 1, 1),      # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
+        angle = 0,              # Dynamic rotation angle around pivot through joint
+        color = None,           # Dynamic color
         
         parts = lambda: None
     ):
@@ -199,7 +199,7 @@ class Nothing:
             self.color = color                                                          #   replace the original static color by it
             
         glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
-        glTranslate (*tAdd (self.center, self.joint))                                   # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
+        glTranslate (*tAdd (self.center, tAdd (position, self.joint)))                  # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
         glRotate (evaluate (angle), *self.pivot)                                        # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
         glTranslate (*tEvaluate (shift))                                                # 6.    Translate object to put shifted joint in the origin
         glScale (*tEvaluate (scale))                                                    # 5.    Scale with respect to joint that's in the origin
