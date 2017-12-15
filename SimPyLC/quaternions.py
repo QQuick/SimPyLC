@@ -5,13 +5,18 @@ from .engine import *
 # All angles are in degrees
 # All multidimensional variables are numpy arrays
 
+def normize (anArray):
+    anArray /= numpy.linalg.norm (anArray)
+    
 def quatFromAxAng (axis, angle):
     tail = axis * sin (angle)
     return numpy.array ((cos (angle), tail [0], tail [1], tail [2]))
     
 def axAngFromQuat (q):
     angle = acos (q [0])
-    axis = q [1:] / sin (angle)
+    s = sin (angle)
+    axis = (q [1:] / s) if s else numpy.array ((1, 0, 0))
+    return axis, angle
     
 def quatMul (q0, q1):
     return numpy.array ((
@@ -24,14 +29,17 @@ def quatMul (q0, q1):
 def quatInv (q):
     return numpy.array ((q [0], -q [1], -q [2], -q [3]))
     
+def quatFromVec (v):
+    return numpy.array ((0, v [0], v [1], v [2]))
+    
 def quatVecRot (q, v):
-    return quatMul (
+    return (quatMul (
         quatMul (
             q,
-            (0, v [0], v [1], v [2])
+            quatFromVec (v)
         ),
         quatInv (q)
-    ) / 2
+    ) / 2) [1:]
     
 def quatMatRot (q, m):
     m [:, 0] = quatVecRot (q, m [:, 0])

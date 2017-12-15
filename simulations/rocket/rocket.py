@@ -106,9 +106,10 @@ class Rocket (Module):
         self.angVelocZ = Register ()
         
         self.group ('attitude')
-        self.attitudeX = Register ()
-        self.attitudeY = Register ()
-        self.attitudeZ = Register ()
+        self.axisX = Register ()
+        self.axisY = Register ()
+        self.axisZ = Register ()
+        self.angle = Register ()
         
         self.group ('Torques in ship frame')
         self.blueYellowTorque = Register ()
@@ -168,10 +169,10 @@ class Rocket (Module):
             quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle),
             quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle)
         )
+        
         thrusterForceVec = numpy.array ((0, 0, self.thrusterForce ()))
         shipForceVec = quatVecRot (thrusterRotQuat, thrusterForceVec)
         
-        print (shipForceVec.shape)
         self.forwardForce.set (shipForceVec [2])
         self.blueYellowForce.set (shipForceVec [1])
         self.greenRedForce.set (shipForceVec [0])
@@ -219,7 +220,7 @@ class Rocket (Module):
         self.torqueZ.set (rawTorqueVec [2])
         torqueVec = numpy.array ((self.torqueX (), self.torqueY (), self.torqueZ ()))
         
-        rawAngAccelVec = degreesPerRadian * numpy.invert (inertMat) * torqueVec
+        rawAngAccelVec = degreesPerRadian * numpy.linalg.inv (inertMat) @ torqueVec
         self.angAccelX.set (rawAngAccelVec [0])
         self.angAccelY.set (rawAngAccelVec [1])
         self.angAccelZ.set (rawAngAccelVec [2])
@@ -228,22 +229,27 @@ class Rocket (Module):
         self.angVelocY.set (self.angVelocY + self.angAccelY * world.period)
         self.angVelocZ.set (self.angVelocZ + self.angAccelZ * world.period)
         angVelocVec = radiansPerDegree * numpy.array ((self.angVelocX (), self.angVelocY (), self.angVelocZ ()))
-
         
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
-        self._shipRotQuat += quatVecRot (angVelocVec, self._shipRotQuat) * world.period
-
-        print (self._shipRotMat)
-        modifiedGramSchmidt (self._shipRotMat)
-        print ()
-        print (self._shipRotMat)
-        print ('=======================')
+        print (self._shipRotQuat)
+        self._shipRotQuat += quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ()
+        print (self._shipRotQuat)
+        print ('--------------------')
         
-        rawAttitudeVec = getXyzAngles (self._shipRotMat)
-        self.attitudeX.set (rawAttitudeVec [0])
-        self.attitudeY.set (rawAttitudeVec [1])
-        self.attitudeZ.set (rawAttitudeVec [2])
-        self._shipRotMat = getRotZMat (self.attitudeZ ()) @ getRotYMat (self.attitudeY ()) @ getRotXMat (self.attitudeX())
+        normize (self._shipRotQuat)
+        
+        axis, angle = axAngFromQuat (self._shipRotQuat)
+        print (axis, angle)
+        self.axisX.set (axis [0])
+        self.axisY.set (axis [1])
+        self.axisZ.set (axis [2])   
+        self.angle.set (angle)
+        
+        axis [0] = self.axisX ()
+        axis [1] = self.axisY ()
+        axis [2] = self.axisZ ()
+        angle = self.angle ()
+        self._shipRotQuat = quatFromAxAng (axis, angle)
         
         self.part ('sweep time measurement')
         self.sweepMin.set (world.period, world.period < self.sweepMin)

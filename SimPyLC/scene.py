@@ -176,11 +176,12 @@ class Nothing:
         
     def __call__ (
         self,
-        position = (0, 0, 0),   # Dynamic distance traveled by center
+        pivot = None,
+        color = None,
+        position = (0, 0, 0),   # Dynamic displacement of the center
         shift = (0, 0, 0),      # Dynamic shift of the joint in natural position, so before dynamic rotation
         scale = (1, 1, 1),      # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
         angle = 0,              # Dynamic rotation angle around pivot through joint
-        color = None,           # Dynamic color
         
         parts = lambda: None
     ):
@@ -194,11 +195,14 @@ class Nothing:
         #   - Transformations appear in the code in normal order, so the last transformation that affecs the object is the nearest to drawing the object in the code
         #   - Transformations move the  coordinate frame in the opposite direction
     
+        if pivot != None:                                                               # If there's a dynamical center
+            self.pivot = pivot                                                          #   replace the original static center by it
+            
         if color != None:                                                               # If there's a dynamical color
             self.color = color                                                          #   replace the original static color by it
             
         glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
-        glTranslate (*tAdd (self.center, tAdd (position, self.joint)))                  # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
+        glTranslate (*tAdd (tAdd (self.center, position), self.joint))                                   # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
         glRotate (evaluate (angle), *self.pivot)                                        # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
         glTranslate (*tEva (shift))                                                     # 6.    Translate object to put shifted joint in the origin
         glScale (*tEva (scale))                                                         # 5.    Scale with respect to joint that's in the origin
