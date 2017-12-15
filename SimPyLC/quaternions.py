@@ -9,13 +9,13 @@ def normize (anArray):
     anArray /= numpy.linalg.norm (anArray)
     
 def quatFromAxAng (axis, angle):
-    tail = axis * sin (angle / 2)
-    return numpy.array ((cos (angle / 2), tail [0], tail [1], tail [2]))
+    imag = axis * sin (angle / 2)
+    return numpy.array ((cos (angle / 2), imag [0], imag [1], imag [2]))
     
 def axAngFromQuat (q):
     imag = q [1:]
     imagLen = numpy.linalg.norm (imag)
-    return imag / imagLen if imagLen else (1, 0, 0), 2 * atan2 (imagLen, q [0])
+    return imag / imagLen if imagLen else numpy.array ((1, 0, 0)), 2 * atan2 (imagLen, q [0])
     
 def quatMul (q0, q1):
     return numpy.array ((

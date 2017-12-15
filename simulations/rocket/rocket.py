@@ -237,11 +237,7 @@ class Rocket (Module):
         angVelocVec = radiansPerDegree * numpy.array ((self.angVelocX (), self.angVelocY (), self.angVelocZ ()))
         
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
-        #print (self._shipRotQuat)
         self._shipRotQuat += quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ()
-        #print (self._shipRotQuat)
-        #print ('--------------------')
-        
         normize (self._shipRotQuat)        
         
         self.srq0.set (self._shipRotQuat [0])
@@ -255,12 +251,11 @@ class Rocket (Module):
         self.axisZ.set (axis [2])   
         self.angle.set (angle)
         
-        
         axis [0] = self.axisX ()
         axis [1] = self.axisY ()
         axis [2] = self.axisZ ()
         angle = self.angle ()
-        #self._shipRotQuat = quatFromAxAng (axis, angle)
+        self._shipRotQuat = quatFromAxAng (axis, angle)
         
         self.part ('sweep time measurement')
         self.sweepMin.set (world.period, world.period < self.sweepMin)
