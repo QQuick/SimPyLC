@@ -13,10 +13,9 @@ def quatFromAxAng (axis, angle):
     return numpy.array ((cos (angle), tail [0], tail [1], tail [2]))
     
 def axAngFromQuat (q):
-    angle = acos (q [0])
-    s = sin (angle)
-    axis = (q [1:] / s) if s else numpy.array ((1, 0, 0))
-    return axis, angle
+    imag = q [1:]
+    imagLen = numpy.linalg.norm (imag)
+    return imag / imagLen, 2 * atan2 (imagLen, q [0])
     
 def quatMul (q0, q1):
     return numpy.array ((

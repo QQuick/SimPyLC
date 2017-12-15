@@ -105,6 +105,12 @@ class Rocket (Module):
         self.angVelocY = Register ()
         self.angVelocZ = Register ()
         
+        self.group ('ship rot quat')
+        self.srq0 = Register ()
+        self.srq1 = Register ()
+        self.srq2 = Register ()
+        self.srq3 = Register ()
+        
         self.group ('attitude')
         self.axisX = Register ()
         self.axisY = Register ()
@@ -166,8 +172,8 @@ class Rocket (Module):
         self.part ('linear movement')
         
         thrusterRotQuat = quatMul (
-            quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle),
-            quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle)
+            quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle / 2),
+            quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle / 2)
         )
         
         thrusterForceVec = numpy.array ((0, 0, self.thrusterForce ()))
@@ -231,25 +237,30 @@ class Rocket (Module):
         angVelocVec = radiansPerDegree * numpy.array ((self.angVelocX (), self.angVelocY (), self.angVelocZ ()))
         
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
-        print (self._shipRotQuat)
+        #print (self._shipRotQuat)
         self._shipRotQuat += quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ()
-        print (self._shipRotQuat)
-        print ('--------------------')
+        #print (self._shipRotQuat)
+        #print ('--------------------')
         
-        normize (self._shipRotQuat)
+        normize (self._shipRotQuat)        
+        
+        self.srq0.set (self._shipRotQuat [0])
+        self.srq1.set (self._shipRotQuat [1])
+        self.srq2.set (self._shipRotQuat [2])
+        self.srq3.set (self._shipRotQuat [3])
         
         axis, angle = axAngFromQuat (self._shipRotQuat)
-        print (axis, angle)
         self.axisX.set (axis [0])
         self.axisY.set (axis [1])
         self.axisZ.set (axis [2])   
         self.angle.set (angle)
         
+        
         axis [0] = self.axisX ()
         axis [1] = self.axisY ()
         axis [2] = self.axisZ ()
         angle = self.angle ()
-        self._shipRotQuat = quatFromAxAng (axis, angle)
+        #self._shipRotQuat = quatFromAxAng (axis, angle)
         
         self.part ('sweep time measurement')
         self.sweepMin.set (world.period, world.period < self.sweepMin)
