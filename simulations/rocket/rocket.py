@@ -172,8 +172,8 @@ class Rocket (Module):
         self.part ('linear movement')
         
         thrusterRotQuat = quatMul (
-            quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle / 2),
-            quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle / 2)
+            quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle),
+            quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle)
         )
         
         thrusterForceVec = numpy.array ((0, 0, self.thrusterForce ()))
