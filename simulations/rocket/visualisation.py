@@ -40,13 +40,17 @@ class Visualisation (Scene):
         self.thruster = Cone (size = (0.2, 0.2, 0.3), pivot = (0, -1, 0), center = (0, 0, -0.09), joint = (0, 0, 0.09), color = (1, 1, 0.2))   # See thruster_rotation.jpg for pivot
                                                                                                                                                # Center at -(0.3/2 - 0.12/2)
         self.flame = Cone (size = (0.1, 0.1, 1), center = (0, 0, -0.65), joint = (0, 0, 0.5), axis = (0, 1, 0), angle = 180, color = (1, 0.7, 0))
-        self.tankRed = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0.2, 0, 0), color = (1, 0, 0))
-        self.tankGreen = Ellipsoid (size = (0.1, 0.1, 0.1), center = (-0.2, 0, 0), color = (0, 1, 0))
-        self.tankYellow = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, 0.2, 0), color = (1, 1, 0))
-        self.tankBlue = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, -0.2, 0), color = (0, 0, 1))
-        
+        self.tankRed = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0.16, 0, 0), color = (1, 0, 0))
+        self.tankGreen = Ellipsoid (size = (0.1, 0.1, 0.1), center = (-0.16, 0, 0), color = (0, 1, 0))
+        self.tankYellow = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, 0.16, 0), color = (1, 1, 0))
+        self.tankBlue = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, -0.16, 0), color = (0, 0, 1))
+ 
+    def look (self):
+        pass
+        #self.camera.move (focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)))
+         
     def display (self):
-        self.body (pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)), angle = world.rocket.angle, parts = lambda:
+        self.body (pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)), position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)), angle = world.rocket.angle, parts = lambda:
             self.nose () +
             self.bracket (parts = lambda:
                 self.tankGreen () +

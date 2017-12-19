@@ -40,9 +40,10 @@ def quatVecRot (q, v):
         quatInv (q)
     ) / 2) [1:]
     
-def quatMatRot (q, m):
-    m [:, 0] = quatVecRot (q, m [:, 0])
-    m [:, 1] = quatVecRot (q, m [:, 1])
-    m [:, 2] = quatVecRot (q, m [:, 2])
-    return m
+def rotMatFromQuat (q):
+    return numpy.array ((
+        (1 - 2 * q [2] * q [2] - 2 * q [3] * q [3], 2 * q [1] * q [2] - 2 * q [3] * q [0],     2 * q [1] * q [3] + 2 * q [2] * q [0]),
+        (2 * q [1] * q [2] + 2 * q [3] * q [0],     1 - 2 * q [1] * q [1] - 2 * q [3] * q [3], 2 * q [2] * q [3] - 2 * q [1] * q [0]),
+        (2 * q [1] * q [3] - 2 * q [2] * q [0],     2 * q [2] * q [3] + 2 * q [1] * q [0],     1 - 2 * q [1] * q [1] - 2 * q [2] * q [2])
+    ))
     

@@ -39,5 +39,5 @@ class Timing (Chart):
         self.channel (world.rocket.axisX, maroon, -1, 1, 100)
         self.channel (world.rocket.axisY, olive, -1, 1, 100)
         self.channel (world.rocket.axisZ, lime, -1, 1, 100)     
-        self.channel (world.rocket.angle, fuchsia, -180, 180, 100)     
+        self.channel (world.rocket.angle, fuchsia, -360, 360, 100)     
                 

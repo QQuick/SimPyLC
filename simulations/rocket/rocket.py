@@ -214,8 +214,9 @@ class Rocket (Module):
             )
         )
 
-        inertMat = quatMatRot (self._shipRotQuat, shipInertMat)
-        
+        shipRotMat = rotMatFromQuat (self._shipRotQuat)
+        invInertMat = numpy.linalg.inv (shipRotMat @ shipInertMat @ shipRotMat.T)
+                
         self.blueYellowTorque.set (self.blueYellowForce * self.effectiveHeight / 2)
         self.greenRedTorque.set (-self.greenRedForce * self.effectiveHeight / 2)
         shipTorqueVec = numpy.array ((self.blueYellowTorque (), self.greenRedTorque (), 0))
@@ -226,7 +227,8 @@ class Rocket (Module):
         self.torqueZ.set (rawTorqueVec [2])
         torqueVec = numpy.array ((self.torqueX (), self.torqueY (), self.torqueZ ()))
         
-        rawAngAccelVec = degreesPerRadian * numpy.linalg.inv (inertMat) @ torqueVec
+        rawAngAccelVec = degreesPerRadian * invInertMat @ torqueVec
+        
         self.angAccelX.set (rawAngAccelVec [0])
         self.angAccelY.set (rawAngAccelVec [1])
         self.angAccelZ.set (rawAngAccelVec [2])
@@ -238,7 +240,7 @@ class Rocket (Module):
         
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
         self._shipRotQuat += quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ()
-        normize (self._shipRotQuat)        
+        normize (self._shipRotQuat)
         
         self.srq0.set (self._shipRotQuat [0])
         self.srq1.set (self._shipRotQuat [1])

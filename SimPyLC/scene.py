@@ -39,11 +39,29 @@ useTexture = False
 if useTexture:
     from PIL import Image
 
+        
+class Camera:
+    def __init__ (self, scene):
+        self.scene = scene
+       
+    def move (self, position = None, focus = None, up = None):
+        if position:
+            self.position = position
+        if focus:
+            self.focus = focus
+        if up:
+            self.up = up
+        
+        glLoadIdentity()
+        gluPerspective (45, self.scene.width / float (self.scene.height), 1, 100)      
+        gluLookAt (*self.position, *self.focus, *self.up)
+    
 class Scene:
     def __init__ (self, name = None, width = 600, height = 400):
         self.name = name if name else self.__class__.__name__.lower ()
         self.width = width
         self.height = height
+        self.camera = Camera (self)
         
     def _createWindow (self):
         glutInitWindowSize (self.width, self.height)
@@ -85,13 +103,15 @@ class Scene:
     def _display (self):
         # [object coords] > (model view matrix) > [eye coords] (projection matrix) > [clip coords]
         
-        # Operations related to model view matrix: glTranslate, glRotate, glScale.
-        # They will work on the objects
-        
         # Operations related to projection matrix: gluPerspective, gluLookat
         # They will work on the camera
 
+        # Operations related to model view matrix: glTranslate, glRotate, glScale.
+        # They will work on the objects
         
+        glMatrixMode (GL_PROJECTION)
+        self.look ()
+                
         glMatrixMode (GL_MODELVIEW)
         glLoadIdentity ()
         glClearColor (0, 0, 0, 0)   
@@ -109,12 +129,10 @@ class Scene:
     def _reshape (self, width, height):
         glViewport (0, 0, width, height)
         glMatrixMode (GL_PROJECTION)
-        glLoadIdentity()
-        gluPerspective (45, width / float (height), 2, 10)      
-        gluLookAt (
-            0, 0, 5,    # Camera position
-            0, 0, 0.7,  # Point looked at
-            0, 1, 0     # Up in the image
+        self.camera.move (
+            (5, 0, 0),      # Camera position
+            (0, 0, 0.7),    # Point looked at
+            (0, 0, 1)       # Up in the image
         )
         
 def tEva (v):
