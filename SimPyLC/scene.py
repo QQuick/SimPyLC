@@ -45,6 +45,8 @@ class Camera:
         self.scene = scene
        
     def move (self, position = None, focus = None, up = None):
+        glMatrixMode (GL_PROJECTION)
+
         if position:
             self.position = position
         if focus:
@@ -55,17 +57,22 @@ class Camera:
         glLoadIdentity()
         gluPerspective (45, self.scene.width / float (self.scene.height), 1, 100)      
         gluLookAt (*self.position, *self.focus, *self.up)
-    
+
+        glMatrixMode (GL_MODELVIEW)
+        
 class Scene:
     def __init__ (self, name = None, width = 600, height = 400):
         self.name = name if name else self.__class__.__name__.lower ()
         self.width = width
         self.height = height
         self.camera = Camera (self)
+        self.hasLook = hasattr (self, 'look')   # Make as cheap as possible by evaluating only at construction time
         
     def _createWindow (self):
         glutInitWindowSize (self.width, self.height)
         self.window = glutCreateWindow (getTitle (self.name) .encode ('ascii'))
+        
+        glClearColor (0, 0, 0, 0)
         
         glEnable (GL_LINE_SMOOTH)
         glEnable(GL_BLEND);
@@ -109,13 +116,10 @@ class Scene:
         # Operations related to model view matrix: glTranslate, glRotate, glScale.
         # They will work on the objects
         
-        glMatrixMode (GL_PROJECTION)
-        self.look ()
+        if self.hasLook:    # Avoid unnecessary overhead of glMatrixMode switches
+            self.look ()    # Optionally defined in descendant class
                 
-        glMatrixMode (GL_MODELVIEW)
         glLoadIdentity ()
-        glClearColor (0, 0, 0, 0)   
-    
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
         
         glPushMatrix ()
@@ -123,12 +127,12 @@ class Scene:
         glPopMatrix ()
         
         glFlush ()
-        
         glutSwapBuffers ()
         
     def _reshape (self, width, height):
-        glViewport (0, 0, width, height)
-        glMatrixMode (GL_PROJECTION)
+        self.width = width
+        self.height = height
+        glViewport (0, 0, self.width, self.height)
         self.camera.move (
             (5, 0, 0),      # Camera position
             (0, 0, 0.7),    # Point looked at

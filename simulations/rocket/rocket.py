@@ -264,3 +264,4 @@ class Rocket (Module):
         self.sweepMax.set (world.period, world.period > self.sweepMax)
         self.sweepWatch.reset (self.sweepWatch > 2)
         self.sweepMin.set (1000, not self.sweepWatch)
+        
