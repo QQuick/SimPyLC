@@ -351,6 +351,10 @@ class World (Thread):
             setattr (World, module._name, module)
             module._setPublicElementNames ()
             
+        for scene in World._scenes:
+            scene._registerWithCamera ()
+            scene._registerThings ()
+            
         for chart in World._charts:
             chart.define ()
                 
@@ -383,9 +387,12 @@ class World (Thread):
                     module.sweep ()
                     module.output ()
                     
+                for scene in World._scenes:
+                    scene.update () ()
+                 
                 for chart in World._charts:
-                    chart.adapt ()
-                    
+                    chart.update ()
+                 
                 World.first.mark (False)
             else:
                 World.offset.set (World.elapsed () - World.time ())

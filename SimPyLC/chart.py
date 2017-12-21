@@ -47,7 +47,7 @@ class Entry:
     def adapt (self):
         pass
         
-    def display (self):
+    def _render (self):
         pass
         
 class Group (Entry):
@@ -76,7 +76,7 @@ class Channel (Entry):
             self.values.rotate (-1)
             self.values [-1] = self.circuit ()
 
-    def display (self):
+    def _render (self):
         values = copy (self.values)
 
         glColor (*backgroundFromRgb (self.circuit.color))
@@ -123,15 +123,15 @@ class Chart:
         glutDisplayFunc (self._display)
         glutReshapeFunc (self._reshape)
         
-    def adapt (self):
+    def update (self):
         for entry in self.entries:
             entry.adapt ()
         
-    def display (self):
+    def _render (self):
         glColor (1, 1, 1)
             
         for entry in self.entries:
-            entry.display ()
+            entry._render ()
         
     def _display (self):
         glMatrixMode (GL_MODELVIEW)
@@ -142,7 +142,7 @@ class Chart:
         
         glPushMatrix ()
         glLineWidth (1)
-        self.display ()
+        self._render ()
         glPopMatrix ()
         
         glFlush ()

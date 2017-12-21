@@ -33,6 +33,9 @@ seed ()
 class Visualisation (Scene):
     def __init__ (self):
         Scene.__init__ (self)
+        
+        self.camera = Camera ()
+        
         self.earth = Ellipsoid (size = (50, 50, 50), center = (0, 0, -25), color = (0, 0, 0.9))
         self.moon = Ellipsoid (size = (25, 25, 25), center = (0, 0, 500), color = (0.6, 0.6, 0.6))
 
@@ -48,13 +51,12 @@ class Visualisation (Scene):
         self.tankYellow = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, 0.16, 0), color = (1, 1, 0))
         self.tankBlue = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, -0.16, 0), color = (0, 0, 1))
  
-    def look (self):
+    def update (self):
         self.camera.move (
             position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ + 0.85)),
             focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ + 0.85))
         )
     
-    def display (self):
         self.earth ()
         self.moon ()
     

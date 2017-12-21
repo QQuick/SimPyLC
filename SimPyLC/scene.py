@@ -41,12 +41,19 @@ if useTexture:
 
         
 class Camera:
-    def __init__ (self, scene):
-        self.scene = scene
+    def __init__ (self,
+        position = (5, 0, 0),   # Camera position
+        focus = (0, 0, 0.7),    # Point looked at
+        up = (0, 0, 1),         # Up in the image
+        tracking = True
+    ):
+        self.position = position
+        self.focus = focus
+        self.up = up
+        self.tracking = tracking
        
     def move (self, position = None, focus = None, up = None):
-        glMatrixMode (GL_PROJECTION)
-
+        
         if position:
             self.position = position
         if focus:
@@ -54,19 +61,26 @@ class Camera:
         if up:
             self.up = up
         
-        glLoadIdentity()
-        gluPerspective (45, self.scene.width / float (self.scene.height), 1, 100)      
-        gluLookAt (*self.position, *self.focus, *self.up)
-
-        glMatrixMode (GL_MODELVIEW)
+    def _transform (self, forced):
+        if self.tracking or forced:
+            glMatrixMode (GL_PROJECTION)
+            glLoadIdentity()
+            gluPerspective (45, self.scene.width / float (self.scene.height), 1, 100)      
+            gluLookAt (*self.position, *self.focus, *self.up)
+            glMatrixMode (GL_MODELVIEW)
         
 class Scene:
     def __init__ (self, name = None, width = 600, height = 400):
         self.name = name if name else self.__class__.__name__.lower ()
         self.width = width
         self.height = height
-        self.camera = Camera (self)
-        self.hasLook = hasattr (self, 'look')   # Make as cheap as possible by evaluating only at construction time
+        self.camera = Camera ()
+        
+    def _registerWithCamera (self):
+        self.camera.scene = self
+        
+    def _regiserThings (self): 
+        self._things = [attrib for attrib in attribs if isinstance (attrib, Thing)]
         
     def _createWindow (self):
         glutInitWindowSize (self.width, self.height)
@@ -107,6 +121,11 @@ class Scene:
         glutDisplayFunc (self._display)
         glutReshapeFunc (self._reshape)
         
+        if hasattr (self, 'display'):
+            print ('Deprecation warning: method \'Scene.display\' is renamed to \'Scene.update\'.')
+            print ('Please adapt your code accordingly, since \'Scene.display\' will eventually be removed.')
+            self.update = self.display
+        
     def _display (self):
         # [object coords] > (model view matrix) > [eye coords] (projection matrix) > [clip coords]
         
@@ -116,14 +135,13 @@ class Scene:
         # Operations related to model view matrix: glTranslate, glRotate, glScale.
         # They will work on the objects
         
-        if self.hasLook:    # Avoid unnecessary overhead of glMatrixMode switches
-            self.look ()    # Optionally defined in descendant class
+        self.camera._transform (False)   # Expensive so only if tracking, not forced
                 
         glLoadIdentity ()
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
         
         glPushMatrix ()
-        self.display () # Since we're in GL_MODELVIEW mode, operations in self.display () will move the objects
+        self._render () # Since we're in GL_MODELVIEW mode, operations in self.display () will move the objects
         glPopMatrix ()
         
         glFlush ()
@@ -133,11 +151,12 @@ class Scene:
         self.width = width
         self.height = height
         glViewport (0, 0, self.width, self.height)
-        self.camera.move (
-            (5, 0, 0),      # Camera position
-            (0, 0, 0.7),    # Point looked at
-            (0, 0, 1)       # Up in the image
-        )
+        self.camera.move (tracking = False)
+        self.camera._transform (True)
+        
+    def _render (self):
+        for thing in self._things:
+            thing._render ()
         
 def tEva (v):
     return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
@@ -169,7 +188,7 @@ def tNor (v):
 def tUni (v):
     return divide (v, norm (v))
     
-class Nothing:
+class Thing:
     def __init__ (
         self,
         size = (0, 0, 0),   # Initial size of the initial bounding box
@@ -203,10 +222,27 @@ class Nothing:
         position = (0, 0, 0),   # Dynamic displacement of the center
         shift = (0, 0, 0),      # Dynamic shift of the joint in natural position, so before dynamic rotation
         scale = (1, 1, 1),      # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
-        angle = 0,              # Dynamic rotation angle around pivot through joint
+        rotation = 0,           # Dynamic rotation angle around pivot through joint
+        angle = None              
         
         parts = lambda: None
-    ):
+    ):    
+        if pivot != None:                                                               # If there's a dynamical center
+            self.pivot = pivot                                                          #   replace the original static center by it
+            
+        if color != None:                                                               # If there's a dynamical color
+            self.color = color                                                          #   replace the original static color by it
+            
+        self.position = position
+        self.shift = shift
+        self.scale = scale
+        
+        if angle == None:
+            self.rotation = rotation
+        else:
+            # Deprecation warning $$$
+            self.rotation = angle
+    
         # We are in GL_MODELVIEW mode, so the transformations conceptually are performed upon the objects
         #
         # If you think in the global coordinate system then:
@@ -217,12 +253,6 @@ class Nothing:
         #   - Transformations appear in the code in normal order, so the last transformation that affecs the object is the nearest to drawing the object in the code
         #   - Transformations move the  coordinate frame in the opposite direction
     
-        if pivot != None:                                                               # If there's a dynamical center
-            self.pivot = pivot                                                          #   replace the original static center by it
-            
-        if color != None:                                                               # If there's a dynamical color
-            self.color = color                                                          #   replace the original static color by it
-            
         glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
         glTranslate (*tAdd (tAdd (self.center, position), self.joint))                                   # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
         glRotate (evaluate (angle), *self.pivot)                                        # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
@@ -240,32 +270,32 @@ class Nothing:
         glPopMatrix ()                                                                  # Restore transformation state from before drawing this _thing
         return 0                                                                        # Make concatenable by e.g. + operator
         
-class Beam (Nothing):
+class Beam (Thing):
     def __init__ (self, **arguments):
-        Nothing.__init__ (self, **arguments)
+        Thing.__init__ (self, **arguments)
         
     def _draw (self):
         glutSolidCube (1)
             
-class Cylinder (Nothing):
+class Cylinder (Thing):
     def __init__ (self, **arguments):
-        Nothing.__init__ (self, **arguments)
+        Thing.__init__ (self, **arguments)
         
     def _draw (self):
         glTranslate (0, 0, -0.5)
         glutSolidCylinder (0.5, 1, 100, 1)
         
-class Ellipsoid (Nothing):
+class Ellipsoid (Thing):
     def __init__ (self, **arguments):
-        Nothing.__init__ (self, **arguments)
+        Thing.__init__ (self, **arguments)
 
     def _draw (self):
         glutSolidSphere (0.5, 100, 100)
         
         
-class Cone (Nothing):
+class Cone (Thing):
     def __init__ (self,  **arguments):
-        Nothing.__init__ (self, **arguments)
+        Thing.__init__ (self, **arguments)
         
     def _draw (self):
         glTranslate (0, 0, -0.5)
