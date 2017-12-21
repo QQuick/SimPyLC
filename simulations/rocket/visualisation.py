@@ -33,10 +33,10 @@ seed ()
 class Visualisation (Scene):
     def __init__ (self):
         Scene.__init__ (self)
-        #self.earth = Ellipsoid (size = (50, 50, 50), center = (0, 0, 0), color = (0, 0, 0.5))
-        self.moon = Ellipsoid (size = (25, 25, 25), center = (0, 0, 500), color = (0.5, 0.5, 0.5))
+        self.earth = Ellipsoid (size = (50, 50, 50), center = (0, 0, -25), color = (0, 0, 0.9))
+        self.moon = Ellipsoid (size = (25, 25, 25), center = (0, 0, 500), color = (0.6, 0.6, 0.6))
 
-        self.body = Cylinder (size = (0.3, 0.3, 1), center = (0, 0, 0), pivot = (0, 0, 1), color = (1, 1, 0.2))
+        self.body = Cylinder (size = (0.3, 0.3, 1), center = (0, 0, 0.85), pivot = (0, 0, 1), color = (1, 1, 0.2))
         self.nose = Cone (size = (0.3, 0.3, 0.5), center = (0, 0, 0.75), color = (1, 1, 0.2))
         self.bracket = Cylinder (size = (0.1, 0.1, 0.1), center = (0, 0, -0.55), color = (1, 1, 0.2))
         self.gimbal = Ellipsoid (size = (0.12, 0.12, 0.12), center = (0, 0, -0.05), pivot = (1, 0, 0), color = (1, 1, 0.2))
@@ -50,12 +50,12 @@ class Visualisation (Scene):
  
     def look (self):
         self.camera.move (
-            position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ)),
-            focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ))
+            position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ + 0.85)),
+            focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ + 0.85))
         )
     
     def display (self):
-        #self.earth ()
+        self.earth ()
         self.moon ()
     
         self.body (pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)), position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)), angle = world.rocket.angle, parts = lambda:
