@@ -8,7 +8,7 @@ def read (*paths):
 
 setup (
 	name = 'SimPyLC',
-	version = '3.6.2',
+	version = '3.6.3',
 	description = 'SimPyLC PLC simulator, after its C++ big brother that has controlled industrial installations for more than 20 years now. ARDUINO CODE GENERATION ADDED!',
 	long_description = (
 		read ('README.rst') + '\n\n' +
