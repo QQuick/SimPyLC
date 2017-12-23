@@ -51,8 +51,8 @@ class Visualisation (Scene):
         self.tankYellow = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, 0.16, 0), color = (1, 1, 0))
         self.tankBlue = Ellipsoid (size = (0.1, 0.1, 0.1), center = (0, -0.16, 0), color = (0, 0, 1))
  
-    def update (self):
-        self.camera.move (
+    def display (self):
+        self.camera (
             position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ + 0.85)),
             focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ + 0.85))
         )
@@ -60,15 +60,27 @@ class Visualisation (Scene):
         self.earth ()
         self.moon ()
     
-        self.body (pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)), position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)), angle = world.rocket.angle, parts = lambda:
-            self.nose () +
-            self.bracket (parts = lambda:
-                self.tankGreen () +
-                self.tankRed () +
-                self.tankBlue () +            
-                self.tankYellow () +
-                self.gimbal (angle = world.rocket.blueYellowAngle, parts = lambda:
-                    self.thruster (angle = world.rocket.greenRedAngle, parts = lambda:
-                        self.flame (scale = tsMul ((1, 1, 1), world.rocket.thrusterForce / world.rocket.thrusterMaxForce * (0.9 + 0.1 * random ())), color = (1, 0.3 + 0.7 * random (), 0))
-        )   )   )   )
-            
+        self.body (
+            pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)),
+            position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)),
+            angle = world.rocket.angle,
+            parts = lambda:
+                self.nose () +
+                self.bracket (
+                    parts = lambda:
+                        self.tankGreen () +
+                        self.tankRed () +
+                        self.tankBlue () +            
+                        self.tankYellow () +
+                        self.gimbal (
+                            angle = world.rocket.blueYellowAngle,
+                            parts = lambda:
+                                self.thruster (
+                                    angle = world.rocket.greenRedAngle,
+                                    parts = lambda:
+                                        self.flame (
+                                            scale = tsMul ((1, 1, 1),
+                                            world.rocket.thrusterForce / world.rocket.thrusterMaxForce * (0.9 + 0.1 * random ())),
+                                            color = (1, 0.3 + 0.7 * random (), 0))
+        )       )       )       )
+        

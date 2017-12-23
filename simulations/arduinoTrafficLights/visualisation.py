@@ -59,27 +59,27 @@ class Visualisation (Scene):
     def display (self):
         control = world.trafficLights
         
-        self.crossing (angle = 30, parts = lambda:
-            self.sidewalk (angle = 0, parts = lambda:
+        self.crossing (rotation = 30, parts = lambda:
+            self.sidewalk (rotation = 0, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.northRedLamp) +
                     self.greenLamp (control.northGreenLamp)
                 )
             ) +
-            self.sidewalk (angle = -90, parts = lambda:
+            self.sidewalk (rotation = -90, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.eastRedLamp) +
                     self.greenLamp (control.eastGreenLamp)
                 )
         
             ) +
-            self.sidewalk (angle = -180, parts = lambda:
+            self.sidewalk (rotation = -180, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.southRedLamp) +
                     self.greenLamp (control.southGreenLamp)
                 )
             ) +
-            self.sidewalk (angle = -270, parts = lambda:
+            self.sidewalk (rotation = -270, parts = lambda:
                 self.pole (parts = lambda:
                     self.redLamp (control.westRedLamp) +
                     self.greenLamp (control.westGreenLamp)

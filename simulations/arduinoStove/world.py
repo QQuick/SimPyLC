@@ -36,6 +36,4 @@ from control import *
 from timing import *
 from visualisation import *
         
-# underConstruction ()
-        
 World (Control (), Timing (), Visualisation ())

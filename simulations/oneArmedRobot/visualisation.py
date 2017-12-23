@@ -55,18 +55,18 @@ class Visualisation (Scene):
         
     def display (self):
         self.base (parts = lambda:
-            self.torso (angle = world.robot.torAng, parts = lambda:
-                self.upperArm (angle = world.robot.uppAng, parts = lambda:
-                    self.foreArm (angle = world.robot.forAng, shift = (world.robot.forShift, 0, 0), parts = lambda:
-                        self.wrist (angle = world.robot.wriAng, parts = lambda:
-                            self.handCenter (angle = world.robot.hanAng, parts = lambda:
+            self.torso (rotation = world.robot.torAng, parts = lambda:
+                self.upperArm (rotation = world.robot.uppAng, parts = lambda:
+                    self.foreArm (rotation = world.robot.forAng, shift = (world.robot.forShift, 0, 0), parts = lambda:
+                        self.wrist (rotation = world.robot.wriAng, parts = lambda:
+                            self.handCenter (rotation = world.robot.hanAng, parts = lambda:
                                 self.handSide0 () +
                                 self.handSide1 () +
                                 self.handSide2 () +
                                 self.handSide3 () +
-                                self.finger0 (angle = world.robot.finAng) +
-                                self.finger1 (angle = world.robot.finAng) +
-                                self.finger2 (angle = world.robot.finAng) +
-                                self.finger3 (angle = world.robot.finAng)
+                                self.finger0 (rotation = world.robot.finAng) +
+                                self.finger1 (rotation = world.robot.finAng) +
+                                self.finger2 (rotation = world.robot.finAng) +
+                                self.finger3 (rotation = world.robot.finAng)
         )   )   )   )   )   )
         

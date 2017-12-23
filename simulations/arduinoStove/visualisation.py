@@ -64,9 +64,9 @@ class Visualisation (Scene):
                 return getColor (segmentNr in self.segments [digitValue ()])
                 
             return self.digit (shift = shift, parts = lambda:
-                self.segment (angle = 90, shift = (0, 0.4, 0), color = getSegmentColor (0)) +
-                self.segment (angle = 90, color = getSegmentColor (1)) +
-                self.segment (angle = 90, shift = (0, -0.4, 0), color = getSegmentColor (2)) +
+                self.segment (rotation = 90, shift = (0, 0.4, 0), color = getSegmentColor (0)) +
+                self.segment (rotation = 90, color = getSegmentColor (1)) +
+                self.segment (rotation = 90, shift = (0, -0.4, 0), color = getSegmentColor (2)) +
                 self.segment (shift = (-0.2, -0.17, 0), color = getSegmentColor (3)) +
                 self.segment (shift = (0.2, -0.17, 0), color = getSegmentColor (4)) +
                 self.segment (shift = (-0.2, 0.17, 0), color = getSegmentColor (5)) +
@@ -74,7 +74,7 @@ class Visualisation (Scene):
                 self.dot (shift = (0.5, 0.25, 0), color = getColor (dotOn ()))
             )
     
-        self.frame (angle = 30, parts = lambda:
+        self.frame (rotation = 30, parts = lambda:
             self.plate (shift = (-0.6, -0.6, 0), color = getPlateColor (world.control.plate0Temp)) +
             self.plate (shift = (-0.6, 0.6, 0), color = getPlateColor (world.control.plate1Temp)) +
             self.plate (shift = (0.6, 0.6, 0), color = getPlateColor (world.control.plate2Temp)) +
@@ -82,7 +82,7 @@ class Visualisation (Scene):
             self.buzzer (color = (1, 1, 1) if world.control.buzzer else (0.1, 0.1, 0.1))
         )
         
-        self.aDisplay (angle = 70, parts = lambda:
+        self.aDisplay (rotation = 70, parts = lambda:
             getDigit ((0, -0.75, 0), world.control.digitValue, world.control.digitDot, world.control.digitIndex == 3) + 
             getDigit ((0, -0.25, 0), world.control.digitValue, world.control.digitDot, world.control.digitIndex == 2) +
             getDigit ((0, 0.25, 0), world.control.digitValue, world.control.digitDot, world.control.digitIndex == 1) +

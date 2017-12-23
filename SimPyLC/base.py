@@ -25,6 +25,7 @@
 #
 
 import os
+from inspect import *
 
 programName = 'SimPyLC'
 programVersion = '3.6.2'
@@ -98,7 +99,30 @@ def backgroundFromRgb (rgb):
 def decapitalize (aString):
     return aString [0] .lower () + aString [1:] if aString else ''
     
-def underConstruction ():
-    print ('THIS SIMULATION IS UNDER CONSTRUCTION')
+def getFileLineClause (frame):
+    frameInfo = getframeinfo (frame)
+    return f'in file {frameInfo.filename}, line {frameInfo.lineno}:'
+    
+def abort ():
     input ()
     exit ()
+    
+def abortUnderConstruction (frame):
+    print ()
+    print ('ERROR', getFileLineClause (frame), 'This simulation is under construction')
+    print ()
+    abort ()
+    
+def warnDeprecated (frame, featureOld, featureNew = None):
+    print ()
+    print ('WARNING', getFileLineClause (frame), featureOld [0].upper () + featureOld [1:], 'will be removed in future versions of', programName, end = '')
+    if featureNew:
+        print (', please use', featureNew, 'instead')
+    else:
+        print ()
+        
+def warnAsyncTrack (frame):
+    print ()
+    print ('WARNING', getFileLineClause (frame), 'Instance recycling in display function may cause \'jumpy\' camera tracking')
+
+        

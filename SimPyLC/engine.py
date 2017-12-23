@@ -353,7 +353,7 @@ class World (Thread):
             
         for scene in World._scenes:
             scene._registerWithCamera ()
-            scene._registerThings ()
+            scene._registerWithThings ()
             
         for chart in World._charts:
             chart.define ()
@@ -388,7 +388,7 @@ class World (Thread):
                     module.output ()
                     
                 for scene in World._scenes:
-                    scene.update () ()
+                    scene.update ()
                  
                 for chart in World._charts:
                     chart.update ()

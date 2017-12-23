@@ -26,6 +26,7 @@
 
 from time import *
 from math import *
+from inspect import *
 import builtins
 
 from OpenGL.GL import *
@@ -52,7 +53,7 @@ class Camera:
         self.up = up
         self.tracking = tracking
        
-    def move (self, position = None, focus = None, up = None):
+    def __call__ (self, position = None, focus = None, up = None):
         
         if position:
             self.position = position
@@ -70,17 +71,31 @@ class Camera:
             glMatrixMode (GL_MODELVIEW)
         
 class Scene:
+    _dmCheck, _dmUpdate, _dmRender, _dmAsync = range (4)
+
     def __init__ (self, name = None, width = 600, height = 400):
         self.name = name if name else self.__class__.__name__.lower ()
         self.width = width
         self.height = height
-        self.camera = Camera ()
+        self.camera = Camera (tracking = False)
+        self._displayMode = Scene._dmCheck
+        self._async = False
         
     def _registerWithCamera (self):
         self.camera.scene = self
         
-    def _regiserThings (self): 
-        self._things = [attrib for attrib in attribs if isinstance (attrib, Thing)]
+    def _registerWithThings (self):                
+        for thing in [attrib for attrib in vars (self) .values () if isinstance (attrib, Thing)]:
+            thing.scene = self
+         
+        if self._displayMode == Scene._dmCheck:
+            self.display ()
+            if self._async:
+                self._displayMode = Scene._dmAsync
+            else:
+                self._displayMode = Scene._dmUpdate
+        else:
+            abortInvalidDisplayMode (currentframe ())
         
     def _createWindow (self):
         glutInitWindowSize (self.width, self.height)
@@ -121,11 +136,6 @@ class Scene:
         glutDisplayFunc (self._display)
         glutReshapeFunc (self._reshape)
         
-        if hasattr (self, 'display'):
-            print ('Deprecation warning: method \'Scene.display\' is renamed to \'Scene.update\'.')
-            print ('Please adapt your code accordingly, since \'Scene.display\' will eventually be removed.')
-            self.update = self.display
-        
     def _display (self):
         # [object coords] > (model view matrix) > [eye coords] (projection matrix) > [clip coords]
         
@@ -134,29 +144,34 @@ class Scene:
 
         # Operations related to model view matrix: glTranslate, glRotate, glScale.
         # They will work on the objects
-        
-        self.camera._transform (False)   # Expensive so only if tracking, not forced
-                
-        glLoadIdentity ()
-        glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
-        
-        glPushMatrix ()
-        self._render () # Since we're in GL_MODELVIEW mode, operations in self.display () will move the objects
-        glPopMatrix ()
-        
-        glFlush ()
-        glutSwapBuffers ()
-        
+                    
+        if self._displayMode in {Scene._dmRender, Scene._dmAsync}:        
+            self.camera._transform (False)   # Expensive so only if tracking, not forced
+                    
+            glLoadIdentity ()
+            glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
+            
+            glPushMatrix ()
+            self.display () # Since we'll render in GL_MODELVIEW mode, operations in self.display () will move the objects
+            glPopMatrix ()
+
+            glFlush ()
+            glutSwapBuffers ()
+            
+            if self._displayMode == Scene._dmRender:
+                self._displayMode = Scene._dmUpdate
+            
     def _reshape (self, width, height):
         self.width = width
         self.height = height
         glViewport (0, 0, self.width, self.height)
-        self.camera.move (tracking = False)
-        self.camera._transform (True)
+        self.camera ()
+        self.camera._transform (True)        
         
-    def _render (self):
-        for thing in self._things:
-            thing._render ()
+    def update (self):
+        if self._displayMode == Scene._dmUpdate:
+            self.display ()
+            self._displayMode = Scene._dmRender
         
 def tEva (v):
     return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
@@ -212,6 +227,8 @@ class Thing:
         self.pivot = pivot
         self.color = color
         
+        self.checked = False
+        
     def _draw (self):
         pass
         
@@ -223,52 +240,73 @@ class Thing:
         shift = (0, 0, 0),      # Dynamic shift of the joint in natural position, so before dynamic rotation
         scale = (1, 1, 1),      # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
         rotation = 0,           # Dynamic rotation angle around pivot through joint
-        angle = None              
+        angle = None,           # Deprecated in favor of 'rotation'             
         
         parts = lambda: None
-    ):    
-        if pivot != None:                                                               # If there's a dynamical center
-            self.pivot = pivot                                                          #   replace the original static center by it
-            
-        if color != None:                                                               # If there's a dynamical color
-            self.color = color                                                          #   replace the original static color by it
-            
-        self.position = position
-        self.shift = shift
-        self.scale = scale
+    ):
+        if self.scene._displayMode == Scene._dmCheck:
+            if self.checked:                    # If an instance Thing occurs twice in the display function
+                self.scene._async = True        # then it has no identity and must be stateless, hence async rather than cached
+                
+                if self.scene.camera.tracking:
+                    warnAsyncTrack (currentframe () .f_back) 
+            else:
+                self.checked = True
         
-        if angle == None:
-            self.rotation = rotation
+            if angle != None:
+                warnDeprecated (currentframe () .f_back, "parameter 'angle' of 'Thing.__call__'", "parameter 'rotation'")
+                
+            parts ()
+            
         else:
-            # Deprecation warning $$$
-            self.rotation = angle
-    
-        # We are in GL_MODELVIEW mode, so the transformations conceptually are performed upon the objects
-        #
-        # If you think in the global coordinate system then:
-        #   - Transformations appear in the code in opposite order, so the first transformation that affects the object is the nearest to drawing the object in the code
-        #   - Transformations move the object in the normal direction
-        #
-        # If you think in the local coordinate system then:
-        #   - Transformations appear in the code in normal order, so the last transformation that affecs the object is the nearest to drawing the object in the code
-        #   - Transformations move the  coordinate frame in the opposite direction
-    
-        glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
-        glTranslate (*tAdd (tAdd (self.center, position), self.joint))                                   # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
-        glRotate (evaluate (angle), *self.pivot)                                        # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
-        glTranslate (*tEva (shift))                                                     # 6.    Translate object to put shifted joint in the origin
-        glScale (*tEva (scale))                                                         # 5.    Scale with respect to joint that's in the origin
-        glTranslate (*tNeg (self.joint))                                                # 4.    Translate object to put joint in the origin
-        glPushMatrix ()
-        glRotate (self.angle, *self.axis)                                               # 3.    Rotate object over initial angle to put it in natural position
-        glScale (*self.size)                                                            # 2.    Scale to natural size
-        glColor (*self.color)
-
-        self._draw ()                                                                   # 1.    Place object with center in origin
-        glPopMatrix ()
-        parts ()                                                                        # Draw parts in local coord frame
-        glPopMatrix ()                                                                  # Restore transformation state from before drawing this _thing
-        return 0                                                                        # Make concatenable by e.g. + operator
+            if self.scene._displayMode in {Scene._dmUpdate, Scene._dmAsync}:
+                if pivot != None:                   # If there's a dynamical center
+                    self.pivot = pivot              #   replace the original static center by it
+                    
+                if color != None:                   # If there's a dynamical color
+                    self.color = color              #   replace the original static color by it
+                    
+                self.position = position
+                self.shift = shift
+                self.scale = scale
+                
+                if angle == None:
+                    self.rotation = rotation
+                else:
+                    self.rotation = angle
+                   
+                if self.scene._displayMode == Scene._dmUpdate:
+                    parts ()
+            
+            if self.scene._displayMode in {Scene._dmRender, Scene._dmAsync}:
+                # We are in GL_MODELVIEW mode, so the transformations conceptually are performed upon the objects
+                #
+                # If you think in the global coordinate system then:
+                #   - Transformations appear in the code in opposite order, so the first transformation that affects the object is the nearest to drawing the object in the code
+                #   - Transformations move the object in the normal direction
+                #
+                # If you think in the local coordinate system then:
+                #   - Transformations appear in the code in normal order, so the last transformation that affecs the object is the nearest to drawing the object in the code
+                #   - Transformations move the  coordinate frame in the opposite direction
+            
+                glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
+                glTranslate (*tAdd (tAdd (self.center, self.position), self.joint))             # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
+                glRotate (evaluate (self.rotation), *self.pivot)                                # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
+                glTranslate (*tEva (self.shift))                                                # 6.    Translate object to put shifted joint in the origin
+                glScale (*tEva (self.scale))                                                    # 5.    Scale with respect to joint that's in the origin
+                glTranslate (*tNeg (self.joint))                                                # 4.    Translate object to put joint in the origin
+                
+                glPushMatrix ()
+                glRotate (self.angle, *self.axis)                                               # 3.    Rotate object over initial angle to put it in natural position
+                glScale (*self.size)                                                            # 2.    Scale to natural size
+                glColor (*self.color)
+                self._draw ()                                                                   # 1.    Place object with center in origin
+                glPopMatrix ()
+                
+                parts ()                                                                        # Draw parts in local coord frame
+                glPopMatrix ()                                                                  # Restore transformation state from before drawing this
+        
+        return 0    # Make concatenable, e.g. by the + operator
         
 class Beam (Thing):
     def __init__ (self, **arguments):
@@ -291,7 +329,6 @@ class Ellipsoid (Thing):
 
     def _draw (self):
         glutSolidSphere (0.5, 100, 100)
-        
         
 class Cone (Thing):
     def __init__ (self,  **arguments):
