@@ -28,6 +28,9 @@ Are you looking for impressive graphics: Look elsewhere. Do you want to gain inv
 
 What's new:
 
+- SimPyLCHowTo updated
+- Boolean circuits can now be switched by pressing the mousewheel
+- Registers can now be altered by rotating the mousewheel
 - Rocket example added with physically correct moment of inertia to demonstrate e.g. precession
 - Some parameters added and some renamed to make Thing.__call__ more consistent
 - Function tEva added to evaluate 3D tuples

@@ -248,7 +248,7 @@ hallmark of the true&quot;</span></i></p>
 
 <p class=MsoToc1>&nbsp;</p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054799"><span lang=EN-US>QQuickLicense
+<p class=MsoToc1><span lang=NL><a href="#_Toc434054799"><span lang=EN-US>QQuickLicence
 governing the use of SimPyLC and of its generated code</span><span
 style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>2</span></a></span></p>
@@ -354,7 +354,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054799">QQuickLicense governing the use of SimPyLC and of
+<h1><a name="_Toc434054799">QQuickLicence governing the use of SimPyLC and of
 its generated code</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -400,7 +400,7 @@ normal'>    this license (i.e. you must include a complete copy of this licen
 with your</p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-normal'>    distribution in a plain text file named QQuickLicense.txt),</p>
+normal'>    distribution in a plain text file named QQuickLicence.txt),</p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
 normal'>    and if you distribute the Software solely in object form</p>
@@ -542,6 +542,12 @@ start the clock again.</p>
 
 <p class=MsoNormal>[PGDN] to go to next control page, [PGUP] to go to previous
 one.</p>
+
+<p class=MsoNormal>[MOUSEWHEEL PRESSED] on a marker field makes it 1, release
+makes it 0 again, both without freezing it</p>
+
+<p class=MsoNormal>[MOUSEWHEEL ROTATION] changes the value of a register field,
+without freezing it</p>
 
 <span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
 clear=all style='page-break-before:always'>
@@ -796,8 +802,8 @@ normal'><b><span style='color:#00B050'>                    �
 the numerical value of the register to value</span></b></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-normal'><b><span style='color:#984806'>                def set (self,
-trueValue, condition = True, falseValue = None):</span></b></p>
+normal'><b><span style='color:#984806'>                def set (self, trueValue,
+condition = True, falseValue = None):</span></b></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
 margin-left:35.4pt;margin-bottom:.0001pt;text-indent:35.4pt;line-height:normal'><b><span
@@ -862,8 +868,7 @@ normal'><b><span style='color:#984806'>                    �
 style='color:#00B050'># Resets the seconds value of timer to 0</span></b></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-normal'><b><span style='color:#984806'>                def reset (self,
-condition):</span></b></p>
+normal'><b><span style='color:#984806'>                def reset (self, condition):</span></b></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
 normal'><b><span style='color:#984806'>                               </span></b><b><span
@@ -960,8 +965,8 @@ style='color:#984806'>calculateOutputFromInputAndPreviousState ()</span></b>.</p
 style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Finally, in the function <b><span style='color:#984806'>writeOutputToActuatorsAndIndicators
 ()</span></b>, the outputs are transferred to the outside world, e.g. servo
-motors, electromagnets, indicator lamps to inform human s or signals and
-reports for external control systems.</p>
+motors, electromagnets, indicator lamps to inform humans or signals and reports
+for external control systems.</p>
 
 <p class=MsoNormal>After this, the whole sequence starts all over again: the
 next sweep. In a real world PLC, the sweeptime is guarded by a watch dog timer.
@@ -978,7 +983,7 @@ or software glitches, the system will come to a halt, rather than run out of
 control.</p>
 
 <p class=MsoNormal>To get a better feeling for the benefits of this approach,
-lets look for a moment at the oil level indicator light in a car. The worst
+let's look for a moment at the oil level indicator light in a car. The worst
 design is a lamp that only briefly lights up if the car runs out of oil. The
 driver will almost certainly miss this transient information. A little better
 is a lamp that will remain burning as long as the oil level remains too low.
@@ -1062,10 +1067,10 @@ experience. The former boils down to a choice: get acquainted with the textbook
 way of programming in any 3rd generation language (C, C++, Python, C#, Java,
 JavaScript, Fortran, Basic, Pascal, Modula, Ada) using all the bells and
 whistles that these ever growing languages offer. After that, imagine yourself
-standing next to a 40 ton coal grab unloader, swaying at full speed at four
-meter distance from your head, controlled by a computer. And ask yourself: how
-much program complexity do I dare to trust my life to. The latter, experience,
-is what you hopefully will gain by building robot controls using the simulator.</p>
+standing next to a 40 ton coal grab unloader, swaying at full speed at four meter
+distance from your head, controlled by a computer. And ask yourself: how much
+program complexity do I dare to trust my life to. The latter, experience, is
+what you hopefully will gain by building robot controls using the simulator.</p>
 
 <p class=MsoNormal>The third point of the PLC programming rules, be brief and
 concise, is probably the most important one. One way to obtain reliable
@@ -1093,8 +1098,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054806">What is wrong with encapsulation and control
-structures?</a></h1>
+<h1><a name="_Toc434054806">What is wrong with encapsulation and control structures?</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1412,8 +1416,8 @@ there's a need or an opportunity, take a peek at the sourcecode of SimPyLC
 itself. So you'll know that there's no magic involved. The goal is to gain the
 insight and confidence that you could have written it yourself and that you
 understand exactly how it behaves and why. This is how PLC's work. And
-hopefully the assignments make clear why these simple and robust control devices
-are ubiquitous in the world of industrial production and logistics.</p>
+hopefully the assignments make clear why these simple and robust control
+devices are ubiquitous in the world of industrial production and logistics.</p>
 
 <span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
 clear=all style='page-break-before:always'>
@@ -1653,7 +1657,7 @@ port addresses are adapted in <i>native.cpp.</i></span></p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><span
 style='color:black'><img width=477 height=267 id="Afbeelding 0"
-src="simpylchowto_bestanden/image001.jpg" alt=trafficlights.jpg></span></p>
+src="simPyLCHowTo_bestanden/image001.jpg" alt=trafficlights.jpg></span></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 1. Hardware used to test the traffic light example.</p>
 
@@ -1704,7 +1708,7 @@ style='color:black'>&nbsp;</span></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt'><span
 style='color:black'>Switching between modes happens by pressing a pushbutton.
-As an exta there's a central lamp post (big yellow led) that can be dimmed or
+As an extra there's a central lamp post (big yellow led) that can be dimmed or
 brightened by pressing and holding another pushbutton. Each time the button is
 released  a switch is made between dimming and brightening.</span></p>
 
@@ -1751,18 +1755,18 @@ style='color:black'>&nbsp;</span></p>
 
 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
 text-align:center;page-break-after:avoid'><span style='color:black'><img
-width=604 height=358 id="Afbeelding 5" src="simpylchowto_bestanden/image002.jpg"></span></p>
+width=604 height=358 id="Afbeelding 5" src="simPyLCHowTo_bestanden/image002.jpg"></span></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 2. Timing chart of the traffic light example in regular mode.</p>
 
 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
 text-align:center;page-break-after:avoid'><span style='color:black'><img
-width=562 height=666 src="simpylchowto_bestanden/image003.jpg"></span></p>
+width=562 height=666 src="simPyLCHowTo_bestanden/image003.jpg"></span></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 3. Control panel of the traffic light example.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=605 height=431 id="Afbeelding 1" src="simpylchowto_bestanden/image004.jpg"></p>
+width=605 height=431 id="Afbeelding 1" src="simPyLCHowTo_bestanden/image004.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 4. Visualisation of the traffic light example.</p>
 
@@ -1786,15 +1790,15 @@ plate a LED is present, its brightness increasing with temperature.</p>
 select a plate and then the up and down buttons to adjust its temperature. The
 dot of the digit of the selected plate lights up. Pressing the child lock
 button for more than five seconds will lock c.q. unlock the child lock. If the
-child lock is active, pressing any other button will generate an alarm, resulting
-in a buzzer sounding with varying pitch. Pressing the alarm select button
-allows for adjustment of the alarm time with the up and down buttons. The
-longer these buttons are pressed, the more speedy the adjustment changes.</p>
+child lock is active, pressing any other button will generate an alarm,
+resulting in a buzzer sounding with varying pitch. Pressing the alarm select
+button allows for adjustment of the alarm time with the up and down buttons.
+The longer these buttons are pressed, the more speedy the adjustment changes.</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=390 height=245 id="Afbeelding 4" src="simpylchowto_bestanden/image005.jpg"></p>
+width=390 height=245 id="Afbeelding 4" src="simPyLCHowTo_bestanden/image005.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 5. Hardware used to test the stove example.</p>
 
@@ -1807,7 +1811,7 @@ the simulator.  The buzzer is visualized by a flashlight. To properly view its
 flashes in the simulation, lower its <i>buzzerBaseFreq</i> to e.g. 4 Hz.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=403 height=278 id="Afbeelding 7" src="simpylchowto_bestanden/image006.jpg"></p>
+width=403 height=278 id="Afbeelding 7" src="simPyLCHowTo_bestanden/image006.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 6. Visualisation of the stove example. Only one digit lights up in this snapshot, since the
 digits are multiplexed.</p>
@@ -1820,13 +1824,13 @@ students have to work on.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
 width=604 height=452 id="Afbeelding 10"
-src="simpylchowto_bestanden/image007.jpg"></p>
+src="simPyLCHowTo_bestanden/image007.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 7. Control panel of the stove example.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
 width=605 height=289 id="Afbeelding 11"
-src="simpylchowto_bestanden/image008.jpg"></p>
+src="simPyLCHowTo_bestanden/image008.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 8. Timing chart of the stove example.</p>
 
@@ -1958,6 +1962,20 @@ resolution of 1 ms, which is more than the sweeptime. This means that a timer
 can remain 0 for multiple sweeps, e.g. incrementing your counter several times.
 Using a oneshot to edge trigger on your counter becoming 0 will solve this
 problem.</p>
+
+<span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1>Making a hierarchical visualistation</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h2>Principle</h2>
+
+<p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
 text-align:center'>--//--</p>
