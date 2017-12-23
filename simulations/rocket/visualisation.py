@@ -63,7 +63,7 @@ class Visualisation (Scene):
         self.body (
             pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)),
             position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)),
-            angle = world.rocket.angle,
+            rotation = world.rocket.angle,
             parts = lambda:
                 self.nose () +
                 self.bracket (
@@ -73,10 +73,10 @@ class Visualisation (Scene):
                         self.tankBlue () +            
                         self.tankYellow () +
                         self.gimbal (
-                            angle = world.rocket.blueYellowAngle,
+                            rotation = world.rocket.blueYellowAngle,
                             parts = lambda:
                                 self.thruster (
-                                    angle = world.rocket.greenRedAngle,
+                                    rotation = world.rocket.greenRedAngle,
                                     parts = lambda:
                                         self.flame (
                                             scale = tsMul ((1, 1, 1),
