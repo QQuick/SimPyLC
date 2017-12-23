@@ -28,6 +28,12 @@ Are you looking for impressive graphics: Look elsewhere. Do you want to gain inv
 
 What's new:
 
+- Rocket example added with physically correct moment of inertia to demonstrate e.g. precession
+- Some parameters added and some renamed to make Thing.__call__ more consistent
+- Function tEva added to evaluate 3D tuples
+- Quaternion module added to accurately model rotational movement
+- Cones and Ellipsoids added
+- Optional moving camera added with synchroneous caching for accurate tracking
 - Comments in code of SimPyLC/scene.py adapted to clarify different purpose of axis and pivot, and of passing angle to __init__ versus passing it to __call__
 - Spaces rather than tabs are now used in the sourcecode.
 - Adapted for Python 3.6 (SimPyLC 2.1.2 is last version running with Python 2.7)
@@ -41,10 +47,7 @@ REMARK: All complete Arduino examples were tested on the Arduino Due, since that
 
 Bugs fixed:
 
-- Type Bool added, needed for Arduino Uno.
-- __nonzero__ changed to __bool__, as required by the move from Python 2.7 to Python 3.6. The blinkingLight demo will now work again.
-- Sidewalks raised above road in arduinoTrafficLights example.
-- Unused circuit group 'Lights' deleted from control in arduinoTrafficLights example.
+- No known bugs currently
 
 **Bug reports and feature requests are most welcome and will be taken under serious consideration on a non-committal basis**
 		
