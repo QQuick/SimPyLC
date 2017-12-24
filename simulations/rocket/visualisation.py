@@ -53,7 +53,7 @@ class Visualisation (Scene):
  
     def display (self):
         self.camera (
-            position = tEva ((world.rocket.positionX + 0.01, world.rocket.positionY, world.rocket.positionZ + 5)),
+            position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ + 3)),
             focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ ))
         )
     
