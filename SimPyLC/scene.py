@@ -240,6 +240,7 @@ class Thing:
         shift = (0, 0, 0),      # Dynamic shift of the joint in natural position, so before dynamic rotation
         scale = (1, 1, 1),      # Dynamic multiplication in natural position, so before dynamic rotation, with respect to the joint, done before the shift
         rotation = 0,           # Dynamic rotation angle around pivot through joint
+        attitude = None,        # Dynamic 3 x 3 rotation matrix, may be used instead of pivot and rotation
         angle = None,           # Deprecated in favor of 'rotation'             
         
         parts = lambda: None
@@ -274,6 +275,8 @@ class Thing:
                     self.rotation = rotation
                 else:
                     self.rotation = angle
+                    
+                self.attitude = attitude
                    
                 if self.scene._displayMode == Scene._dmUpdate:
                     parts ()
@@ -290,8 +293,18 @@ class Thing:
                 #   - Transformations move the  coordinate frame in the opposite direction
             
                 glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
-                glTranslate (*tAdd (tAdd (self.center, self.position), self.joint))             # 8.    First translate object to get shifted joint into right place (see scene_transformations.jpg)
-                glRotate (evaluate (self.rotation), *self.pivot)                                # 7.    Rotate object object over dynamic angle around the shifted joint (if arm shifts out, joint shifts in) 
+                glTranslate (*tAdd (tAdd (self.center, self.position), self.joint))             # 8.    First translate object to get shifted joint into right place
+                                                                                                #       (See scene_transformations.jpg)
+                if self.attitude == None:
+                    glRotate (evaluate (self.rotation), *self.pivot)                            # 7b.   Rotate object object over dynamic angle around the shifted joint vector
+                else:
+                    glMultMatrixd ((                                                             # 7a.   Rotate object according to dynamic attitude around shifted joint point
+                        *self.attitude [0], 0,
+                        *self.attitude [1], 0,
+                        *self.attitude [2], 0,
+                        0, 0, 0, 1
+                    ))
+                                                                                                #       (If arm shifts out, joint shifts in)
                 glTranslate (*tEva (self.shift))                                                # 6.    Translate object to put shifted joint in the origin
                 glScale (*tEva (self.scale))                                                    # 5.    Scale with respect to joint that's in the origin
                 glTranslate (*tNeg (self.joint))                                                # 4.    Translate object to put joint in the origin

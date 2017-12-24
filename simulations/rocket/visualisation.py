@@ -53,17 +53,16 @@ class Visualisation (Scene):
  
     def display (self):
         self.camera (
-            position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ + 0.85)),
-            focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ + 0.85))
+            position = tEva ((world.rocket.positionX + 0.01, world.rocket.positionY, world.rocket.positionZ + 5)),
+            focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ ))
         )
     
         self.earth ()
         self.moon ()
     
         self.body (
-            pivot = tEva ((world.rocket.axisX, world.rocket.axisY, world.rocket.axisZ)),
             position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)),
-            rotation = world.rocket.angle,
+            attitude = world.rocket._shipRotMat.tolist (),
             parts = lambda:
                 self.nose () +
                 self.bracket (

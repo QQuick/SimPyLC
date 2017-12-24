@@ -95,27 +95,15 @@ class Rocket (Module):
         self.forceY = Register ()
         self.forceZ = Register ()        
         
-        self.group ('angular acceleration', True)
+        self.group ('Angular acceleration', True)
         self.angAccelX = Register ()
         self.angAccelY = Register ()
         self.angAccelZ = Register ()
         
-        self.group ('angular velocity')
+        self.group ('Angular velocity')
         self.angVelocX = Register ()
         self.angVelocY = Register ()
         self.angVelocZ = Register ()
-        
-        self.group ('ship rot quat')
-        self.srq0 = Register ()
-        self.srq1 = Register ()
-        self.srq2 = Register ()
-        self.srq3 = Register ()
-        
-        self.group ('attitude')
-        self.axisX = Register ()
-        self.axisY = Register ()
-        self.axisZ = Register ()
-        self.angle = Register ()
         
         self.group ('Torques in ship frame')
         self.blueYellowTorque = Register ()
@@ -125,10 +113,16 @@ class Rocket (Module):
         self.torqueX = Register ()
         self.torqueY = Register ()
         self.torqueZ = Register ()
-        
-        # Auxiliary attributes
-        
+                
         self._shipRotQuat = quatFromAxAng (numpy.array ((1, 0, 0)), 0)
+        
+        self.group ('Ship rotation quaternion')
+        self.shipRotQuat0 = Register ()
+        self.shipRotQuat1 = Register ()
+        self.shipRotQuat2 = Register ()
+        self.shipRotQuat3 = Register ()
+        
+        self._shipRotMat = rotMatFromQuat (self._shipRotQuat)
         
     def input (self):   
         self.part ('gimbal angle blue/yellow')
@@ -213,9 +207,7 @@ class Rocket (Module):
                 (0                      , 0                     , rSq / 6)
             )
         )
-
-        shipRotMat = rotMatFromQuat (self._shipRotQuat)
-        invInertMat = numpy.linalg.inv (shipRotMat @ shipInertMat @ shipRotMat.T)
+        invInertMat = numpy.linalg.inv (self._shipRotMat @ shipInertMat @ self._shipRotMat.T)
                 
         self.blueYellowTorque.set (self.blueYellowForce * self.effectiveHeight / 2)
         self.greenRedTorque.set (-self.greenRedForce * self.effectiveHeight / 2)
@@ -239,26 +231,20 @@ class Rocket (Module):
         angVelocVec = radiansPerDegree * numpy.array ((self.angVelocX (), self.angVelocY (), self.angVelocZ ()))
         
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
-        self._shipRotQuat += quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ()
-        normize (self._shipRotQuat)
+        self._shipRotQuat = normized (self._shipRotQuat + quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ())
         
-        self.srq0.set (self._shipRotQuat [0])
-        self.srq1.set (self._shipRotQuat [1])
-        self.srq2.set (self._shipRotQuat [2])
-        self.srq3.set (self._shipRotQuat [3])
+        self.shipRotQuat0.set (self._shipRotQuat [0])
+        self.shipRotQuat1.set (self._shipRotQuat [1])
+        self.shipRotQuat2.set (self._shipRotQuat [2])
+        self.shipRotQuat3.set (self._shipRotQuat [3])
         
-        axis, angle = axAngFromQuat (self._shipRotQuat)
-        self.axisX.set (axis [0])
-        self.axisY.set (axis [1])
-        self.axisZ.set (axis [2])   
-        self.angle.set (angle)
+        self._shipRotQuat [0] = self.shipRotQuat0 ()
+        self._shipRotQuat [1] = self.shipRotQuat1 ()
+        self._shipRotQuat [2] = self.shipRotQuat2 ()
+        self._shipRotQuat [3] = self.shipRotQuat3 ()
         
-        axis [0] = self.axisX ()
-        axis [1] = self.axisY ()
-        axis [2] = self.axisZ ()
-        angle = self.angle ()
-        self._shipRotQuat = quatFromAxAng (axis, angle)
-        
+        self._shipRotMat = rotMatFromQuat (self._shipRotQuat)        
+                
         self.part ('sweep time measurement')
         self.sweepMin.set (world.period, world.period < self.sweepMin)
         self.sweepMax.set (world.period, world.period > self.sweepMax)

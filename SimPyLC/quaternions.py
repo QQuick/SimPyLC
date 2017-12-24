@@ -1,21 +1,30 @@
 import numpy
 
+from math import sqrt
+
 from .engine import *
 
 # All angles are in degrees
 # All multidimensional variables are numpy arrays
 
-def normize (anArray):
-    anArray /= numpy.linalg.norm (anArray)
+def normized (anArray):
+    return anArray / numpy.linalg.norm (anArray)
     
 def quatFromAxAng (axis, angle):
-    imag = axis * sin (angle / 2)
+    imag =  axis * sin (angle / 2)
     return numpy.array ((cos (angle / 2), imag [0], imag [1], imag [2]))
     
 def axAngFromQuat (q):
+    angle = 2 * acos (q [0])
+    denom = math.sqrt (1 - q [0] * q [0])
+    axis = (q [1:] / denom) if denom else numpy.array ((1, 0, 0))
+    return axis, angle
+
+    '''
     imag = q [1:]
     imagLen = numpy.linalg.norm (imag)
     return imag / imagLen if imagLen else numpy.array ((1, 0, 0)), 2 * atan2 (imagLen, q [0])
+    '''
     
 def quatMul (q0, q1):
     return numpy.array ((
