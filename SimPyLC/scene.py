@@ -298,7 +298,7 @@ class Thing:
                 if self.attitude == None:
                     glRotate (evaluate (self.rotation), *self.pivot)                            # 7b.   Rotate object object over dynamic angle around the shifted joint vector
                 else:
-                    glMultMatrixd ((                                                             # 7a.   Rotate object according to dynamic attitude around shifted joint point
+                    glMultMatrixd ((                                                            # 7a.   Rotate object according to dynamic attitude around shifted joint point
                         *self.attitude [0], 0,
                         *self.attitude [1], 0,
                         *self.attitude [2], 0,
