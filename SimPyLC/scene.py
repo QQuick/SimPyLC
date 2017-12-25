@@ -25,7 +25,6 @@
 #
 
 from time import *
-from math import *
 from inspect import *
 import builtins
 
@@ -172,36 +171,6 @@ class Scene:
         if self._displayMode == Scene._dmUpdate:
             self.display ()
             self._displayMode = Scene._dmRender
-        
-def tEva (v):
-    return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
-                
-def tNeg (v):
-    return (-v [0], -v [1], -v [2])
-    
-def tAdd (v0, v1):
-    return (v0 [0] + v1 [0], v0 [1] + v1 [1], v0 [2] + v1 [2])
-    
-def tSub (v0, v1):
-    return (v0 [0] - v1 [0], v0 [1] - v1 [1], v0 [2] - v1 [2])
-        
-def tMul (v0, v1):
-    return (x [0] * v [0], x [1] * v [1], x [2] * v [2])
-
-def tsMul (v, x):
-    return (v [0] * x, v [1] * x, v [2] * x)
-    
-def tDiv (v, x):
-    return (v [0] / x [0], v [1] / x [1], v [2] / x [2])
-
-def tsDiv (v, x):
-    return (v [0] / x, v [1] / x, v [2] / x)
-   
-def tNor (v):
-    return sqrt (v [0] * v [0] + v [1] * v[1] + v [2] * v [2])
-    
-def tUni (v):
-    return divide (v, norm (v))
     
 class Thing:
     def __init__ (
@@ -295,7 +264,7 @@ class Thing:
                 glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
                 glTranslate (*tAdd (tAdd (self.center, self.position), self.joint))             # 8.    First translate object to get shifted joint into right place
                                                                                                 #       (See scene_transformations.jpg)
-                if self.attitude == None:
+                if self.attitude is None:                                                       # Use 'is' to be NumPy compatible
                     glRotate (evaluate (self.rotation), *self.pivot)                            # 7b.   Rotate object object over dynamic angle around the shifted joint vector
                 else:
                     glMultMatrixd ((                                                            # 7a.   Rotate object according to dynamic attitude around shifted joint point

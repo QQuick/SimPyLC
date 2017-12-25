@@ -28,6 +28,8 @@ import numpy
 
 from SimPyLC import *
 
+from common import *
+
 # General remarks:
 # - The physical reality of precession indicates that rotation matrix cannot be
 #   found by applying angular acceleration in x, y and z direction successively.
@@ -53,16 +55,16 @@ class Rocket (Module):
         self.group ('fuel throttle')
         self.throttleDelta = Register ()
         self.throttlePercent = Register ()
-        self.thrusterForce = Register ()      
+        self.thrust = Register ()      
         
         self.group ('ship')
-        self.totalMass = Register (5000)
+        self.shipMass = Register (5000)
         self.effectiveRadius = Register (0.15)
         self.effectiveHeight = Register (1.5)
         self.thrusterTiltSpeed = Register (30)
         self.thrusterMaxAngle = Register (90)
         self.throttleSpeed = Register (20)
-        self.thrusterMaxForce = Register (10000)
+        self.thrusterMaxForce = Register (100000)
         
         self.group ('sweep time measurement')
         self.sweepMin = Register (1000)
@@ -83,46 +85,63 @@ class Rocket (Module):
         self.group ('position')
         self.positionX = Register ()
         self.positionY = Register ()
-        self.positionZ = Register ()
+        self.positionZ = Register (earthDiam / 2)
         
-        self.group ('Forces in ship frame')
-        self.forwardForce = Register ()
-        self.blueYellowForce = Register ()
-        self.greenRedForce = Register ()
+        self.group ('thrust in ship frame')
+        self.forwardThrust = Register ()
+        self.blueYellowThrust = Register ()
+        self.greenRedThrust = Register ()
         
-        self.group ('Forces in world frame')
-        self.forceX = Register ()
-        self.forceY = Register ()
-        self.forceZ = Register ()        
+        self.group ('thrust in world frame')
+        self.thrustX = Register ()
+        self.thrustY = Register ()
+        self.thrustZ = Register ()
         
-        self.group ('Angular acceleration', True)
+        self.group ('angular acceleration', True)
         self.angAccelX = Register ()
         self.angAccelY = Register ()
         self.angAccelZ = Register ()
         
-        self.group ('Angular velocity')
+        self.group ('angular velocity')
         self.angVelocX = Register ()
         self.angVelocY = Register ()
         self.angVelocZ = Register ()
         
-        self.group ('Torques in ship frame')
+        self.group ('torques in ship frame')
         self.blueYellowTorque = Register ()
         self.greenRedTorque = Register ()
         
-        self.group ('Torques in world frame')
+        self.group ('torques in world frame')
         self.torqueX = Register ()
         self.torqueY = Register ()
         self.torqueZ = Register ()
                 
         self._shipRotQuat = quatFromAxAng (numpy.array ((1, 0, 0)), 0)
         
-        self.group ('Ship rotation quaternion')
+        self.group ('ship rotation quaternion')
         self.shipRotQuat0 = Register ()
         self.shipRotQuat1 = Register ()
         self.shipRotQuat2 = Register ()
         self.shipRotQuat3 = Register ()
         
         self._shipRotMat = rotMatFromQuat (self._shipRotQuat)
+        
+        self.group ('earth gravity', True)
+        self.distEarthSurf = Register ()        
+        self.earthGravX = Register ()
+        self.earthGravY = Register ()
+        self.earthGravZ = Register ()
+        
+        self.group ('moon gravity')
+        self.distMoonSurf = Register ()
+        self.moonGravX = Register ()
+        self.moonGravY = Register ()
+        self.moonGravZ = Register ()
+        
+        self.group ('total force')
+        self.totalForceX = Register ()
+        self.totalForceY = Register ()
+        self.totalForceZ = Register ()
         
     def input (self):   
         self.part ('gimbal angle blue/yellow')
@@ -161,7 +180,7 @@ class Rocket (Module):
                 100
             )
         )
-        self.thrusterForce.set (self.throttlePercent * self.thrusterMaxForce / 100)
+        self.thrust.set (self.throttlePercent * self.thrusterMaxForce / 100)
 
         self.part ('linear movement')
         
@@ -170,21 +189,35 @@ class Rocket (Module):
             quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle)
         )
         
-        thrusterForceVec = numpy.array ((0, 0, self.thrusterForce ()))
+        thrusterForceVec = numpy.array ((0, 0, self.thrust ()))
         shipForceVec = quatVecRot (thrusterRotQuat, thrusterForceVec)
         
-        self.forwardForce.set (shipForceVec [2])
-        self.blueYellowForce.set (shipForceVec [1])
-        self.greenRedForce.set (shipForceVec [0])
+        self.forwardThrust.set (shipForceVec [2])
+        self.blueYellowThrust.set (shipForceVec [1])
+        self.greenRedThrust.set (shipForceVec [0])
         
         worldForceVec = quatVecRot (self._shipRotQuat, shipForceVec)
-        self.forceX.set (worldForceVec [0])
-        self.forceY.set (worldForceVec [1])
-        self.forceZ.set (worldForceVec [2])
-                
-        self.linAccelX.set (self.forceX / self.totalMass)
-        self.linAccelY.set (self.forceY / self.totalMass)
-        self.linAccelZ.set (self.forceZ / self.totalMass)
+        self.thrustX.set (worldForceVec [0])
+        self.thrustY.set (worldForceVec [1])
+        self.thrustZ.set (worldForceVec [2])
+             
+        earthGravVec = getGravVec (self.shipMass, earthMass, earthDiam, tEva ((self.positionX, self.positionY, self.positionZ)))
+        self.earthGravX.set (earthGravVec [0])
+        self.earthGravY.set (earthGravVec [1])
+        self.earthGravZ.set (earthGravVec [2])  
+      
+        moonGravVec = getGravVec (self.shipMass, moonMass, moonDiam, tSub (tEva ((self.positionX, self.positionY, self.positionZ)), (0, 0, earthMoonDist)))
+        self.moonGravX.set (moonGravVec [0])
+        self.moonGravY.set (moonGravVec [1])
+        self.moonGravZ.set (moonGravVec [2])
+        
+        self.totalForceX.set (self.thrustX + self.earthGravX + self.moonGravX)
+        self.totalForceY.set (self.thrustY + self.earthGravY + self.moonGravY)
+        self.totalForceZ.set (self.thrustZ + self.earthGravZ + self.moonGravZ)
+        
+        self.linAccelX.set (self.totalForceX / self.shipMass)
+        self.linAccelY.set (self.totalForceY / self.shipMass)
+        self.linAccelZ.set (self.totalForceZ / self.shipMass)
         
         self.linVelocX.set (self.linVelocX + self.linAccelX * world.period)
         self.linVelocY.set (self.linVelocY + self.linAccelY * world.period)
@@ -200,7 +233,7 @@ class Rocket (Module):
         hSq = self.effectiveHeight * self.effectiveHeight
 
         # Source: https://en.wikipedia.org/wiki/List_of_moments_of_inertia#List_of_3D_inertia_tensors        
-        shipInertMat = self.totalMass () / 12 * numpy.array  (
+        shipInertMat = self.shipMass () / 12 * numpy.array  (
             (
                 ((3 * rSq + hSq) / 12   , 0                     , 0      ),
                 (0                      , (3 * rSq + hSq) / 12  , 0      ),
@@ -209,8 +242,8 @@ class Rocket (Module):
         )
         invInertMat = numpy.linalg.inv (self._shipRotMat @ shipInertMat @ self._shipRotMat.T)
                 
-        self.blueYellowTorque.set (self.blueYellowForce * self.effectiveHeight / 2)
-        self.greenRedTorque.set (-self.greenRedForce * self.effectiveHeight / 2)
+        self.blueYellowTorque.set (self.blueYellowThrust * self.effectiveHeight / 2)
+        self.greenRedTorque.set (-self.greenRedThrust * self.effectiveHeight / 2)
         shipTorqueVec = numpy.array ((self.blueYellowTorque (), self.greenRedTorque (), 0))
         
         rawTorqueVec = quatVecRot (self._shipRotQuat, shipTorqueVec)

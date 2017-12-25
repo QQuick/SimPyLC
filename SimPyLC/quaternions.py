@@ -47,7 +47,7 @@ def quatVecRot (q, v):
             quatFromVec (v)
         ),
         quatInv (q)
-    ) / 2) [1:]
+    )) [1:]
     
 def rotMatFromQuat (q):
     return numpy.array ((
