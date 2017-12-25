@@ -299,10 +299,10 @@ class Thing:
                     glRotate (evaluate (self.rotation), *self.pivot)                            # 7b.   Rotate object object over dynamic angle around the shifted joint vector
                 else:
                     glMultMatrixd ((                                                            # 7a.   Rotate object according to dynamic attitude around shifted joint point
-                        *self.attitude [0], 0,
-                        *self.attitude [1], 0,
-                        *self.attitude [2], 0,
-                        0, 0, 0, 1
+                        self.attitude [0][0],   self.attitude [1][0],   self.attitude [2][0],   0,
+                        self.attitude [0][1],   self.attitude [1][1],   self.attitude [2][1],   0,
+                        self.attitude [0][2],   self.attitude [1][2],   self.attitude [2][2],   0,
+                        0,                      0,                      0,                      1
                     ))
                                                                                                 #       (If arm shifts out, joint shifts in)
                 glTranslate (*tEva (self.shift))                                                # 6.    Translate object to put shifted joint in the origin

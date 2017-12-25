@@ -28,6 +28,8 @@ from random import *
 
 from SimPyLC import *
 
+import numpy
+
 seed ()
 
 class Visualisation (Scene):
@@ -62,7 +64,7 @@ class Visualisation (Scene):
     
         self.body (
             position = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ)),
-            attitude = world.rocket._shipRotMat.tolist (),
+            attitude = world.rocket._shipRotMat,
             parts = lambda:
                 self.nose () +
                 self.bracket (
