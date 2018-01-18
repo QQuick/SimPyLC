@@ -1,3 +1,29 @@
+# ====== Legal notices
+#
+# Copyright (C) 2013 - 2018 GEATEC engineering
+#
+# This program is free software.
+# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicence.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the QQuickLicence for details.
+#
+# The QQuickLicense can be accessed at: http://www.qquick.org/license.html
+#
+# __________________________________________________________________________
+#
+#
+#  THIS PROGRAM IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS !!
+#
+# __________________________________________________________________________
+#
+# It is meant for training purposes only.
+#
+# Removing this header ends your licence.
+#
+
 import math
 
 from SimPyLC import *
@@ -12,7 +38,7 @@ earthMass = 8e7
 moonDiam = 15
 moonMass = 1e6
 
-# Gravite made proportional to r^-0.5 instead of r^-2 to get a more "telling" simulation
+# Gravity made proportional to r^-0.5 instead of r^-2 to get a more "telling" simulation
 
 gamma = g * (earthDiam / 2) * (earthDiam / 2) / earthMass
 

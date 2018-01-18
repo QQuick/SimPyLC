@@ -2,13 +2,15 @@ import os
 
 from setuptools import setup
 
+import SymPyLC as sp
+
 def read (*paths):
 	with open (os.path.join (*paths), 'r') as aFile:
 		return aFile.read()
 
 setup (
 	name = 'SimPyLC',
-	version = '3.6.11',
+	version = sp.base.programVersion,
 	description = 'SimPyLC PLC simulator, after its C++ big brother that has controlled industrial installations for more than 20 years now. ARDUINO CODE GENERATION ADDED!',
 	long_description = (
 		read ('README.rst') + '\n\n' +

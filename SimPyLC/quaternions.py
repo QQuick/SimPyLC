@@ -1,3 +1,29 @@
+# ====== Legal notices
+#
+# Copyright (C) 2013 - 2018 GEATEC engineering
+#
+# This program is free software.
+# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the QQuickLicense for details.
+#
+# The QQuickLicense can be accessed at: http://www.qquick.org/license.html
+#
+# __________________________________________________________________________
+#
+#
+#  THIS PROGRAM IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS !!
+#
+# __________________________________________________________________________
+#
+# It is meant for training purposes only.
+#
+# Removing this header ends your license.
+#
+
 import numpy
 
 from math import sqrt
@@ -5,7 +31,7 @@ from math import sqrt
 from .engine import *
 
 # All angles are in degrees
-# All multidimensional variables are numpy arrays
+# All non-scalar variables are numpy arrays
 
 def normized (anArray):
     return anArray / numpy.linalg.norm (anArray)
@@ -19,12 +45,6 @@ def axAngFromQuat (q):
     denom = math.sqrt (1 - q [0] * q [0])
     axis = (q [1:] / denom) if denom else numpy.array ((1, 0, 0))
     return axis, angle
-
-    '''
-    imag = q [1:]
-    imagLen = numpy.linalg.norm (imag)
-    return imag / imagLen if imagLen else numpy.array ((1, 0, 0)), 2 * atan2 (imagLen, q [0])
-    '''
     
 def quatMul (q0, q1):
     return numpy.array ((

@@ -155,7 +155,7 @@ but WITHOUT ANY WARRANTY, without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the QQuickLicence for details.
 
-The QQuickLicense can be accessed at: http://www.geatec.com/qqLicence.html
+The QQuickLicense can be accessed at: http://www.qquick.org/license.html
 
 __________________________________________________________________________
 

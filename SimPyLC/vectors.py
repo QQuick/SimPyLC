@@ -1,3 +1,29 @@
+# ====== Legal notices
+#
+# Copyright (C) 2013 - 2018 GEATEC engineering
+#
+# This program is free software.
+# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the QQuickLicense for details.
+#
+# The QQuickLicense can be accessed at: http://www.qquick.org/license.html
+#
+# __________________________________________________________________________
+#
+#
+#  THIS PROGRAM IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS !!
+#
+# __________________________________________________________________________
+#
+# It is meant for training purposes only.
+#
+# Removing this header ends your license.
+#
+
 from numpy import *
 
 from .engine import *
@@ -38,51 +64,4 @@ def vUni (v):
     
 def mInv (m):
     return numpy.invert (numpy.array (m)) .tolist ()
-    
-# Quaternions (angles in degrees)
-
-def qJoi (axis, angle):
-    s = sin (angle)
-    return (cos (angle), s * axis [0], s * axis [1], s * axis [2])
-    
-def qSpli (q):
-    angle = acos (q [0)]
-    s = sin (angle)
-    axis = (q [1] / s, q [2] / s, q [3] / s)
-    
-def qMul (q0, q1):
-    return  (
-        +q0 [0] * q1 [0] - q0 [1] * q1 [1] - q0 [2] * q1 [2] - q0 [3] * q1 [3],
-        +q0 [0] * q1 [1] + q0 [1] * q1 [0] + q0 [2] * q1 [3] - q0 [3] * q1 [2],
-        +q0 [0] * q1 [2] - q0 [1] * q1 [3] + q0 [2] * q1 [0] + q0 [3] * q1 [1],
-        +q0 [0] * q1 [3] + q0 [1] * q1 [2] - q0 [2] * q1 [1] + q0 [3] * q1 [0]       
-    )
-    
-def qsMul (q, s):
-    return (q [0] * s, q [1] * s, q [2] * s, q [3] * s)
-    
-def qsDiv (q, s):
-    return (q [0] / s, q [1] / s, q [2] / s, q [3] / s)
-    
-def qInv (q):
-    return (q [0], -q [1], -q [2]. -q [3])
-    
-def qvRot (q, v):
-    return qsDiv (
-        qMul (
-            qMul (
-                q,
-                (0, v [0], v [1], v [2])
-            ),
-            qInv (q))
-        ),
-        2
-    ) [1 : ]
-    
-def qmRot (q, m):
-    m = numpy.array (m)
-    m [ : , 0] = qvRot (m [ : , 0]
-    m [ : , 0] = qvRot (m [ : , 1]
-    m [ : , 0] = qvRot (m [ : , 2]
-    return m
     
