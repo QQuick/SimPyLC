@@ -2,7 +2,7 @@ import os
 
 from setuptools import setup
 
-import SymPyLC as sp
+import SimPyLC as sp
 
 def read (*paths):
 	with open (os.path.join (*paths), 'r') as aFile:
