@@ -84,7 +84,7 @@ class Scene:
         self.camera.scene = self
         
     def _registerWithThings (self):                
-        for thing in [attrib for attrib in vars (self) .values () if isinstance (attrib, Thing)]:
+        for thing in Thing.instances:
             thing.scene = self
          
         if self._displayMode == Scene._dmCheck:
@@ -173,6 +173,8 @@ class Scene:
             self._displayMode = Scene._dmRender
     
 class Thing:
+    instances = []
+
     def __init__ (
         self,
         size = (0, 0, 0),   # Initial size of the initial bounding box
@@ -196,6 +198,7 @@ class Thing:
         self.pivot = pivot
         self.color = color
         
+        Thing.instances.append (self)
         self.checked = False
         
     def _draw (self):

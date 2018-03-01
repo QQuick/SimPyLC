@@ -159,7 +159,7 @@ class ModuleWindow (Toplevel):
             self.columnconfigure (columnIndex, weight = 1)
         
         if self.module._defaultFormat:
-            self.geometry("%dx%d%+d%+d" % (Gui.labelWidth + Gui.entryWidth, Gui.windowWidth, 0, 0))
+            self.geometry("%dx%d%+d%+d" % (Gui.windowWidth / 4, 800, 0, 0))
         else:
             self.geometry("%dx%d%+d%+d" % (Gui.windowWidth, self.module._maxNrOfRows * Gui.rowHeight, 0, 0))
             
