@@ -1,4 +1,4 @@
-=== ANNOUNCEMENT: You can now use the SimPyLC `FORUM <http://simpylc.freeforums.net/>`_ to share knowledge and ask questions about SimPyLC. ===
+=== Use the `SimPyLC forum <http://simpylc.freeforums.net/>`_ to share knowledge and ask questions about SimPyLC. ===
 
 .. figure:: http://www.qquick.org/simpylc/robotvisualisation.jpg
 	:alt: Screenshot of SimPyLC
@@ -38,16 +38,8 @@ What's new:
 - Quaternion module added to accurately model rotational movement
 - Cones and Ellipsoids added
 - Optional moving camera added with synchroneous caching for accurate tracking
-- Comments in code of SimPyLC/scene.py adapted to clarify different purpose of axis and pivot, and of passing angle to __init__ versus passing it to __call__
-- Spaces rather than tabs are now used in the sourcecode.
-- Adapted for Python 3.6 (SimPyLC 2.1.2 is last version running with Python 2.7)
-- Development status bumped to production / stable.
-- Native.py files replaced by native.cpp files, which are plain C++, hence benefit from syntax highlighting. You'll have to adapt your existing code to this (by merely leaving things out).
-- Code now generated in a separate subdirectory to avoid confusion, especially with native.cpp.
-- Cooking stove example I/O assignment for Arduino Due and hardware description added.
-- Some changes to the visualisation API, parameters to overloaded () operator of Beam and Cylinder now have to be named. This is not backwards compatible, you'll have to add parameter names to visualisations of your old projects. Look at what has changed in the oneArmedRobot simulation, module visualisation.py, to understand what this is about. Using named parameters gives more flexibility in changing other things than angles in your visualisations, e.g. position or color. This is used very modestly in the new arduinoStove example. 
 
-REMARK: All complete Arduino examples were tested on the Arduino Due, since that's the one I own, but they should run on the One with only slight I/O modifications (PWM instead of true analog output, using a shift register if you run short of I/O pins etc.)
+*REMARK: All complete Arduino examples were tested on the Arduino Due, since that's the one I own, but they should run on the One with only slight I/O modifications (PWM instead of true analog output, using a shift register if you run short of I/O pins etc.)*
 
 Bugs fixed:
 
@@ -55,15 +47,46 @@ Bugs fixed:
 
 **Bug reports and feature requests are most welcome and will be taken under serious consideration on a non-committal basis**
 		
-Requirements for Windows:
+Installing on Windows:
 
-1. Install WinPython 3.6, e.g. from https://winpython.github.io
-2. (Optional) Copy SimPyLC\\SimPyLC\\QuartzMS.TTF to C:\\Windows\\Fonts
-3. (Optional) You can may also add SimPyLC\\SimPyLC to your PYTHONPATH
+1. Install MiniConda for Python 3.6 from https://conda.io/miniconda.html
+2. Open a command prompt
+3. Type `conda install numpy`
+4. Type `conda install pyopengl`
+5. Type `python -m pip install simpylc`
+6. Install freeglut as explained on http://freeglut.sourceforge.net/index.php#download
 
-Requirements for Linux:
+ Alternatively, copy `SimPyLC\SimPyLC\freeglut.dll` to a directory that's in the DLL search path.
+    
+7. Optionally copy `SimPyLC\SimPyLC\QuartzMS.TTF` to `C:\\Windows\\Fonts`
 
-1. Install Python 3.6 and PyOpenGL
+Installing on Linux:
+
+1. Install MiniConda for Python 3.6 from https://conda.io/miniconda.html
+2. Open a command prompt
+3. Type `conda install numpy`
+4. Type `conda install pyopengl`
+5. Type `python -m pip install simpylc`
+6. Install freeglut as explained on http://freeglut.sourceforge.net/index.php#download
+   
+ Alternatively, type ::
+
+    sudo apt-get update
+    sudo apt-get install build-essential
+    sudo apt-get install freeglut3-dev
+
+Installing on OSX:
+
+1. Install MiniConda for Python 3.6 from https://conda.io/miniconda.html
+2. Open a command prompt
+3. Type `conda install numpy`
+4. Type `conda install pyopengl`
+5. Type `python -m pip install simpylc`
+6. Install FreeGlut as explained on http://freeglut.sourceforge.net/index.php#download
+ 
+ Alternatively, type `brew install freeglut`
+    
+7. Install the XQuartz X-window system from https://www.xquartz.org/
 
 Usage:
 
@@ -74,13 +97,16 @@ GUI Operation:
 
 - [LEFT CLICK] on a field or [ENTER] gets you into edit mode.
 - [LEFT CLICK] or [ENTER] again gets you out of edit mode and into forced mode, values coloured orange are frozen.
-- [RIGHT CLICK] or [ESC] gets gets you into released mode, values are thawed again.
+- [RIGHT CLICK] or [ESC] gets you into released mode, values are thawed again.
 - [PGUP] and [PGDN] change the currently viewed control page.
+- [WHEEL PRESSED] on a marker field makes it 1, release makes it 0 again, both without freezing it.
+- [WHEEL ROTATION] changes the value of a register field, without freezing it.
+
 
 For a test run of oneArmedRobot:
 
-- Enter setpoints in degrees for the joint angles (e.g. torAngSet for the torso of the robot) on the movement control page.
-- After that set 'go' to 1 and watch what happens.
+1. Enter setpoints in degrees for the joint angles (e.g. torAngSet for the torso of the robot) on the movement control page.
+2. After that set 'go' to 1 and watch what happens.
 
 If you want to experiment yourself, read `SimPyLCHowTo <http://www.qquick.org/simpylchowto>`_
 

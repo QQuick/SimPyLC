@@ -44,7 +44,8 @@ h1
 	page-break-after:avoid;
 	font-size:14.0pt;
 	font-family:"Cambria","serif";
-	color:#365F91;}
+	color:#365F91;
+	font-weight:bold;}
 h2
 	{mso-style-link:"Kop 2 Char";
 	margin-top:10.0pt;
@@ -56,7 +57,8 @@ h2
 	page-break-after:avoid;
 	font-size:13.0pt;
 	font-family:"Cambria","serif";
-	color:#4F81BD;}
+	color:#4F81BD;
+	font-weight:bold;}
 h3
 	{mso-style-link:"Kop 3 Char";
 	margin-top:10.0pt;
@@ -68,7 +70,8 @@ h3
 	page-break-after:avoid;
 	font-size:11.0pt;
 	font-family:"Cambria","serif";
-	color:#4F81BD;}
+	color:#4F81BD;
+	font-weight:bold;}
 p.MsoToc1, li.MsoToc1, div.MsoToc1
 	{margin-top:0cm;
 	margin-right:0cm;
@@ -112,6 +115,13 @@ a:link, span.MsoHyperlink
 a:visited, span.MsoHyperlinkFollowed
 	{color:purple;
 	text-decoration:underline;}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+code
+	{font-family:"Courier New";}
 pre
 	{mso-style-link:"HTML - vooraf opgemaakt Char";
 	margin:0cm;
@@ -228,17 +238,11 @@ ul
 <p class=MsoNormal align=center style='text-align:center'><b><span
 style='font-size:28.0pt;line-height:115%'>SimPyLC HowTo</span></b></p>
 
-<p class=MsoNormal align=center style='text-align:center'>© 2013-2015 GEATEC
+<p class=MsoNormal align=center style='text-align:center'>© 2013-2018 GEATEC
 engineering, www.geatec.com</p>
 
 <p class=MsoNormal align=center style='text-align:center'><span
 style='font-size:12.0pt;line-height:115%'>Author: Jacques de Hooge</span></p>
-
-<p class=MsoNormal align=center style='text-align:center'><span
-style='font-size:12.0pt;line-height:115%'>Date: October 31th 2015</span></p>
-
-<p class=MsoNormal align=center style='text-align:center'><span
-style='font-size:12.0pt;line-height:115%'>&nbsp;</span></p>
 
 <p class=MsoNormal align=center style='text-align:center'><i><span
 style='font-size:20.0pt;line-height:115%;color:#943634'>&quot;Simplicity is the
@@ -248,113 +252,120 @@ hallmark of the true&quot;</span></i></p>
 
 <p class=MsoToc1>&nbsp;</p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054799"><span lang=EN-US>QQuickLicence
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123206"><span lang=EN-US>QQuickLicence
 governing the use of SimPyLC and of its generated code</span><span
 style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>2</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054800"><span lang=EN-US>Introduction</span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123207"><span lang=EN-US>Introduction</span><span
 style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054801"><span lang=EN-US>GUI
-quick reference</span><span style='color:windowtext;display:none;text-decoration:
-none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123208"><span lang=EN-US>Installation</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054802"><span lang=EN-US>Putting
-together a simulation</span><span style='color:windowtext;display:none;
-text-decoration:none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123209"><span lang=EN-US>GUI
+quick reference</span><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054803"><span lang=EN-US>Basic
-control elements</span><span style='color:windowtext;display:none;text-decoration:
-none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123210"><span lang=EN-US>Putting
+together a simulation</span><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054804"><span lang=EN-US>The
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123211"><span lang=EN-US>Basic
+control elements</span><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></p>
+
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123212"><span lang=EN-US>The
 PLC programming paradigm</span><span style='color:windowtext;display:none;
 text-decoration:none'>.. </span><span
-style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></p>
+style='color:windowtext;display:none;text-decoration:none'>9</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054805"><span lang=EN-US>PLC
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123213"><span lang=EN-US>PLC
 programming rules</span><span style='color:windowtext;display:none;text-decoration:
 none'>. </span><span
-style='color:windowtext;display:none;text-decoration:none'>10</span></a></span></p>
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054806"><span lang=EN-US>What
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123214"><span lang=EN-US>What
 is wrong with encapsulation and control structures?</span><span
-style='color:windowtext;display:none;text-decoration:none'>. </span><span
-style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></p>
-
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054807"><span lang=EN-US>But
-what makes controlling a robot system so different?</span><span
 style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054808"><span lang=EN-US>Control
-levels</span><span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123215"><span lang=EN-US>But
+what makes controlling a robot system so different?</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>14</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054809"><span lang=EN-US>Putting
-a robot system into active operation</span><span style='color:windowtext;
-display:none;text-decoration:none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123216"><span lang=EN-US>Control
+levels</span><span style='color:windowtext;display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>15</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054810"><span lang=EN-US>The
-SimPyLC simulator</span><span style='color:windowtext;display:none;text-decoration:
-none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123217"><span lang=EN-US>Putting
+a robot system into active operation</span><span style='color:windowtext;
+display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>16</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054811"><span lang=EN-US>Example
-of an assignment linked to elementary physics</span><span style='color:windowtext;
-display:none;text-decoration:none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123218"><span lang=EN-US>The
+SimPyLC simulator</span><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>17</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054812"><span lang=EN-US>Code
-generation for the Arduino</span><span style='color:windowtext;display:none;
-text-decoration:none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123219"><span lang=EN-US>Example
+of an assignment linked to elementary physics</span><span style='color:windowtext;
+display:none;text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>18</span></a></span></p>
 
-<p class=MsoToc2><span lang=NL><a href="#_Toc434054813"><span lang=EN-US>The
-arduinoLed example</span><span style='color:windowtext;display:none;text-decoration:
-none'>. </span><span
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123220"><span lang=EN-US>Code
+generation for the Arduino</span><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>19</span></a></span></p>
 
-<p class=MsoToc2><span lang=NL><a href="#_Toc434054814"><span lang=EN-US>The
-arduinoTraficLight example</span><span style='color:windowtext;display:none;
-text-decoration:none'>. </span><span
+<p class=MsoToc2><span lang=NL><a href="#_Toc508123221"><span lang=EN-US>The
+arduinoLed example</span><span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
 style='color:windowtext;display:none;text-decoration:none'>20</span></a></span></p>
 
-<p class=MsoToc2><span lang=NL><a href="#_Toc434054815"><span lang=EN-US>The
+<p class=MsoToc2><span lang=NL><a href="#_Toc508123222"><span lang=EN-US>The
+arduinoTraficLight example</span><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>21</span></a></span></p>
+
+<p class=MsoToc2><span lang=NL><a href="#_Toc508123223"><span lang=EN-US>The
 arduinoStove example</span><span style='color:windowtext;display:none;
 text-decoration:none'>. </span><span
-style='color:windowtext;display:none;text-decoration:none'>24</span></a></span></p>
+style='color:windowtext;display:none;text-decoration:none'>25</span></a></span></p>
 
-<p class=MsoToc1><span lang=NL><a href="#_Toc434054816"><span lang=EN-US>Some
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123224"><span lang=EN-US>Some
 timing hints and pitfalls</span><span style='color:windowtext;display:none;
 text-decoration:none'>. </span><span
-style='color:windowtext;display:none;text-decoration:none'>28</span></a></span></p>
+style='color:windowtext;display:none;text-decoration:none'>29</span></a></span></p>
 
-<p class=MsoToc2><span lang=NL><a href="#_Toc434054817"><span lang=EN-US>Integration
+<p class=MsoToc2><span lang=NL><a href="#_Toc508123225"><span lang=EN-US>Integration
 and differentiation</span><span style='color:windowtext;display:none;
 text-decoration:none'>. </span><span
-style='color:windowtext;display:none;text-decoration:none'>28</span></a></span></p>
+style='color:windowtext;display:none;text-decoration:none'>29</span></a></span></p>
 
-<p class=MsoToc2><span lang=NL><a href="#_Toc434054818"><span lang=EN-US>Edge
+<p class=MsoToc2><span lang=NL><a href="#_Toc508123226"><span lang=EN-US>Edge
 triggering for buttons and timers</span><span style='color:windowtext;
 display:none;text-decoration:none'>. </span><span
-style='color:windowtext;display:none;text-decoration:none'>28</span></a></span></p>
+style='color:windowtext;display:none;text-decoration:none'>29</span></a></span></p>
+
+<p class=MsoToc1><span lang=NL><a href="#_Toc508123227"><span lang=EN-US>Making
+a hierarchical visualistation</span><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>31</span></a></span></p>
+
+<p class=MsoToc2><span lang=NL><a href="#_Toc508123228"><span lang=EN-US>Principle</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>31</span></a></span></p>
 
 <p class=MsoNormal><span lang=NL>&nbsp;</span></p>
 
-<span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
-clear=all style='page-break-before:always'>
-</span>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h1><a name="_Toc434054799">QQuickLicence governing the use of SimPyLC and of
+<h1><a name="_Toc508123206">QQuickLicence governing the use of SimPyLC and of
 its generated code</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -481,13 +492,13 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054800">Introduction</a></h1>
+<h1><a name="_Toc508123207">Introduction</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>This document briefly describes the functions of the SimPyLC
-control simulator. Purpose of the simulator is to allow students to get acquainted
-with the design of real time controls for automated production and
+control simulator. Purpose of the simulator is to allow students to get
+acquainted with the design of real time controls for automated production and
 transportation systems. The controlled systems may range from out of the box
 assembly line robots to special purpose robot cranes and automatically
 controlled transportation vehicles.</p>
@@ -496,9 +507,8 @@ controlled transportation vehicles.</p>
 (Programmable Logic Controller). A PLC has to perform a lot of tasks in
 parallel. It does so using design patterns that are very different from the
 ones used in mainstream design of non-control programs. When it comes to
-performing tasks in parallel, traditionally things like interprocess
-communication, threads, semaphores, queues en critical sections may come to
-mind.</p>
+performing tasks in parallel, traditionally things like interprocess communication,
+threads, semaphores, queues en critical sections may come to mind.</p>
 
 <p class=MsoNormal>Synchronizing tasks by means of these facilities is error
 prone. Problems may range from deadlocks, where processes are waiting for each
@@ -512,9 +522,9 @@ executing a movement, which may  be very dangerous.</p>
 <p class=MsoNormal>Safety plays a major role in designing real time control
 systems. Even a small production robot may cause harm in an environment where
 also human labor is being performed. The main demand to be made on a real
-control system is that the environment is being watched constantly and that actions
-are not solely dictated by supervisory commands and previous program state, but
-also by constant evaluation of sensor input from the environment.</p>
+control system is that the environment is being watched constantly and that
+actions are not solely dictated by supervisory commands and previous program
+state, but also by constant evaluation of sensor input from the environment.</p>
 
 <p class=MsoNormal>To be able to experiment with controlling real hardware, a
 code generator for the well known Arduino processor board has been added. <b>Note
@@ -530,33 +540,139 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054801">GUI quick reference</a></h1>
+<h1><a name="_Toc508123208">Installation</a></h1>
+
+<p><span style='font-size:11.0pt;font-family:"Calibri","sans-serif";color:black'>Installing
+on Windows:</span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install Miniconda
+     for Python 3.6 from&nbsp;<span lang=NL style='color:windowtext'><a
+     href="https://conda.io/miniconda.html"><span lang=EN-US>https://conda.io/miniconda.html</span></a></span></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Open
+     a command prompt</span></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Type&nbsp;</span><code><span
+     lang=NL>conda install numpy</span></code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Type&nbsp;</span><code><span
+     lang=NL>conda install pyopengl</span></code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'>Type&nbsp;<code>python
+     -m pip install simpylc</code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install freeglut as
+     explained on&nbsp;<span lang=NL style='color:windowtext'><a
+     href="http://freeglut.sourceforge.net/index.php#download"><span
+     lang=EN-US>http://freeglut.sourceforge.net/index.php#download</span></a></span></li>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:18.0pt;margin-bottom:.0001pt'><span style='color:black'>Alternatively,
+copy&nbsp;</span><code><span style='line-height:115%;color:black'>SimPyLC\\SimPyLC\\freeglut.dll</span></code><span
+style='color:black'>&nbsp;to a directory that's in the DLL search path.</span></p>
+
+<ol start=7 type=1>
+ <li class=MsoNormal style='color:black;line-height:normal'>Optionally
+     copy&nbsp;<code>SimPyLC\\SimPyLC\\QuartzMS.TTF</code>&nbsp;to&nbsp;<code>C:\\Windows\\Fonts</code></li>
+</ol>
+
+<p><span style='font-size:11.0pt;font-family:"Calibri","sans-serif";color:black'>Installing
+on Linux:</span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install Miniconda for
+     Python 3.6 from&nbsp;<span lang=NL style='color:windowtext'><a
+     href="https://conda.io/miniconda.html"><span lang=EN-US>https://conda.io/miniconda.html</span></a></span></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Open
+     a command prompt</span></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Type&nbsp;</span><code><span
+     lang=NL>conda install numpy</span></code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Type&nbsp;</span><code><span
+     lang=NL>conda install pyopengl</span></code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'>Type&nbsp;<code>python
+     -m pip install simpylc</code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install freeglut as
+     explained on&nbsp;<span lang=NL style='color:windowtext'><a
+     href="http://freeglut.sourceforge.net/index.php#download"><span
+     lang=EN-US>http://freeglut.sourceforge.net/index.php#download</span></a></span></li>
+</ol>
+
+<p style='margin-left:18.0pt'><span style='font-size:11.0pt;font-family:"Calibri","sans-serif";
+color:black'>Alternatively, type</span></p>
+
+<pre style='margin-left:18.0pt'><span style='font-size:11.0pt;color:black'>sudo apt-get update</span></pre><pre
+style='margin-left:18.0pt'><span style='font-size:11.0pt;color:black'>sudo apt-get install build-essential</span></pre><pre
+style='margin-left:18.0pt'><span style='font-size:11.0pt;color:black'>sudo apt-get install freeglut3-dev</span></pre>
+
+<p><span style='font-size:11.0pt;font-family:"Calibri","sans-serif";color:black'>Installing
+on OSX:</span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install Miniconda
+     for Python 3.6 from&nbsp;<span lang=NL style='color:windowtext'><a
+     href="https://conda.io/miniconda.html"><span lang=EN-US>https://conda.io/miniconda.html</span></a></span></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Open
+     a command prompt</span></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Type&nbsp;</span><code><span
+     lang=NL>conda install numpy</span></code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'><span lang=NL>Type&nbsp;</span><code><span
+     lang=NL>conda install pyopengl</span></code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'>Type&nbsp;<code>python
+     -m pip install simpylc</code></li>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install freeglut as
+     explained on&nbsp;<span lang=NL style='color:windowtext'><a
+     href="http://freeglut.sourceforge.net/index.php#download"><span
+     lang=EN-US>http://freeglut.sourceforge.net/index.php#download</span></a></span></li>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:18.0pt;margin-bottom:.0001pt'><span lang=NL style='color:black'>Alternatively,
+type&nbsp;</span><code><span lang=NL style='line-height:115%;color:black'>brew
+install freeglut</span></code></p>
+
+<ol start=7 type=1>
+ <li class=MsoNormal style='color:black;line-height:normal'>Install the XQuartz
+     X-window system from&nbsp;<span lang=NL style='color:windowtext'><a
+     href="https://www.xquartz.org/"><span lang=EN-US>https://www.xquartz.org/</span></a></span></li>
+</ol>
+
+<b><span style='font-size:14.0pt;line-height:115%;font-family:"Cambria","serif";
+color:#365F91'><br clear=all style='page-break-before:always'>
+</span></b>
+
+<h1>&nbsp;</h1>
+
+<h1><a name="_Toc508123209">GUI quick reference</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoNormal>[LEFT CLICK] on a field to freeze, type to edit, [RETURN] 
-or [LEFT CLICK] to accept, [ESC] or [RIGHT CLICK] to accept and thaw.</p>
+<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>[LEFT CLICK] on a field or [ENTER] gets you into edit mode.</p>
 
-<p class=MsoNormal>Set the 'run' marker to 0 to stop the clock, set it to 1 to
-start the clock again.</p>
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>[LEFT CLICK] or [ENTER] again gets you out of edit mode and into
+forced mode, values colored orange are frozen.</p>
 
-<p class=MsoNormal>[PGDN] to go to next control page, [PGUP] to go to previous
-one.</p>
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>[RIGHT CLICK] or [ESC] gets you into released mode, values are
+thawed again.</p>
 
-<p class=MsoNormal>[MOUSEWHEEL PRESSED] on a marker field makes it 1, release
-makes it 0 again, both without freezing it</p>
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>[PGUP] and [PGDN] change the currently viewed control page.</p>
 
-<p class=MsoNormal>[MOUSEWHEEL ROTATION] changes the value of a register field,
-without freezing it</p>
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>[WHEEL PRESS] on a marker field makes it 1, release makes it 0
+again, both without freezing it.</p>
 
-<span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
-clear=all style='page-break-before:always'>
-</span>
+<p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>[WHEEL ROTATE] changes the value of a register field, without
+freezing it.<br clear=all style='page-break-before:always'>
+</p>
 
-<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%;
-font-family:"Cambria","serif";color:#365F91'>&nbsp;</span></b></p>
-
-<h1><a name="_Toc434054802">Putting together a simulation</a></h1>
+<h1><a name="_Toc508123210">Putting together a simulation</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -580,7 +696,7 @@ parts that make up the simulation</p>
 <p class=MsoNormal><i>robot.py</i>                             A SimPyLC module
 that simulates the physics of a production robot</p>
 
-<p class=MsoNormal><i>control.py</i>                          A SimPyLC module
+<p class=MsoNormal><i>control.py</i>                           A SimPyLC module
 that contains the control software for the robot</p>
 
 <p class=MsoNormal><i>visualisation.py</i>                               Contains
@@ -621,7 +737,7 @@ clear=all style='page-break-before:always'>
 <p class=MsoNormal><b><span style='font-size:14.0pt;line-height:115%;
 font-family:"Cambria","serif";color:#365F91'>&nbsp;</span></b></p>
 
-<h1><a name="_Toc434054803">Basic control elements</a></h1>
+<h1><a name="_Toc508123211">Basic control elements</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -802,8 +918,8 @@ normal'><b><span style='color:#00B050'>                    �
 the numerical value of the register to value</span></b></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-normal'><b><span style='color:#984806'>                def set (self, trueValue,
-condition = True, falseValue = None):</span></b></p>
+normal'><b><span style='color:#984806'>                def set (self,
+trueValue, condition = True, falseValue = None):</span></b></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
 margin-left:35.4pt;margin-bottom:.0001pt;text-indent:35.4pt;line-height:normal'><b><span
@@ -868,7 +984,8 @@ normal'><b><span style='color:#984806'>                    �
 style='color:#00B050'># Resets the seconds value of timer to 0</span></b></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-normal'><b><span style='color:#984806'>                def reset (self, condition):</span></b></p>
+normal'><b><span style='color:#984806'>                def reset (self,
+condition):</span></b></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
 normal'><b><span style='color:#984806'>                               </span></b><b><span
@@ -904,7 +1021,7 @@ color:#00B050'><br clear=all style='page-break-before:always'>
 <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt'><b><span
 style='color:#00B050'>&nbsp;</span></b></p>
 
-<h1><a name="_Toc434054804">The PLC programming paradigm</a></h1>
+<h1><a name="_Toc508123212">The PLC programming paradigm</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1001,7 +1118,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054805">PLC programming rules</a></h1>
+<h1><a name="_Toc508123213">PLC programming rules</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1067,10 +1184,10 @@ experience. The former boils down to a choice: get acquainted with the textbook
 way of programming in any 3rd generation language (C, C++, Python, C#, Java,
 JavaScript, Fortran, Basic, Pascal, Modula, Ada) using all the bells and
 whistles that these ever growing languages offer. After that, imagine yourself
-standing next to a 40 ton coal grab unloader, swaying at full speed at four meter
-distance from your head, controlled by a computer. And ask yourself: how much
-program complexity do I dare to trust my life to. The latter, experience, is
-what you hopefully will gain by building robot controls using the simulator.</p>
+standing next to a 40 ton coal grab unloader, swaying at full speed at four
+meter distance from your head, controlled by a computer. And ask yourself: how
+much program complexity do I dare to trust my life to. The latter, experience,
+is what you hopefully will gain by building robot controls using the simulator.</p>
 
 <p class=MsoNormal>The third point of the PLC programming rules, be brief and
 concise, is probably the most important one. One way to obtain reliable
@@ -1098,7 +1215,8 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054806">What is wrong with encapsulation and control structures?</a></h1>
+<h1><a name="_Toc508123214">What is wrong with encapsulation and control
+structures?</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1145,7 +1263,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054807">But what makes controlling a robot system so
+<h1><a name="_Toc508123215">But what makes controlling a robot system so
 different?</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -1201,7 +1319,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054808">Control levels</a></h1>
+<h1><a name="_Toc508123216">Control levels</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1337,7 +1455,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054809">Putting a robot system into active operation</a></h1>
+<h1><a name="_Toc508123217">Putting a robot system into active operation</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1392,7 +1510,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054810">The SimPyLC simulator</a></h1>
+<h1><a name="_Toc508123218">The SimPyLC simulator</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1416,8 +1534,8 @@ there's a need or an opportunity, take a peek at the sourcecode of SimPyLC
 itself. So you'll know that there's no magic involved. The goal is to gain the
 insight and confidence that you could have written it yourself and that you
 understand exactly how it behaves and why. This is how PLC's work. And
-hopefully the assignments make clear why these simple and robust control
-devices are ubiquitous in the world of industrial production and logistics.</p>
+hopefully the assignments make clear why these simple and robust control devices
+are ubiquitous in the world of industrial production and logistics.</p>
 
 <span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
 clear=all style='page-break-before:always'>
@@ -1425,7 +1543,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054811">Example of an assignment linked to elementary
+<h1><a name="_Toc508123219">Example of an assignment linked to elementary
 physics</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -1551,7 +1669,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1><a name="_Toc434054812">Code generation for the Arduino</a></h1>
+<h1><a name="_Toc508123220">Code generation for the Arduino</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1601,7 +1719,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h2><a name="_Toc434054813">The arduinoLed example</a></h2>
+<h2><a name="_Toc508123221">The arduinoLed example</a></h2>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1645,7 +1763,7 @@ color:#00B050'><br clear=all style='page-break-before:always'>
 
 <p class=MsoNormal><b><span style='color:#00B050'>&nbsp;</span></b></p>
 
-<h2><a name="_Toc434054814">The arduinoTraficLight example</a></h2>
+<h2><a name="_Toc508123222">The arduinoTraficLight example</a></h2>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1656,7 +1774,7 @@ an Arduino Due, but should also run on an Arduino Uno if PWM is used and the
 port addresses are adapted in <i>native.cpp.</i></span></p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><span
-style='color:black'><img width=477 height=267 id="Afbeelding 0"
+style='color:black'><img border=0 width=477 height=267 id="Afbeelding 0"
 src="simpylc_howto_bestanden/image001.jpg" alt=trafficlights.jpg></span></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 1. Hardware used to test the traffic light example.</p>
@@ -1755,19 +1873,19 @@ style='color:black'>&nbsp;</span></p>
 
 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
 text-align:center;page-break-after:avoid'><span style='color:black'><img
-width=604 height=358 id="Afbeelding 5"
+border=0 width=604 height=358 id="Afbeelding 5"
 src="simpylc_howto_bestanden/image002.jpg"></span></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 2. Timing chart of the traffic light example in regular mode.</p>
 
 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
 text-align:center;page-break-after:avoid'><span style='color:black'><img
-width=562 height=666 src="simpylc_howto_bestanden/image003.jpg"></span></p>
+border=0 width=562 height=666 src="simpylc_howto_bestanden/image003.jpg"></span></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 3. Control panel of the traffic light example.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=605 height=431 id="Afbeelding 1"
+border=0 width=605 height=431 id="Afbeelding 1"
 src="simpylc_howto_bestanden/image004.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 4. Visualisation of the traffic light example.</p>
@@ -1778,7 +1896,7 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h2><a name="_Toc434054815">The arduinoStove example</a></h2>
+<h2><a name="_Toc508123223">The arduinoStove example</a></h2>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1800,7 +1918,7 @@ The longer these buttons are pressed, the more speedy the adjustment changes.</p
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=390 height=245 id="Afbeelding 4"
+border=0 width=390 height=245 id="Afbeelding 4"
 src="simpylc_howto_bestanden/image005.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 5. Hardware used to test the stove example.</p>
@@ -1814,7 +1932,7 @@ the simulator.  The buzzer is visualized by a flashlight. To properly view its
 flashes in the simulation, lower its <i>buzzerBaseFreq</i> to e.g. 4 Hz.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=403 height=278 id="Afbeelding 7"
+border=0 width=403 height=278 id="Afbeelding 7"
 src="simpylc_howto_bestanden/image006.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 6. Visualisation of the stove example. Only one digit lights up in this snapshot, since the
@@ -1827,13 +1945,13 @@ to start with. It has been added because it resembles an assignment that my
 students have to work on.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=604 height=452 id="Afbeelding 10"
+border=0 width=604 height=452 id="Afbeelding 10"
 src="simpylc_howto_bestanden/image007.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 7. Control panel of the stove example.</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-width=605 height=289 id="Afbeelding 11"
+border=0 width=605 height=289 id="Afbeelding 11"
 src="simpylc_howto_bestanden/image008.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'>Figure 8. Timing chart of the stove example.</p>
@@ -1897,9 +2015,9 @@ color:#7030A0'><br clear=all style='page-break-before:always'>
 <p class=MsoNormal><span style='font-size:10.0pt;line-height:115%;font-family:
 "Comic Sans MS";color:#7030A0'>&nbsp;</span></p>
 
-<h1><a name="_Toc434054816">Some timing hints and pitfalls</a></h1>
+<h1><a name="_Toc508123224">Some timing hints and pitfalls</a></h1>
 
-<h2><a name="_Toc434054817">Integration and differentiation</a></h2>
+<h2><a name="_Toc508123225">Integration and differentiation</a></h2>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1948,7 +2066,7 @@ RESET  THE TIMER EACH DAY AND COUNT THE NUMBER OF DAYS</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h2><a name="_Toc434054818">Edge triggering for buttons and timers</a></h2>
+<h2><a name="_Toc508123226">Edge triggering for buttons and timers</a></h2>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1957,9 +2075,9 @@ a next step etc., you have to use a oneshot to avoid incrementing or stepping
 multiple times at only one button press. Failing to recognize this is a common
 source of problems. </p>
 
-<p class=MsoNormal>Less clear is the necessity to use a oneshot if you want a
-timer to trigger certain events. Suppose you want to  increment a counter every
-3 seconds. The simplest thing would be to use a timer, reset it to 0 after 3
+<p class=MsoNormal>Less clear is the necessity to use a oneshot if you want a timer
+to trigger certain events. Suppose you want to  increment a counter every 3
+seconds. The simplest thing would be to use a timer, reset it to 0 after 3
 seconds and increment the counter whenever the timer is 0. On the simulator
 this would work fine. However, SimPyLC timers running on the Arduino have a
 resolution of 1 ms, which is more than the sweeptime. This means that a timer
@@ -1973,11 +2091,11 @@ clear=all style='page-break-before:always'>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h1>Making a hierarchical visualistation</h1>
+<h1><a name="_Toc508123227">Making a hierarchical visualistation</a></h1>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h2>Principle</h2>
+<h2><a name="_Toc508123228">Principle</a></h2>
 
 <p class=MsoNormal>&nbsp;</p>
 
