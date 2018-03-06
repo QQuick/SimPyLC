@@ -54,10 +54,9 @@ Installing on Windows:
 3. Type `conda install numpy`
 4. Type `conda install pyopengl`
 5. Type `python -m pip install simpylc`
-6. Install freeglut as explained on http://freeglut.sourceforge.net/index.php#download
-
- Alternatively, copy `SimPyLC\SimPyLC\freeglut.dll` to a directory that's in the DLL search path.
-    
+6. Perform one of the following alternatives:
+    1. Install freeglut as explained on http://freeglut.sourceforge.net/index.php#download
+    2. Copy `SimPyLC\SimPyLC\freeglut.dll` to any directory in the Windows DLL path
 7. Optionally copy `SimPyLC\SimPyLC\QuartzMS.TTF` to `C:\\Windows\\Fonts`
 
 Installing on Linux:
@@ -67,13 +66,12 @@ Installing on Linux:
 3. Type `conda install numpy`
 4. Type `conda install pyopengl`
 5. Type `python -m pip install simpylc`
-6. Install freeglut as explained on http://freeglut.sourceforge.net/index.php#download
-   
- Alternatively, type ::
-
-    sudo apt-get update
-    sudo apt-get install build-essential
-    sudo apt-get install freeglut3-dev
+6. Perform one of the following alternatives:
+    1.  Install freeglut as explained on http://freeglut.sourceforge.net/index.php#download.
+    2. Type the following command sequence:
+        - `sudo apt-get update`
+        - `sudo apt-get install build-essential`
+        - `sudo apt-get install freeglut3-dev`
 
 Installing on OSX:
 
@@ -82,11 +80,10 @@ Installing on OSX:
 3. Type `conda install numpy`
 4. Type `conda install pyopengl`
 5. Type `python -m pip install simpylc`
-6. Install FreeGlut as explained on http://freeglut.sourceforge.net/index.php#download
- 
- Alternatively, type `brew install freeglut`
-    
-7. Install the XQuartz X-window system from https://www.xquartz.org/
+6. Perform one of the following alternatives:
+    1. Install FreeGlut as explained on http://freeglut.sourceforge.net/index.php#download
+    2. Type `brew install freeglut`
+7. Install the XQuartz X-window system from https://www.xquartz.org
 
 Usage:
 
