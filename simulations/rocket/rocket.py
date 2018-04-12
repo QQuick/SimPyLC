@@ -30,6 +30,8 @@ from SimPyLC import *
 
 from common import *
 
+from transforms import *
+
 # General remarks:
 # - The physical reality of precession indicates that rotation matrix cannot be
 #   found by applying angular acceleration in x, y and z direction successively.
@@ -116,15 +118,26 @@ class Rocket (Module):
         self.torqueY = Register ()
         self.torqueZ = Register ()
                 
-        self._shipRotQuat = quatFromAxAng (numpy.array ((1, 0, 0)), 0)
+        if useQuaternions:
+            self._shipRotQuat = quatFromAxAng (numpy.array ((1, 0, 0)), 0)
         
-        self.group ('ship rotation quaternion')
-        self.shipRotQuat0 = Register ()
-        self.shipRotQuat1 = Register ()
-        self.shipRotQuat2 = Register ()
-        self.shipRotQuat3 = Register ()
-        
-        self._shipRotMat = rotMatFromQuat (self._shipRotQuat)
+            self.group ('ship rotation quaternion')
+            self.shipRotQuat0 = Register ()
+            self.shipRotQuat1 = Register ()
+            self.shipRotQuat2 = Register ()
+            self.shipRotQuat3 = Register ()
+            self._shipRotMat = rotMatFromQuat (self._shipRotQuat)
+        else:
+            self._shipRotMat = numpy.array ([   # Columns are tangent (front), normal (up) and binormal (starboard) of ship
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1]
+            ])
+                              
+        self.group ('attitude')
+        self.attitudeX = Register ()
+        self.attitudeY = Register ()
+        self.attitudeZ = Register ()
         
         self.group ('earth gravity', True)
         self.distEarthSurf = Register ()        
@@ -196,7 +209,11 @@ class Rocket (Module):
         self.blueYellowThrust.set (shipForceVec [1])
         self.greenRedThrust.set (shipForceVec [0])
         
-        worldForceVec = quatVecRot (self._shipRotQuat, shipForceVec)
+        if useQuaternions:
+            worldForceVec = quatVecRot (self._shipRotQuat, shipForceVec)
+        else:
+            worldForceVec = self._shipRotMat @ shipForceVec 
+            
         self.thrustX.set (worldForceVec [0])
         self.thrustY.set (worldForceVec [1])
         self.thrustZ.set (worldForceVec [2])
@@ -246,7 +263,10 @@ class Rocket (Module):
         self.greenRedTorque.set (-self.greenRedThrust * self.effectiveHeight / 2)
         shipTorqueVec = numpy.array ((self.blueYellowTorque (), self.greenRedTorque (), 0))
         
-        rawTorqueVec = quatVecRot (self._shipRotQuat, shipTorqueVec)
+        if useQuaternions:
+            rawTorqueVec = quatVecRot (self._shipRotQuat, shipTorqueVec)
+        else:
+            rawTorqueVec = self._shipRotMat @ shipTorqueVec
         self.torqueX.set (rawTorqueVec [0])
         self.torqueY.set (rawTorqueVec [1])
         self.torqueZ.set (rawTorqueVec [2])
@@ -263,20 +283,32 @@ class Rocket (Module):
         self.angVelocZ.set (self.angVelocZ + self.angAccelZ * world.period)
         angVelocVec = radiansPerDegree * numpy.array ((self.angVelocX (), self.angVelocY (), self.angVelocZ ()))
         
+        # Integration of rotation
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
-        self._shipRotQuat = normized (self._shipRotQuat + quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ())
-        
-        self.shipRotQuat0.set (self._shipRotQuat [0])
-        self.shipRotQuat1.set (self._shipRotQuat [1])
-        self.shipRotQuat2.set (self._shipRotQuat [2])
-        self.shipRotQuat3.set (self._shipRotQuat [3])
-        
-        self._shipRotQuat [0] = self.shipRotQuat0 ()
-        self._shipRotQuat [1] = self.shipRotQuat1 ()
-        self._shipRotQuat [2] = self.shipRotQuat2 ()
-        self._shipRotQuat [3] = self.shipRotQuat3 ()
-        
-        self._shipRotMat = rotMatFromQuat (self._shipRotQuat)        
+        if useQuaternions:
+            # Quaternions are much more numerically stable
+            self._shipRotQuat = normized (self._shipRotQuat + quatMul (quatFromVec (angVelocVec), self._shipRotQuat) / 2 * world.period ())
+            
+            self.shipRotQuat0.set (self._shipRotQuat [0])
+            self.shipRotQuat1.set (self._shipRotQuat [1])
+            self.shipRotQuat2.set (self._shipRotQuat [2])
+            self.shipRotQuat3.set (self._shipRotQuat [3])
+            
+            self._shipRotQuat [0] = self.shipRotQuat0 ()
+            self._shipRotQuat [1] = self.shipRotQuat1 ()
+            self._shipRotQuat [2] = self.shipRotQuat2 ()
+            self._shipRotQuat [3] = self.shipRotQuat3 ()
+            
+            self._shipRotMat = rotMatFromQuat (self._shipRotQuat)        
+        else:
+            # N.B. The rotation matrix cannot be found by applying angular velocity in x, y and z direction successively
+            self._shipRotMat = self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat, axisb = 0, axisc = 0) * world.period ()
+            modifiedGramSchmidt (self._shipRotMat)
+            
+        rawAttitudeVec = getXyzAngles (self._shipRotMat)
+        self.attitudeX.set (rawAttitudeVec [0])
+        self.attitudeY.set (rawAttitudeVec [1])
+        self.attitudeZ.set (rawAttitudeVec [2])
                 
         self.part ('sweep time measurement')
         self.sweepMin.set (world.period, world.period < self.sweepMin)

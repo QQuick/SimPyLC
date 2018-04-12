@@ -28,6 +28,8 @@ import math
 
 from SimPyLC import *
 
+useQuaternions = False
+
 g = 10
 
 earthMoonDist = 500

@@ -26,13 +26,22 @@
 
 from SimPyLC import *
 
+from common import *
+
 class Timing (Chart):
     def __init__ (self):
         Chart.__init__ (self)
         
     def define (self):
-        self.channel (world.rocket.shipRotQuat0, red, -1, 1, 100)
-        self.channel (world.rocket.shipRotQuat1, green, -1, 1, 100)
-        self.channel (world.rocket.shipRotQuat2, blue, -1, 1, 100)     
-        self.channel (world.rocket.shipRotQuat3, yellow, -1, 1, 100)     
-                
+        '''
+        if useQuaternions:
+            self.channel (world.rocket.shipRotQuat0, white, -1, 1, 100)
+            self.channel (world.rocket.shipRotQuat1, white, -1, 1, 100)
+            self.channel (world.rocket.shipRotQuat2, white, -1, 1, 100)     
+            self.channel (world.rocket.shipRotQuat3, white, -1, 1, 100)
+        '''
+        
+        self.channel (world.rocket.attitudeX, red, -180, 180, 100)
+        self.channel (world.rocket.attitudeY, green, -180, 180, 100)
+        self.channel (world.rocket.attitudeZ, blue, -180, 180, 100)
+        
