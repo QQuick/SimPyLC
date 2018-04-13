@@ -28,7 +28,8 @@ import math
 
 from SimPyLC import *
 
-useQuaternions = False
+useQuaternions = True
+useGramSchmidt = True   # Only matters if useQuaternions = False
 
 g = 10
 

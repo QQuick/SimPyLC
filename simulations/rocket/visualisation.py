@@ -32,6 +32,17 @@ from common import *
 
 seed ()
 
+'''
+
+      z
+      |
+      o -- y
+     /
+    x
+
+'''
+
+
 class Visualisation (Scene):
     def __init__ (self):
         Scene.__init__ (self)
@@ -55,8 +66,8 @@ class Visualisation (Scene):
  
     def display (self):
         self.camera (
-            position = tEva ((world.rocket.positionX + 5, world.rocket.positionY, world.rocket.positionZ + 3)),
-            focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ + 0.4))
+            position = tEva ((world.rocket.positionX + 4, world.rocket.positionY, world.rocket.positionZ)),
+            focus = tEva ((world.rocket.positionX, world.rocket.positionY, world.rocket.positionZ + 1.5))
         )
     
         self.earth ()

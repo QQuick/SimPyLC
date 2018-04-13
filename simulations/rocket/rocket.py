@@ -197,13 +197,18 @@ class Rocket (Module):
 
         self.part ('linear movement')
         
-        thrusterRotQuat = quatMul (
-            quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle),
-            quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle)
-        )
-        
         thrusterForceVec = numpy.array ((0, 0, self.thrust ()))
-        shipForceVec = quatVecRot (thrusterRotQuat, thrusterForceVec)
+        
+        if useQuaternions:
+            thrusterRotQuat = quatMul (
+                quatFromAxAng (numpy.array ((1, 0, 0)), self.blueYellowAngle),
+                quatFromAxAng (numpy.array ((0, 1, 0)), -self.greenRedAngle)
+            )
+            shipForceVec = quatVecRot (thrusterRotQuat, thrusterForceVec)
+        else:
+            # Local coord sys, so "forward" order
+            thrusterRotMat = getRotXMat (self.blueYellowAngle) @ getRotYMat (-self.greenRedAngle)    
+            shipForceVec = thrusterRotMat @ thrusterForceVec
         
         self.forwardThrust.set (shipForceVec [2])
         self.blueYellowThrust.set (shipForceVec [1])
@@ -303,7 +308,8 @@ class Rocket (Module):
         else:
             # N.B. The rotation matrix cannot be found by applying angular velocity in x, y and z direction successively
             self._shipRotMat = self._shipRotMat + numpy.cross (angVelocVec, self._shipRotMat, axisb = 0, axisc = 0) * world.period ()
-            modifiedGramSchmidt (self._shipRotMat)
+            if useGramSchmidt:
+                modifiedGramSchmidt (self._shipRotMat)
             
         rawAttitudeVec = getXyzAngles (self._shipRotMat)
         self.attitudeX.set (rawAttitudeVec [0])
