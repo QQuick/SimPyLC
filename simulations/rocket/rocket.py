@@ -288,7 +288,7 @@ class Rocket (Module):
         self.angVelocZ.set (self.angVelocZ + self.angAccelZ * world.period)
         angVelocVec = radiansPerDegree * numpy.array ((self.angVelocX (), self.angVelocY (), self.angVelocZ ()))
         
-        # Integration of rotation
+        # Actual integration over one timestep
         # Source: Friendly F# and C++ (fun with game physics), by Dr Giuseppe Maggiore and Dino Dini, May 22, 2014
         if useQuaternions:
             # Quaternions are much more numerically stable
