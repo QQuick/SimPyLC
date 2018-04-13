@@ -29,7 +29,7 @@ import math
 from SimPyLC import *
 
 useQuaternions = True
-useGramSchmidt = True   # Only matters if useQuaternions = False
+useGramSchmidt = True   # Only matters if useQuaternions == False
 
 g = 10
 
