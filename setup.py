@@ -24,11 +24,7 @@ setup (
 	packages = ['SimPyLC'],	
 	include_package_data = True,
 	install_requires = ['numpy', 'pyopengl'],
-	entry_points = {
-		'console_scripts': [
-			'splc = SimPyLC.splc:main'
-		]
-	},    
+	entry_points = {},    
 	classifiers = [
 		'Development Status :: 5 - Production/Stable',
 		'Intended Audience :: Developers',
