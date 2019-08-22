@@ -33,6 +33,7 @@ Are you looking for impressive graphics: Look elsewhere. Do you want to gain inv
 What's new
 ----------
 
+- Command line tool *splc* made available
 - Parameter attitude added to Thing.__call__ to be able to use rotation matrix rather than Euler angles
 - Document simpylc_howto updated and renamed to pothole case
 - Boolean circuits can now be switched by pressing the mousewheel

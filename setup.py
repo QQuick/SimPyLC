@@ -23,7 +23,12 @@ setup (
 	author_email = 'jacques.de.hooge@qquick.org',
 	packages = ['SimPyLC'],	
 	include_package_data = True,
-	install_requires = [],
+	install_requires = ['numpy', 'pyopengl'],
+	entry_points = {
+		'console_scripts': [
+			'splc' = SimPyLC.splc:main'
+		]
+	},    
 	classifiers = [
 		'Development Status :: 5 - Production/Stable',
 		'Intended Audience :: Developers',
@@ -32,7 +37,6 @@ setup (
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Operating System :: Microsoft :: Windows',
 		'Operating System :: POSIX :: Linux',
-		'Programming Language :: Python :: 3.5',
-		'Programming Language :: Python :: 3.6'
+		'Programming Language :: Python :: 3.7',
 	],
 )
