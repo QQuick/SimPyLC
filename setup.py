@@ -26,7 +26,7 @@ setup (
 	install_requires = ['numpy', 'pyopengl'],
 	entry_points = {
 		'console_scripts': [
-			'splc' = SimPyLC.splc:main'
+			'splc = SimPyLC.splc:main'
 		]
 	},    
 	classifiers = [
