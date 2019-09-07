@@ -136,7 +136,7 @@ class Scene:
         glutReshapeFunc (self._reshape)
         
     def _display (self):
-        # [object coords] > (model view matrix) > [eye coords] (projection matrix) > [clip coords]
+        # [object coords] -> (model view matrix) -> [eye coords] (projection matrix) -> [clip coords]
         
         # Operations related to projection matrix: gluPerspective, gluLookat
         # They will work on the camera

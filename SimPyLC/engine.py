@@ -445,6 +445,9 @@ def asin (anObject):
 def acos (anObject):
     return math.acos (evaluate (anObject)) * degreesPerRadian
 
+def atan (anObject):
+    return math.atan (evaluate (anObject)) * degreesPerRadian
+
 def atan2 (object0, object1):
     return math.atan2 (evaluate (object0), evaluate (object1)) * degreesPerRadian
     
