@@ -26,6 +26,7 @@
 
 from time import *
 from inspect import *
+from sys import *
 import builtins
 
 from OpenGL.GL import *
@@ -34,6 +35,7 @@ from OpenGL.GLU import *
 
 # from numpy import *
 from .base import *
+from .collisions import *
 
 useTexture = False
 if useTexture:
@@ -152,6 +154,7 @@ class Scene:
             
             glPushMatrix ()
             self.display () # Since we'll render in GL_MODELVIEW mode, operations in self.display () will move the objects
+            self._collide ()
             glPopMatrix ()
 
             glFlush ()
@@ -171,9 +174,22 @@ class Scene:
         if self._displayMode == Scene._dmUpdate:
             self.display ()
             self._displayMode = Scene._dmRender
+            
+    def _collide (self):            
+        for colliderGroup in Thing.groups.values ():
+            for thing in colliderGroup:
+                thing.computeCollisionFields ()
+            for collideeGroup in Thing.groups.values ():
+                if colliderGroup == collideeGroup:
+                    break
+                for collider in colliderGroup:
+                    for collidee in collideeGroup:
+                        if collision (collider, collidee):
+                            print ('Collision!')
     
-class Thing:
+class Thing (Box):
     instances = []
+    groups = {}
 
     def __init__ (
         self,
@@ -188,7 +204,9 @@ class Thing:
 
         rest = (0, 0, 0),   # Inital position of the point that stays at rest when scaling dynamically
         
-        color = (1, 1, 1)   # Initial color
+        color = (1, 1, 1),  # Initial color
+        
+        group = None        # Assigned to no collision group
     ):
         self.center = center
         self.size = size
@@ -197,8 +215,16 @@ class Thing:
         self.joint = joint
         self.pivot = pivot
         self.color = color
+        self.group = group
         
         Thing.instances.append (self)
+        
+        if self.group != None:
+            if self.group in Thing.groups:
+                Thing.groups [self.group] .append (self)
+            else:
+                Thing.groups [self.group] = [self]
+        
         self.checked = False
         
     def _draw (self):
@@ -264,32 +290,35 @@ class Thing:
                 #   - Transformations appear in the code in normal order, so the last transformation that affecs the object is the nearest to drawing the object in the code
                 #   - Transformations move the  coordinate frame in the opposite direction
             
-                glPushMatrix ()                                                                 # Remember transformation state before drawing this _thing
-                glTranslate (*tAdd (tAdd (self.center, self.position), self.joint))             # 8.    First translate object to get shifted joint into right place
-                                                                                                #       (See scene_transformations.jpg)
-                if self.attitude is None:                                                       # Use 'is' to be NumPy compatible
-                    glRotate (evaluate (self.rotation), *self.pivot)                            # 7b.   Rotate object object over dynamic angle around the shifted joint vector
+                glPushMatrix ()                                                                     # Remember transformation state before drawing this _thing
+                glTranslate (*tAdd (tAdd (self.center, self.position), self.joint))                 # 8.    First translate object to get shifted joint into right place
+                                                                                                    #       (See scene_transformations.jpg)
+                if self.attitude is None:                                                           # Use 'is' to be NumPy compatible
+                    glRotate (evaluate (self.rotation), *self.pivot)                                # 7b.   Rotate object object over dynamic angle around the shifted joint vector
                 else:
-                    glMultMatrixd ((                                                            # 7a.   Rotate object according to dynamic attitude around shifted joint point
+                    glMultMatrixd ((                                                                # 7a.   Rotate object according to dynamic attitude around shifted joint point
                         self.attitude [0][0],   self.attitude [1][0],   self.attitude [2][0],   0,
                         self.attitude [0][1],   self.attitude [1][1],   self.attitude [2][1],   0,
                         self.attitude [0][2],   self.attitude [1][2],   self.attitude [2][2],   0,
                         0,                      0,                      0,                      1
                     ))
-                                                                                                #       (If arm shifts out, joint shifts in)
-                glTranslate (*tEva (self.shift))                                                # 6.    Translate object to put shifted joint in the origin
-                glScale (*tEva (self.scale))                                                    # 5.    Scale with respect to joint that's in the origin
-                glTranslate (*tNeg (self.joint))                                                # 4.    Translate object to put joint in the origin
+                                                                                                    #       (If arm shifts out, joint shifts in)
+                glTranslate (*tEva (self.shift))                                                    # 6.    Translate object to put shifted joint in the origin
+                glScale (*tEva (self.scale))                                                        # 5.    Scale with respect to joint that's in the origin
+                glTranslate (*tNeg (self.joint))                                                    # 4.    Translate object to put joint in the origin
                 
                 glPushMatrix ()
-                glRotate (self.angle, *self.axis)                                               # 3.    Rotate object over initial angle to put it in natural position
-                glScale (*self.size)                                                            # 2.    Scale to natural size
+                glRotate (self.angle, *self.axis)                                                   # 3.    Rotate object over initial angle to put it in natural position
+                glScale (*self.size)                                                                # 2.    Scale to natural size
+                
+                self.modelViewMatrix = [[c for c in r] for r in glGetDouble (GL_MODELVIEW_MATRIX) ] # Save model view matrix for collision testing
+                
                 glColor (*self.color)
-                self._draw ()                                                                   # 1.    Place object with center in origin
+                self._draw ()                                                                       # 1.    Place object with center in origin
                 glPopMatrix ()
                 
-                parts ()                                                                        # Draw parts in local coord frame
-                glPopMatrix ()                                                                  # Restore transformation state from before drawing this
+                parts ()                                                                            # Draw parts in local coord frame
+                glPopMatrix ()                                                                      # Restore transformation state from before drawing this
         
         return 0    # Make concatenable, e.g. by the + operator
         
