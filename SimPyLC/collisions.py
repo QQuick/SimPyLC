@@ -12,55 +12,65 @@ Separation axes are
     3 x 3 cross products between those edges
 '''
 
-from vectors import *
+from .vectors import *
 
 class Box:
+    def __init__ (self):
+        # OpenGL uses row vectors
+        
+        self.startPositionVec = (0, 0, 0, 1)
+
+        self.startBaseVecs = msMul ((
+            (0, 0, 1),
+            (0, 1, 0),
+            (1, 0, 0)
+        ), 0.5) [:3]
+
+
+        self.startEdgeVecs = msMul ((
+            ( 1,  1,  1),
+            ( 1,  1, -1),
+            ( 1, -1,  1),
+            (-1,  1,  1)
+        ), 0.5)
+
     def computeCollisionFields (self):
-        self.positionVec = mMul ((0, 0, 0, 1), self.modelViewMatrix)    # OpenGL uses row vectors
-        self.radiusVecs = msMul (self.modelViewMatrix [:3], 0.5)        # Radii of inner ellipsoid
+        self.positionVec = mMul (self.startPositionVec, self.modelViewMatrix)
+        
+        rotationMatrix = self.modelViewMatrix [:3]                              # Leave out translation row (OpenGL uses row vectors
+        self.baseVecs = mMul (self.startBaseVecs, rotationMatrix)
+        self.edgeVecs = mMul (self.startEdgeVecs, rotationMatrix)
 
-def _separate (distanceVec, separAxisVec, boxes):
-    projectedDistance = abs (vIpr (distanceVec, separAxisVec))          # Factor |separAxisVec| cancels out below
+def _separate (distanceVec, separAxisVec, boxPair):
+    projectedDistance = abs (vIpr (distanceVec, separAxisVec))                  # Factor |separAxisVec| cancels out below
+    
+    for edgeVec0 in boxPair [0] .edgeVecs:
+        for edgeVec1 in boxPair [1] .edgeVecs:
+        
+            # Test for >= rather than >, since if baseVecs are parallel, separAxisVec will be 0 vec, so inner prods all 0
 
-    print ()
-    print (111, distanceVec, separAxisVec, abs (vIpr (distanceVec, separAxisVec)))
-
-    for radiusVec0 in boxes [0] .radiusVecs:
-        for radiusVec1 in boxes [1] .radiusVecs:
-            print (222, radiusVec0, separAxisVec, abs (vIpr (radiusVec0, separAxisVec)))
-            print (333, radiusVec1, separAxisVec, abs (vIpr (radiusVec1, separAxisVec)))
-            print (444, abs (vIpr (radiusVec0, separAxisVec)) + abs (vIpr (radiusVec1, separAxisVec)), projectedDistance)
-            print (555, abs (vIpr (radiusVec0, separAxisVec)) + abs (vIpr (radiusVec1, separAxisVec)) > projectedDistance)
-            if abs (vIpr (radiusVec0, separAxisVec)) + abs (vIpr (radiusVec1, separAxisVec)) > projectedDistance:
-                print ('     return not sep   \n')
+            if abs (vIpr (edgeVec0, separAxisVec)) + abs (vIpr (edgeVec1, separAxisVec)) >= projectedDistance:
                 return False
-        print ()
     else:
-        print ('   return separate \n')
         return True
 
-def collision (*boxes):
-    distanceVec = vSub (boxes [1] .positionVec, boxes [0] .positionVec)
+def collision (*boxPair):
+    distanceVec = vSub (boxPair [1] .positionVec, boxPair [0] .positionVec)
 
-    for box in boxes:
-        for radiusVec in box.radiusVecs:
-            if _separate (distanceVec, radiusVec, boxes):
-                return False
-    '''
-    for radiusVec0 in boxes [0] .radiusVecs:
-        for radiusVec1 in boxes [1] .radiusVecs:
-            if _separate (distanceVec, vOpr (radiusVec0, radiusVec1), boxes):
-                print (222, radiusVec0, radiusVec1)
-                return False
-    '''
+    # Try 2 x 3 base vectors as possible separation axes
     
-    print (
-        distanceVec,
-        boxes [0] .positionVec, '   ',
-        boxes [0].radiusVecs, '  -  ',
-        boxes [1] .positionVec, '   ',
-        boxes [1] .radiusVecs
-    )
+    for box in boxPair:
+        for baseVec in box.baseVecs:
+            if _separate (distanceVec, baseVec, boxPair):
+                return False
     
+    # Try 3 x 3 outer products of base vectors as possible separation axes
+    
+    for baseVec0 in boxPair [0] .baseVecs:
+        for baseVec1 in boxPair [1] .baseVecs:
+            if _separate (distanceVec, vOpr (baseVec0, baseVec1), boxPair):
+                return False
+    
+    # None of the possible separation axes held up, so it's a collision
     return True
     

@@ -81,6 +81,7 @@ class Scene:
         self.camera = Camera (tracking = False)
         self._displayMode = Scene._dmCheck
         self._async = False
+        self.collided = False
         
     def _registerWithCamera (self):
         self.camera.scene = self
@@ -175,7 +176,8 @@ class Scene:
             self.display ()
             self._displayMode = Scene._dmRender
             
-    def _collide (self):            
+    def _collide (self):
+        self.collided = False
         for colliderGroup in Thing.groups.values ():
             for thing in colliderGroup:
                 thing.computeCollisionFields ()
@@ -185,7 +187,8 @@ class Scene:
                 for collider in colliderGroup:
                     for collidee in collideeGroup:
                         if collision (collider, collidee):
-                            print ('Collision!')
+                            self.collided = True
+                            return
     
 class Thing (Box):
     instances = []
@@ -216,6 +219,8 @@ class Thing (Box):
         self.pivot = pivot
         self.color = color
         self.group = group
+        
+        super () .__init__ ()
         
         Thing.instances.append (self)
         
