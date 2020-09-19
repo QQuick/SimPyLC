@@ -132,8 +132,9 @@ class Cell:
         if self.element._isA ('Register', 'Timer'):
             try:
                 self.element._write (round (eval (self.entry.get ())) + delta)
-            except:
-                print (traceback.format_exc ())
+            except:     # Why is this needed under Linux?
+                pass
+                # print (traceback.format_exc ())
 
 class _Filler:
     def __init__ (self, columnIndex):
