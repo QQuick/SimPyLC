@@ -57,8 +57,7 @@ class Coder:
         
         self.moduleNameList = [module._name for module in modules] if ('*' in tailArgs or 'world.py' in tailArgs) else [arg for arg in tailArgs if not '=' in arg]
         '''
-        Linux will expand '*' to all file names in the current directory.
-        This is called 'globbing'.
+        Linux will expand '*' to all file names in the current directory, this is called 'globbing'.
         By checking on 'world.py' we know that globbing took place, and pretend we saw the '*' instead.
         This may give problems if SimPyLC is not run from the source directory of the user code.
         It's possible add a check for that if it proves to be a problem in practice.
