@@ -60,8 +60,8 @@ class Channel (Entry):
         Entry.__init__ (self, chart, index, height)
         self.circuit = circuit
 
-        self.min = float (min)
-        self.max = float (max)
+        self.min = float (evaluate (min))
+        self.max = float (evaluate (max))
         self.mean = (self.min + self.max) / 2
         
         self.ceiling = self.top + 2

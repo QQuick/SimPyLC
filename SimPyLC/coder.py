@@ -362,39 +362,44 @@ class GeneratingVisitor (NodeVisitor):
             
     def visit_Assign (self, node):
         if self.init:
-            if node.value.func.id == 'Runner':
+            if type (node.value.func) == Attribute:
+                aType = node.value.func.attr
+            else:   # Free function
+                aType = node.value.func.id
+                            
+            if aType == 'Runner':
                 self.surpressSemicolon = True
                 self.surpressNewline = True
             else:
-                coder.symbolTable ['{0}{1}{2}'.format (coder.plcPrefix, self.getModulePrefix (node.targets[0] .value.id), node.targets [0] .attr)] = node.value.func.id
+                coder.symbolTable ['{0}{1}{2}'.format (coder.plcPrefix, self.getModulePrefix (node.targets[0] .value.id), node.targets [0] .attr)] = aType
                 self.emit ('{0}{1}{2} {1}{3}{4}'.format (
                     self.getIndent (),
                     coder.plcPrefix,
-                    node.value.func.id,
+                    aType,
                     self.getModulePrefix (node.targets [0] .value.id),
                     node.targets [0] .attr
                 ))
                 self.emit (' = ')           
                 
-                if node.value.func.id in ('Marker', 'Latch'):
+                if aType in ('Marker', 'Latch'):
                     if node.value.args:
                         self.emit ('{0}{1}'.format (coder.plcPrefix, node.value.args [0] .value))
                     else:
                         self.emit ('{0}False'.format (coder.plcPrefix))
-                elif node.value.func.id == 'Oneshot':
+                elif aType == 'Oneshot':
                     if node.value.args:
                         self.emit ('{{0}{1}, {0}{False}}'.format (coder.plcPrefix, node.value.args [0] .id))
                     else:
                         self.emit ('{{{0}False, {0}False}}'.format (coder.plcPrefix))
-                elif node.value.func.id == 'Register':
+                elif aType == 'Register':
                     if node.value.args:
                         self.emit ('{0}'.format (node.value.args [0] .n))
                     else:
                         self.emit ('0')
-                elif node.value.func.id == 'Timer':
+                elif aType == 'Timer':
                     self.emit ('{{{0}nowExact, {0}nowInexact}}'.format (coder.plcPrefix))
                 else:
-                    raise Exception (self.getError (node, 'Element {0} not allowed here'.format (node.value.func.id)))
+                    raise Exception (self.getError (node, 'Element {0} not allowed here'.format (aType)))
         else:
             raise Exception (self.getError (node, 'Operator = not allowed here'))
 
