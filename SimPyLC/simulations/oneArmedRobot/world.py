@@ -37,4 +37,4 @@ from control import *
 from visualisation import *
 from timing import *
 
-World (Control (), Robot (), Visualisation (), Timing ())
+World (Control, Robot, Visualisation, Timing)

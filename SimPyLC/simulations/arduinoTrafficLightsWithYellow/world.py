@@ -36,4 +36,4 @@ from trafficLights import *
 from timing import *
 from visualisation import *
 
-World (TrafficLights (), Timing (), Visualisation ())
+World (TrafficLights, Timing, Visualisation)

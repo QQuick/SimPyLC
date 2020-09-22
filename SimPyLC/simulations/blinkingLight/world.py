@@ -35,4 +35,4 @@ from SimPyLC import *
 from blinkingLight import *
 from timing import *
         
-World (BlinkingLight (), Timing ())
+World (BlinkingLight, Timing)

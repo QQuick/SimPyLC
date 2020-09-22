@@ -30,6 +30,7 @@ from threading import *
 from traceback import *
 import math
 import builtins
+import curses as cs
 
 from .base import *
 from .gui import *
@@ -327,19 +328,23 @@ class World (Thread):
     def __init__ (self, *parameters):
         Thread.__init__ (self)
         
-        Module._current = None  # Place further elements outside any module
         World._modules = []
         World._scenes = []
         World._charts = []
+        World._Agents = []
         
         for parameter in parameters:
-            if isinstance (parameter, Module):
-                World._modules.append (parameter)
-            elif isinstance (parameter, Scene):
-                World._scenes.append (parameter)
-            elif isinstance (parameter, Chart):
-                World._charts.append (parameter)
+            if issubclass (parameter, Module):
+                World._modules.append (parameter ())
+            elif issubclass (parameter, Scene):
+                World._scenes.append (parameter ())
+            elif issubclass (parameter, Chart):
+                World._charts.append (parameter ())
+            else:
+                World._Agents.append (parameter)
                 
+        Module._current = None  # Place further elements outside any module
+
         if generateCode (self):
             exit (0)
                 
@@ -370,6 +375,10 @@ class World (Thread):
         self.start ()
 
         Graphics (World)
+        
+        for Agent in self._Agents:
+            AgentThread (Agent)
+
         Gui (World) # Main thread, so this thread, so last
     
     def run (self): # Module constructors called here, placing elements inside modules
@@ -401,7 +410,21 @@ class World (Thread):
             sleep (World.sleep ())
             
 world = World   # Pretend this class is a singleton object  
-                 
+
+class AgentThread (Thread):
+    def __init__ (self, Agent):
+        Thread.__init__ (self)
+        self.Agent = Agent
+        self.start ()
+    
+    def run (self):
+        cs.wrapper (self.main)
+        
+    def main (self, window):
+        self.Agent.world = world
+        self.Agent.getKey = window.getkey    # No typo
+        self.Agent ()
+        
 pi = math.pi
 radiansPerDegree = math.pi / 180
 degreesPerRadian = 180 / math.pi
@@ -462,4 +485,10 @@ def snap (anObject, target, margin):
     
 def digit (anObject, index):
     return int (('000000000000' + str (int (evaluate (anObject)))) [-evaluate (index + 1)])
+
+_print = print
+
+def cursesCompatiblePrint (*args, **kwargs):
+    _print (*args, **kwargs, end = '\n\r')
     
+builtins.print = cursesCompatiblePrint

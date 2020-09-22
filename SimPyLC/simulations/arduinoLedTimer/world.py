@@ -35,4 +35,4 @@ from SimPyLC import *
 from ledTimer import *
 from timing import *
         
-World (LedTimer (), Timing ())
+World (LedTimer, Timing)

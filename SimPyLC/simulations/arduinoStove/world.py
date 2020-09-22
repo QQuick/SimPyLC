@@ -36,4 +36,4 @@ from control import *
 from timing import *
 from visualisation import *
         
-World (Control (), Timing (), Visualisation ())
+World (Control, Timing, Visualisation)

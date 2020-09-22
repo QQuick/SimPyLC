@@ -24,13 +24,13 @@
 # Removing this header ends your licence.
 #
 
-from random import *
+import random as rd
 
 from SimPyLC import *
 
 from common import *
 
-seed ()
+rd.seed ()
 
 '''
 
@@ -92,7 +92,7 @@ class Visualisation (Scene):
                                     parts = lambda:
                                         self.flame (
                                             scale = tsMul ((1, 1, 1),
-                                            world.rocket.thrust / world.rocket.thrusterMaxForce * (0.9 + 0.1 * random ())),
-                                            color = (1, 0.3 + 0.7 * random (), 0))
+                                            world.rocket.thrust / world.rocket.thrusterMaxForce * (0.9 + 0.1 * rd.random ())),
+                                            color = (1, 0.3 + 0.7 * rd.random (), 0))
         )       )       )       )
         
