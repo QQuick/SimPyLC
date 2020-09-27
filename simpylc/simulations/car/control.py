@@ -35,11 +35,11 @@ class Control (sp.Module):
         self.page ('motion control')
         
         self.group ('driver input', True)
-        self.velocityStepper = sp.Register (0)
-        self.steeringStepper = sp.Register (2)
+        self.targetVelocityStep = sp.Register (0)
+        self.steeringAngleStep = sp.Register (2)
 
         self.group ('control output')
-        self.velocity = sp.Register ()
+        self.targetVelocity = sp.Register ()
         self.steeringAngle = sp.Register ()
                 
         self.group ('sweep time measurement', True)
@@ -48,13 +48,14 @@ class Control (sp.Module):
         self.sweepWatch = sp.Timer ()
         self.run = sp.Runner ()
         
-    def input (self):
-        pass
+    def output (self):
+        sp.world.physics.targetVelocity.set (self.targetVelocity)
+        sp.world.physics.steeringAngle.set (self.steeringAngle)
         
     def sweep (self):
         # Input to output
-        self.velocity = 0.2 * self.velocityStepper
-        self.steeringAngle = 10 * self.steeringStepper
+        self.targetVelocity.set (0.2 * self.targetVelocityStep)
+        self.steeringAngle.set (10 * self.steeringAngleStep)
         
         # Sweep time measurement
         self.sweepMin.set (sp.world.period, sp.world.period < self.sweepMin)

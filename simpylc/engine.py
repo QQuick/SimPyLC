@@ -336,13 +336,15 @@ class World (Thread):
         for parameter in parameters:
             if issubclass (parameter, Module):
                 World._modules.append (parameter ())
-            elif issubclass (parameter, Scene):
+
+        for parameter in parameters:
+            if issubclass (parameter, Scene):
                 World._scenes.append (parameter ())
-            elif issubclass (parameter, Chart):
+
+        for parameter in parameters:
+            if issubclass (parameter, Chart):
                 World._charts.append (parameter ())
-            else:
-                World._Agents.append (parameter)
-                
+
         Module._current = None  # Place further elements outside any module
 
         if generateCode (self):
@@ -357,11 +359,17 @@ class World (Thread):
             module._setPublicElementNames ()
             
         for scene in World._scenes:
+            setattr (World, scene.name, scene)
             scene._registerWithCamera ()
             scene._registerWithThings ()
             
         for chart in World._charts:
             chart.define ()
+                
+        # Construct agents last, since they may depend on any other parameters because they have least restrictions
+        for parameter in parameters:
+            if not (issubclass (parameter, Module) or issubclass (parameter, Scene) or issubclass (parameter, Chart)):
+                World._Agents.append (parameter)
                 
         World.first = Marker (True)
         World.sleep = Register (0.02)
@@ -425,6 +433,8 @@ class AgentThread (Thread):
         self.Agent.getKey = window.getkey    # No typo
         self.Agent ()
         
+finity = 1e20
+        
 pi = math.pi
 radiansPerDegree = math.pi / 180
 degreesPerRadian = 180 / math.pi
@@ -486,9 +496,11 @@ def snap (anObject, target, margin):
 def digit (anObject, index):
     return int (('000000000000' + str (int (evaluate (anObject)))) [-evaluate (index + 1)])
 
+'''
 _print = print
 
 def cursesCompatiblePrint (*args, **kwargs):
     _print (*args, **kwargs, end = '\n\r')
     
 builtins.print = cursesCompatiblePrint
+'''

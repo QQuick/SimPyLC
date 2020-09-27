@@ -36,6 +36,8 @@ class Physics (sp.Module):
         
         self.group ('wheels', True)
         
+        self.acceleration = sp.Register (2)
+        self.targetVelocity= sp.Register ()
         self.velocity = sp.Register ()
         self.midWheelAngularVelocity = sp.Register ()
         self.midWheelAngle = sp.Register (30)
@@ -60,15 +62,12 @@ class Physics (sp.Module):
         self.slipping = sp.Marker ()
         self.radialVelocity = sp.Register ()
         
-    def input (self):   
-        self.velocity = sp.world.control.velocity
-        self.steeringAngle = sp.world.control.steeringAngle
-        
     def sweep (self):
         self.page ('traction')  
         self.group ('wheels', True)
         
-        self.midWheelAngularVelocity = self.velocity / pm.displacementPerWheelAngle
+        self.velocity.set (self.velocity + self.acceleration * sp.world.period, self.velocity < self.targetVelocity, self.velocity - self.acceleration * sp.world.period)
+        self.midWheelAngularVelocity.set (self.velocity / pm.displacementPerWheelAngle)
         self.midWheelAngle.set (self.midWheelAngle + self.midWheelAngularVelocity * sp.world.period)
         self.tangentialVelocity.set (self.midWheelAngularVelocity * pm.displacementPerWheelAngle) 
         

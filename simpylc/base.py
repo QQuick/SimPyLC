@@ -43,31 +43,31 @@ def evaluate (anObject):
         return anObject      
       
 def tEva (v):
-    return (evaluate (v [0]), evaluate (v [1]), evaluate (v [2]))
+    return tuple (evaluate (entry) for entry in v)
                 
 def tNeg (v):
-    return (-v [0], -v [1], -v [2])
+    return tuple (-entry for entry in v)
     
 def tAdd (v0, v1):
-    return (v0 [0] + v1 [0], v0 [1] + v1 [1], v0 [2] + v1 [2])
+    return tuple (entry0 + entry1 for entry0, entry1 in zip (v0, v1))
     
 def tSub (v0, v1):
-    return (v0 [0] - v1 [0], v0 [1] - v1 [1], v0 [2] - v1 [2])
+    return tuple (entry0 - entry1 for entry0, entry1 in zip (v0, v1))
         
 def tMul (v0, v1):
-    return (x [0] * v [0], x [1] * v [1], x [2] * v [2])
+    return tuple (entry0 * entry1 for entry0, entry1 in zip (v0, v1))
 
 def tsMul (v, x):
-    return (v [0] * x, v [1] * x, v [2] * x)
+    return tuple (entry * x for entry in v)
     
 def tDiv (v, x):
-    return (v [0] / x [0], v [1] / x [1], v [2] / x [2])
+    return tuple (entry0 / entry1 for entry0, entry1 in zip (v0, v1))
 
 def tsDiv (v, x):
-    return (v [0] / x, v [1] / x, v [2] / x)
+    return tuple (entry / x for entry in v)
    
 def tNor (v):
-    return sqrt (v [0] * v [0] + v [1] * v[1] + v [2] * v [2])
+    return sqrt (sum (entry * entry for entry in v))
     
 def tUni (v):
     return tsDiv (v, tNor (v))

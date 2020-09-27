@@ -44,6 +44,28 @@ normalFloorColor = (0, 0.003, 0)
 collisionFloorColor = (1, 0, 0.3)
 nrOfObstacles = 64
 
+class Lidar:
+    # 0, ...,  halfApertureAngle - 1, -halfApertureAngle, ..., -1
+    
+    def __init__ (self, apertureAngle, obstacles):
+        self.apertureAngle = apertureAngle
+        self.halfApertureAngle = self.apertureAngle // 2
+        self.obstacles = obstacles
+        
+    def scan (self, mountPosition, mountAngle):
+        self.distances = [sp.finity for angle in range (self.apertureAngle)]
+        
+        for obstacle in self.obstacles:
+            relativePosition = sp.tSub (obstacle.center, mountPosition) 
+            distance = sp.tNor (relativePosition)
+            absoluteAngle = sp.atan2 (relativePosition [1], relativePosition [0])
+            relativeAngle = round (absoluteAngle - mountAngle)
+            if relativeAngle > 180:
+                relativeAngle -= 360
+            
+            if -self.halfApertureAngle <= relativeAngle < self.halfApertureAngle - 1:
+                self.distances [relativeAngle] = min (distance, self.distances [relativeAngle])    # In case of coincidence, favor nearby obstacle
+
 class Line (sp.Cylinder):
     def __init__ (self, **arguments):
        super () .__init__ (size = (0.01, 0.01, 0), axis = (1, 0, 0), angle = 90, color = (0, 1, 1), **arguments)
@@ -54,7 +76,7 @@ class BodyPart (sp.Beam):
         super () .__init__ (color = (1, 0, 0), **arguments)
 
 class Wheel:
-    def __init__ (self, **arguments):
+    def __init__ (self, **arguments): 
         self.suspension = sp.Cylinder (size = (0.01, 0.01, 0.001), axis = (1, 0, 0), angle = 90, pivot = (0, 0, 1), **arguments)
         self.rim = sp.Beam (size = (0.08, 0.06, 0.02), pivot = (0, 1, 0), color = (0, 0, 0))
         self.tire = sp.Cylinder (size = (pm.wheelDiameter, pm.wheelDiameter, 0.04), axis = (1, 0, 0), angle = 90, color = (1, 1, 0))
@@ -72,7 +94,7 @@ class Window (sp.Beam):
         super () .__init__ (axis = (0, 1, 0), color = (0, 0, 1), **arguments)
         
 class Floor (sp.Beam):
-    side = 10
+    side = 16
     spacing = 0.2
     halfSteps = round (0.5 * side / spacing)
 
@@ -112,16 +134,34 @@ class Visualisation (sp.Scene):
         
         self.windowFront = Window (size = (0.05, 0.14, 0.14), center = (0.14, 0, -0.025), angle = -60)    
         self.windowRear = Window (size = (0.05, 0.14, 0.18), center = (-0.18, 0, -0.025),angle = 72) 
-                
-        self.obstacles = [sp.Beam (
-            size = (rd.uniform (0.3, 0.6), rd.uniform (0.3, 0.6), rd.uniform (0.2, 0.4)),
-            center = (rd.uniform (-self.floor.side / 2, self.floor.side / 2), rd.uniform (-self.floor.side / 2, self.floor.side / 2), 0),
-            angle = rd.uniform (0, 90),
-            group = 1
-        ) for i in range (nrOfObstacles)]
-        # self.obstacles = [obstacle for obstacle in self.obstacles if sp.vNor (obstacle.center) > 1]
 
+        self.roadCones = []
+        track = open ('default.track')
+        
+        for rowIndex, row in enumerate (track):
+            for columnIndex, column in enumerate (row):
+                if column == '*':
+                    self.roadCones.append (sp.Cone (
+                        size = (0.1, 0.1, 0.3),
+                        center = (columnIndex / 4 - 8, rowIndex / 2 - 8, 0),
+                        color = (1, 0.3, 0),
+                        group = 1
+                    ))
+                elif column == "@":
+                    self.startX = columnIndex / 4 - 8
+                    self.startY = rowIndex / 2 - 8
+                    self.init = True
+                    
+        track.close ()
+        
+        self.lidar = Lidar (120, self.roadCones)
+        
     def display (self):
+        if self.init:
+            self.init = False
+            sp.world.physics.positionX.set (self.startX) 
+            sp.world.physics.positionY.set (self.startY)
+        
         
         self.camera (
             position = sp.tEva ((sp.world.physics.positionX + 2, sp.world.physics.positionY, 2)),
@@ -133,7 +173,6 @@ class Visualisation (sp.Scene):
             focus = sp.tEva ((0, 0, 0))
         )
         '''
-        
         
         self.floor (parts = lambda:
             self.fuselage (position = (sp.world.physics.positionX, sp.world.physics.positionY, 0), rotation = sp.world.physics.attitudeAngle, parts = lambda:
@@ -165,6 +204,11 @@ class Visualisation (sp.Scene):
                 self.fuselageLine ()
             ) +
             
-            sum (obstacle () for obstacle in self.obstacles)
+            sum (roadCone () for roadCone in self.roadCones)
         )
+                
+        try:
+            self.lidar.scan (self.fuselage.center, self.fuselage.rotation)
+        except Exception as e: # Initial check
+            print (e)
         
