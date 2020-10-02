@@ -51,20 +51,31 @@ class Lidar:
         self.apertureAngle = apertureAngle
         self.halfApertureAngle = self.apertureAngle // 2
         self.obstacles = obstacles
+        self.distances = [sp.finity for angle in range (self.apertureAngle)]
         
     def scan (self, mountPosition, mountAngle):
         self.distances = [sp.finity for angle in range (self.apertureAngle)]
+        all = [(sp.finity, angle) for angle in range (-180, 180)]
         
         for obstacle in self.obstacles:
             relativePosition = sp.tSub (obstacle.center, mountPosition) 
             distance = sp.tNor (relativePosition)
             absoluteAngle = sp.atan2 (relativePosition [1], relativePosition [0])
             relativeAngle = round (absoluteAngle - mountAngle)
+            
             if relativeAngle > 180:
                 relativeAngle -= 360
-            
+                
+            elif relativeAngle < -180:
+                relativeAngle += 360
+
+            if distance < all [relativeAngle][0]:
+                all [relativeAngle] = (distance, relativeAngle)   # In case of coincidence, favor nearby obstacle  
+                
             if -self.halfApertureAngle <= relativeAngle < self.halfApertureAngle - 1:
                 self.distances [relativeAngle] = min (distance, self.distances [relativeAngle])    # In case of coincidence, favor nearby obstacle
+
+        #print (all)
 
 class Line (sp.Cylinder):
     def __init__ (self, **arguments):
@@ -142,8 +153,8 @@ class Visualisation (sp.Scene):
             for columnIndex, column in enumerate (row):
                 if column == '*':
                     self.roadCones.append (sp.Cone (
-                        size = (0.1, 0.1, 0.3),
-                        center = (columnIndex / 4 - 8, rowIndex / 2 - 8, 0),
+                        size = (0.07, 0.07, 0.15),
+                        center = (columnIndex / 4 - 8, rowIndex / 2 - 8, 0.15),
                         color = (1, 0.3, 0),
                         group = 1
                     ))
@@ -208,7 +219,7 @@ class Visualisation (sp.Scene):
         )
                 
         try:
-            self.lidar.scan (self.fuselage.center, self.fuselage.rotation)
-        except Exception as e: # Initial check
-            print (e)
+            self.lidar.scan (self.fuselage.position, self.fuselage.rotation)
+        except Exception as exception: # Initial check
+            print ('Visualisation.display:', exception)
         
