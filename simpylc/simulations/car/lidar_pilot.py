@@ -1,50 +1,58 @@
-'''
-Inputs:
-
-- A lidar distance array with a resolution of 1 degree
-- An x, y position and course angle of the car
-
-Outpus:
-
-- Acceleration stepper output
-
-'''
-
 import time as tm
+import traceback as tb
 
 import simpylc as sp
 
 class LidarPilot:
-    noObstacle = (sp.finity, 0)
-
     def __init__ (self):
-        self.lidar = self.world.visualisation.lidar
+        print ('Press enter to start or stop...')
+        
+        '''
+        self.driveEnabled = False
         
         while True:
-            self.readInputs ()
+            self.input ()
             self.sweep ()
-            self.writeOutputs ()
+            self.output ()
             tm.sleep (0.02)
-            
-            
-    def readInputs (self):
-        self.nearestObstacles = [self.noObstacle, self.noObstacle]
+        '''
+        
+    def input (self):
+        key = sp.getKey ()
+        
+        if key == 'KEY_ENTER':
+            self.driveEnabled = not self.driveEnabled
+        
+        self.nearestObstacleDistance = sp.finity
+        self.nearestObstacleAngle = 0
+        
+        self.nextObstacleDistance = sp.finity
+        self.nextObstacleAngle = 0
+
+        self.lidar = sp.world.visualisation.lidar
         
         for lidarAngle in range (-self.lidar.halfApertureAngle, self.lidar.halfApertureAngle):
             lidarDistance = self.lidar.distances [lidarAngle]
-            if lidarDistance < self.nearestObstacles [0][0]:
-                self.nearestObstacles [0] = (lidarDistance, lidarAngle)
-            elif lidarDistance < self.nearestObstacles [1][0]:
-                self.nearestObstacles [1] = (lidarDistance, lidarAngle)
-                                                                                                                                
-        self.targetObstacle = sp.tsDiv (sp.tAdd (*self.nearestObstacles), 2)
+            
+            if lidarDistance < self.nearestObstacleDistance:
+                self.nextObstacleDistance =  self.nearestObstacleDistance
+                self.nextObstacleAngle = self.nearestObstacleAngle
+                
+                self.nearestObstacleDistance = lidarDistance 
+                self.nearestObstacleAngle = lidarAngle
+
+            elif lidarDistance < self.nextObstacleDistance:
+                self.nextObstacleDistance = lidarDistance
+                self.nextObstacleAngle = lidarAngle
+           
+        self.targetObstacleDistance = (self.nearestObstacleDistance + self.nextObstacleDistance) / 2
+        self.targetObstacleAngle = (self.nearestObstacleAngle + self.nextObstacleAngle) / 2
         
-        self.velocity = self.world.physics.velocity
-        self.steeringAngle = self.world.physics.steeringAngle
-
     def sweep (self):
-        self.steeringAngle = self.targetObstacle [1]
-
-    def writeOutputs (self):
-        self.world.physics.steeringAngle.set (self.steeringAngle)
+        self.steeringAngle = self.targetObstacleAngle
+        self.targetVelocity = (sp.abs (90 - self.steeringAngle) / 65) if self.driveEnabled else 0
+        
+    def output (self):
+        sp.world.physics.steeringAngle.set (self.steeringAngle)
+        sp.world.physics.targetVelocity.set (self.targetVelocity)
         

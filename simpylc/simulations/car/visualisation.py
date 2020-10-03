@@ -61,13 +61,7 @@ class Lidar:
             relativePosition = sp.tSub (obstacle.center, mountPosition) 
             distance = sp.tNor (relativePosition)
             absoluteAngle = sp.atan2 (relativePosition [1], relativePosition [0])
-            relativeAngle = round (absoluteAngle - mountAngle)
-            
-            if relativeAngle > 180:
-                relativeAngle -= 360
-                
-            elif relativeAngle < -180:
-                relativeAngle += 360
+            relativeAngle = (round (absoluteAngle - mountAngle) + 180) % 360 - 180
 
             if distance < all [relativeAngle][0]:
                 all [relativeAngle] = (distance, relativeAngle)   # In case of coincidence, favor nearby obstacle  
@@ -221,5 +215,6 @@ class Visualisation (sp.Scene):
         try:
             self.lidar.scan (self.fuselage.position, self.fuselage.rotation)
         except Exception as exception: # Initial check
-            print ('Visualisation.display:', exception)
+            pass
+            # print ('Visualisation.display:', exception)
         

@@ -58,7 +58,7 @@ class Physics (sp.Module):
         self.positionX = sp.Register ()
         self.positionY = sp.Register ()
         
-        self.radialAccelleration = sp.Register ()
+        self.radialAcceleration = sp.Register ()
         self.slipping = sp.Marker ()
         self.radialVelocity = sp.Register ()
         
@@ -79,9 +79,9 @@ class Physics (sp.Module):
         self.attitudeAngle.set (self.attitudeAngle + self.midAngularVelocity * sp.world.period)
         self.courseAngle.set (self.attitudeAngle + self.midSteeringAngle)
         
-        self.radialAccelleration.set (sp.max (abs (self.tangentialVelocity * self.tangentialVelocity * self.inverseMidCurveRadius) - 0.5, 0))
-        self.slipping.mark (sp.abs (self.radialAccelleration) > 0.5)
-        self.radialVelocity.set (self.radialVelocity + self.radialAccelleration * sp.world.period, self.slipping, 0)
+        self.radialAcceleration.set (sp.max (abs (self.tangentialVelocity * self.tangentialVelocity * self.inverseMidCurveRadius) - 0.5, 0))
+        self.slipping.mark (sp.abs (self.radialAcceleration) > 0.55)
+        self.radialVelocity.set (self.radialVelocity + self.radialAcceleration * sp.world.period, self.slipping, 0)
         
         self.velocityX.set (self.tangentialVelocity * sp.cos (self.courseAngle) + self.radialVelocity * sp.sin (self.courseAngle))
         self.velocityY.set (self.tangentialVelocity * sp.sin (self.courseAngle) + self.radialVelocity * sp.cos (self.courseAngle))

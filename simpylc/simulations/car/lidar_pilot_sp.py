@@ -36,6 +36,8 @@ class LidarPilotSp (sp.Module):
         
         self.group ('inputs', True)
 
+        self.driveEnabled = sp.Marker ()
+
         self.nearestObstacleDistance = sp.Register (sp.finity)
         self.nearestObstacleAngle = sp.Register (0)
 
@@ -81,9 +83,10 @@ class LidarPilotSp (sp.Module):
         self.velocity.set (sp.world.physics.velocity)      
         
     def sweep (self):
-        self.steeringAngle = self.targetObstacleAngle
+        self.steeringAngle.set (self.targetObstacleAngle)
+        self.targetVelocity.set (sp.abs (90 - self.steeringAngle) / 65, self.driveEnabled, 0)
 
     def output (self):
-        sp.world.physics.targetVelocity.set (self.targetVelocity)
         sp.world.physics.steeringAngle.set (self.steeringAngle)
+        sp.world.physics.targetVelocity.set (self.targetVelocity)
         

@@ -31,6 +31,7 @@ from traceback import *
 import math
 import builtins
 import curses as cs
+import sys as ss
 
 from .base import *
 from .gui import *
@@ -429,8 +430,7 @@ class AgentThread (Thread):
         cs.wrapper (self.main)
         
     def main (self, window):
-        self.Agent.world = world
-        self.Agent.getKey = window.getkey    # No typo
+        ss.modules [self.Agent.__module__] .sp.getKey = window.getkey    # No typo
         self.Agent ()
         
 finity = 1e20
@@ -496,11 +496,9 @@ def snap (anObject, target, margin):
 def digit (anObject, index):
     return int (('000000000000' + str (int (evaluate (anObject)))) [-evaluate (index + 1)])
 
-'''
 _print = print
 
 def cursesCompatiblePrint (*args, **kwargs):
     _print (*args, **kwargs, end = '\n\r')
     
 builtins.print = cursesCompatiblePrint
-'''
