@@ -430,7 +430,12 @@ class AgentThread (Thread):
         cs.wrapper (self.main)
         
     def main (self, window):
-        ss.modules [self.Agent.__module__] .sp.getKey = window.getkey    # No typo
+        def _print (*args):
+            window.addstr (' '.join (str (arg) for arg in args) + '\n')
+        
+        agentModule = ss.modules [self.Agent.__module__]
+        agentModule.sp.getKey = window.getkey    # No typo
+        agentModule.print = _print
         self.Agent ()
         
 finity = 1e20
@@ -495,10 +500,3 @@ def snap (anObject, target, margin):
     
 def digit (anObject, index):
     return int (('000000000000' + str (int (evaluate (anObject)))) [-evaluate (index + 1)])
-
-_print = print
-
-def cursesCompatiblePrint (*args, **kwargs):
-    _print (*args, **kwargs, end = '\n\r')
-    
-builtins.print = cursesCompatiblePrint

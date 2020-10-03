@@ -2,6 +2,8 @@ import simpylc as sp
 
 class KeyboardPilot:
     def __init__ (self):
+        print ('test', 1, 2, 3, 4)
+        
         while True:
             self.readInputs ()
             self.sweep ()
