@@ -430,12 +430,19 @@ class AgentThread (Thread):
         cs.wrapper (self.main)
         
     def main (self, window):
-        def _print (*args):
+        def print (*args):
             window.addstr (' '.join (str (arg) for arg in args) + '\n')
+            
+        def getKey ():
+            try:
+                return window.getkey ()
+            except:
+                return ''
         
+        window.nodelay (True)
         agentModule = ss.modules [self.Agent.__module__]
-        agentModule.sp.getKey = window.getkey    # No typo
-        agentModule.print = _print
+        agentModule.print = print
+        agentModule.sp.getKey = getKey
         self.Agent ()
         
 finity = 1e20

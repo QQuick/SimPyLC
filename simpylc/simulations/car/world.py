@@ -42,11 +42,11 @@ import visualisation as vs
 import timing as tm
 
 sp.World (
-    ct.Control,
-    kp.KeyboardPilot,
-    #lp.LidarPilot,
-    #ls.LidarPilotSp,
+    # ct.Control,
+    # kp.KeyboardPilot,
+    lp.LidarPilot,
+    # ls.LidarPilotSp,
     ps.Physics,
     vs.Visualisation,
-    tm.Timing
+    # tm.Timing
 )

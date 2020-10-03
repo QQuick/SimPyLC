@@ -1,15 +1,18 @@
+import time as tm
+
 import simpylc as sp
 
 class KeyboardPilot:
     def __init__ (self):
-        print ('test', 1, 2, 3, 4)
+        print ('Use arrow keys to control speed and direction')
         
         while True:
-            self.readInputs ()
+            self.input ()
             self.sweep ()
-            self.writeOutputs ()
+            self.output ()
+            tm.sleep (0.02)
             
-    def readInputs (self):
+    def input (self):
         key = sp.getKey ()
         
         self.leftKey = key == 'KEY_LEFT'
@@ -34,7 +37,7 @@ class KeyboardPilot:
             self.targetVelocityStep -= 1
             print ('Target velocity step: ', self.targetVelocityStep)
         
-    def writeOutputs (self):
+    def output (self):
         sp.world.control.steeringAngleStep.set (self.steeringAngleStep)
         sp.world.control.targetVelocityStep.set (self.targetVelocityStep)
         
