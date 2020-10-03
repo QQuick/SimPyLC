@@ -1,3 +1,29 @@
+# ====== Legal notices
+#
+# Copyright (C) 2013 GEATEC engineering
+#
+# This program is free software.
+# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicence.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the QQuickLicence for details.
+#
+# The QQuickLicense can be accessed at: http://www.geatec.com/qqLicence.html
+#
+# __________________________________________________________________________
+#
+#
+#  THIS PROGRAM IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS !!
+#
+# __________________________________________________________________________
+#
+# It is meant for training purposes only.
+#
+# Removing this header ends your licence.
+#
+
 import time as tm
 import traceback as tb
 
@@ -15,7 +41,7 @@ class LidarPilot:
             self.output ()
             tm.sleep (0.02)
         
-    def input (self):
+    def input (self):   # Input from simulator
         key = sp.getKey ()
         
         if key == 'KEY_UP':
@@ -26,8 +52,7 @@ class LidarPilot:
         self.lidarDistances = sp.world.visualisation.lidar.distances
         self.lidarHalfApertureAngle = sp.world.visualisation.lidar.halfApertureAngle
         
-        
-    def sweep (self):
+    def sweep (self):   # Control algorithm to be tested
         self.nearestObstacleDistance = sp.finity
         self.nearestObstacleAngle = 0
         
@@ -54,7 +79,7 @@ class LidarPilot:
         self.steeringAngle = self.targetObstacleAngle
         self.targetVelocity = (sp.abs (90 - self.steeringAngle) / 80) if self.driveEnabled else 0
     
-    def output (self):
+    def output (self):  # Output to simulator
         sp.world.physics.steeringAngle.set (self.steeringAngle)
         sp.world.physics.targetVelocity.set (self.targetVelocity)
         
