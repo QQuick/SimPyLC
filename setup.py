@@ -2,7 +2,7 @@ import os
 
 from setuptools import setup
 
-import SimPyLC as sp
+import simpylc as sp
 
 def read (*paths):
 	with open (os.path.join (*paths), 'r') as aFile:
@@ -21,7 +21,7 @@ setup (
 	license = 'qQuickLicence',
 	author = 'Jacques de Hooge',
 	author_email = 'jacques.de.hooge@qquick.org',
-	packages = ['SimPyLC'],	
+	packages = ['simpylc'],	
 	include_package_data = True,
 	install_requires = ['numpy', 'pyopengl'],
 	entry_points = {},    
