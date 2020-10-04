@@ -1,2 +1,2 @@
-global-include *.py *.txt *.html *.docx *.jpg *.cpp *.dll *.TTF
+global-include *.py *.cpp *.txt *.odt *.pdf *.jpg *.dll *.track *.TTF
 global-exclude *.pyc *.ino
