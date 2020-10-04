@@ -116,6 +116,7 @@ class Control (sp.Module):
         self.part ('Edge triggering of buttons')
         self.powerEdge.trigger (self.powerButton)
         self.power.mark (not self.power, not self.childLock and self.powerEdge)
+        self.alarmDelta.set (sp.world.period)
         
         self.childLockChangeTimer.reset (not (self.power and self.childLockButton))
         self.childLockEdge.trigger (self.childLockChangeTimer > 5)

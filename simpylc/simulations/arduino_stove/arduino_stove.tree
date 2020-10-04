@@ -1,0 +1,3354 @@
+file: Module 
+	body: list 
+		element: Import 
+			names: list 
+				element: alias 
+					name: str = simpylc
+					asname: str = sp
+		element: ClassDef 
+			name: str = Control
+			bases: list 
+				element: Attribute 
+					value: Name 
+						id: str = sp
+						ctx: Load 
+					attr: str = Module
+					ctx: Load 
+			keywords: list 
+			body: list 
+				element: FunctionDef 
+					name: str = __init__
+					args: arguments 
+						posonlyargs: list 
+						args: list 
+							element: arg 
+								arg: str = self
+								annotation: NoneType = None
+								type_comment: NoneType = None
+						vararg: NoneType = None
+						kwonlyargs: list 
+						kw_defaults: list 
+						kwarg: NoneType = None
+						defaults: list 
+					body: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = sp
+											ctx: Load 
+										attr: str = Module
+										ctx: Load 
+									attr: str = __init__
+									ctx: Load 
+								args: list 
+									element: Name 
+										id: str = self
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = page
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Four plate stove control with cooking alarm
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = General buttons
+										kind: NoneType = None
+									element: Constant 
+										value: bool = True
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = powerButton
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = powerEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = power
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = childLockButton
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = childLockChangeTimer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = childLockEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = childLock
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = unlocked
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Plate selection
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plateSelectButton
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plateSelectEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plateSelectDelta
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plateSelectNr
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = tempDelta
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = tempChange
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Up/down buttons
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = upButton
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = upEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = downButton
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = downEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Cooking plates
+										kind: NoneType = None
+									element: Constant 
+										value: bool = True
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate0Temp
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate0Selected
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate1Temp
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate1Selected
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate2Temp
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate2Selected
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate3Temp
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plate3Selected
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Alarm selection button
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmSelectButton
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmSelectEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmSelected
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmTime
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmTimer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmOn
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Latch
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmTimeLeft
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmChangeTimer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmChangeStep
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmDelta
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Numerical displays
+										kind: NoneType = None
+									element: Constant 
+										value: bool = True
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = digitIndex
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = plateDigitValue
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = alarmDigitValue
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = digitValue
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = digitDot
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Buzzer
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerOnTime
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 6
+										kind: NoneType = None
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerOnTimer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerOn
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Latch
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerBaseFreq
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: float = 300.0
+										kind: NoneType = None
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerPitchTimer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerFreq
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerWaveTimer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzerEdge
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Oneshot
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = buzzer
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Marker
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = group
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = System
+										kind: NoneType = None
+								keywords: list 
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = sweepMin
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 1000
+										kind: NoneType = None
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = sweepMax
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Register
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = sweepWatch
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Timer
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+						element: Assign 
+							targets: list 
+								element: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = run
+									ctx: Store 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = sp
+										ctx: Load 
+									attr: str = Runner
+									ctx: Load 
+								args: list 
+								keywords: list 
+							type_comment: NoneType = None
+					decorator_list: list 
+					returns: NoneType = None
+					type_comment: NoneType = None
+				element: FunctionDef 
+					name: str = sweep
+					args: arguments 
+						posonlyargs: list 
+						args: list 
+							element: arg 
+								arg: str = self
+								annotation: NoneType = None
+								type_comment: NoneType = None
+						vararg: NoneType = None
+						kwonlyargs: list 
+						kw_defaults: list 
+						kwarg: NoneType = None
+						defaults: list 
+					body: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = part
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Edge triggering of buttons
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = powerEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = powerButton
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = power
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = power
+											ctx: Load 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: UnaryOp 
+												op: Not 
+												operand: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = childLock
+													ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = powerEdge
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmDelta
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = world
+											ctx: Load 
+										attr: str = period
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = childLockChangeTimer
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: BoolOp 
+											op: And 
+											values: list 
+												element: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = power
+													ctx: Load 
+												element: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = childLockButton
+													ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = childLockEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = childLockChangeTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 5
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = childLock
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = childLock
+											ctx: Load 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = childLockEdge
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = unlocked
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = power
+												ctx: Load 
+											element: UnaryOp 
+												op: Not 
+												operand: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = childLock
+													ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateSelectEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateSelectButton
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateSelectDelta
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 1
+										kind: NoneType = None
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = unlocked
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plateSelectEdge
+												ctx: Load 
+									element: Constant 
+										value: int = 0
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateSelectNr
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: BinOp 
+										left: BinOp 
+											left: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plateSelectNr
+												ctx: Load 
+											op: Add 
+											right: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plateSelectDelta
+												ctx: Load 
+										op: Mod 
+										right: Constant 
+											value: int = 4
+											kind: NoneType = None
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = power
+										ctx: Load 
+									element: Constant 
+										value: int = 0
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = upEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = upButton
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = downEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = downButton
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = part
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Cooking alarm
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmSelectEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = power
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = alarmSelectButton
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmSelected
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = alarmSelected
+											ctx: Load 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = unlocked
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = alarmSelectEdge
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmChangeTimer
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: BoolOp 
+											op: And 
+											values: list 
+												element: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmSelected
+													ctx: Load 
+												element: BoolOp 
+													op: Or 
+													values: list 
+														element: Attribute 
+															value: Name 
+																id: str = self
+																ctx: Load 
+															attr: str = upButton
+															ctx: Load 
+														element: Attribute 
+															value: Name 
+																id: str = self
+																ctx: Load 
+															attr: str = downButton
+															ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmChangeStep
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 1
+										kind: NoneType = None
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = alarmChangeTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+									element: Constant 
+										value: int = 0
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmChangeStep
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 10
+										kind: NoneType = None
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = alarmChangeTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 10
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmChangeStep
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 100
+										kind: NoneType = None
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = alarmChangeTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 20
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmDelta
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: USub 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = alarmChangeStep
+											ctx: Load 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = downButton
+										ctx: Load 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmChangeStep
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmTime
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 0
+										kind: NoneType = None
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = power
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = upButton
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = downButton
+												ctx: Load 
+									element: Call 
+										func: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = limit
+											ctx: Load 
+										args: list 
+											element: BinOp 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmTime
+													ctx: Load 
+												op: Add 
+												right: BinOp 
+													left: Attribute 
+														value: Name 
+															id: str = self
+															ctx: Load 
+														attr: str = alarmDelta
+														ctx: Load 
+													op: Mult 
+													right: Attribute 
+														value: Attribute 
+															value: Name 
+																id: str = sp
+																ctx: Load 
+															attr: str = world
+															ctx: Load 
+														attr: str = period
+														ctx: Load 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+											element: Constant 
+												value: int = 9999
+												kind: NoneType = None
+										keywords: list 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmOn
+										ctx: Load 
+									attr: str = latch
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = alarmChangeTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmTimer
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: BoolOp 
+										op: Or 
+										values: list 
+											element: UnaryOp 
+												op: Not 
+												operand: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmOn
+													ctx: Load 
+											element: Compare 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmChangeTimer
+													ctx: Load 
+												ops: list 
+													element: Gt 
+												comparators: list 
+													element: Constant 
+														value: int = 0
+														kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: BoolOp 
+										op: Or 
+										values: list 
+											element: Compare 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmTimer
+													ctx: Load 
+												ops: list 
+													element: Gt 
+												comparators: list 
+													element: Attribute 
+														value: Name 
+															id: str = self
+															ctx: Load 
+														attr: str = alarmTime
+														ctx: Load 
+											element: BoolOp 
+												op: And 
+												values: list 
+													element: Attribute 
+														value: Name 
+															id: str = self
+															ctx: Load 
+														attr: str = childLock
+														ctx: Load 
+													element: BoolOp 
+														op: Or 
+														values: list 
+															element: Attribute 
+																value: Name 
+																	id: str = self
+																	ctx: Load 
+																attr: str = powerButton
+																ctx: Load 
+															element: Attribute 
+																value: Name 
+																	id: str = self
+																	ctx: Load 
+																attr: str = plateSelectButton
+																ctx: Load 
+															element: Attribute 
+																value: Name 
+																	id: str = self
+																	ctx: Load 
+																attr: str = alarmSelectButton
+																ctx: Load 
+															element: Attribute 
+																value: Name 
+																	id: str = self
+																	ctx: Load 
+																attr: str = plateSelectButton
+																ctx: Load 
+															element: Attribute 
+																value: Name 
+																	id: str = self
+																	ctx: Load 
+																attr: str = upButton
+																ctx: Load 
+															element: Attribute 
+																value: Name 
+																	id: str = self
+																	ctx: Load 
+																attr: str = downButton
+																ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmOn
+										ctx: Load 
+									attr: str = unlatch
+									ctx: Load 
+								args: list 
+									element: BoolOp 
+										op: Or 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = alarmEdge
+												ctx: Load 
+											element: Compare 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmTime
+													ctx: Load 
+												ops: list 
+													element: Eq 
+												comparators: list 
+													element: Constant 
+														value: int = 0
+														kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmTimeLeft
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Call 
+										func: Name 
+											id: str = max
+											ctx: Load 
+										args: list 
+											element: BinOp 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmTime
+													ctx: Load 
+												op: Sub 
+												right: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmTimer
+													ctx: Load 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+										keywords: list 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = part
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Cooking plates
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate0Selected
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = plateSelectNr
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate1Selected
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = plateSelectNr
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 1
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate2Selected
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = plateSelectNr
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 2
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate3Selected
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = plateSelectNr
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 3
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = tempChange
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = unlocked
+												ctx: Load 
+											element: UnaryOp 
+												op: Not 
+												operand: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmSelected
+													ctx: Load 
+											element: BoolOp 
+												op: Or 
+												values: list 
+													element: Attribute 
+														value: Name 
+															id: str = self
+															ctx: Load 
+														attr: str = upEdge
+														ctx: Load 
+													element: Attribute 
+														value: Name 
+															id: str = self
+															ctx: Load 
+														attr: str = downEdge
+														ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = tempDelta
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: USub 
+										operand: Constant 
+											value: int = 1
+											kind: NoneType = None
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: UnaryOp 
+												op: Not 
+												operand: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = alarmSelected
+													ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = downButton
+												ctx: Load 
+									element: Constant 
+										value: int = 1
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate0Temp
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Call 
+										func: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = limit
+											ctx: Load 
+										args: list 
+											element: BinOp 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = plate0Temp
+													ctx: Load 
+												op: Add 
+												right: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = tempDelta
+													ctx: Load 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+											element: Constant 
+												value: int = 9
+												kind: NoneType = None
+										keywords: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = tempChange
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plate0Selected
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate1Temp
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Call 
+										func: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = limit
+											ctx: Load 
+										args: list 
+											element: BinOp 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = plate1Temp
+													ctx: Load 
+												op: Add 
+												right: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = tempDelta
+													ctx: Load 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+											element: Constant 
+												value: int = 9
+												kind: NoneType = None
+										keywords: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = tempChange
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plate1Selected
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate2Temp
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Call 
+										func: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = limit
+											ctx: Load 
+										args: list 
+											element: BinOp 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = plate2Temp
+													ctx: Load 
+												op: Add 
+												right: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = tempDelta
+													ctx: Load 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+											element: Constant 
+												value: int = 9
+												kind: NoneType = None
+										keywords: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = tempChange
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plate2Selected
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate3Temp
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Call 
+										func: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = limit
+											ctx: Load 
+										args: list 
+											element: BinOp 
+												left: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = plate3Temp
+													ctx: Load 
+												op: Add 
+												right: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = tempDelta
+													ctx: Load 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+											element: Constant 
+												value: int = 9
+												kind: NoneType = None
+										keywords: list 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = tempChange
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = plate3Selected
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = part
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Buzzer tone generation and pitch bend
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerOn
+										ctx: Load 
+									attr: str = latch
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmEdge
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerOnTimer
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzerOn
+											ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerOn
+										ctx: Load 
+									attr: str = unlatch
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzerOnTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = buzzerOnTime
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerPitchTimer
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzerPitchTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 3
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerFreq
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: BinOp 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzerBaseFreq
+											ctx: Load 
+										op: Mult 
+										right: BinOp 
+											left: Constant 
+												value: int = 1
+												kind: NoneType = None
+											op: Add 
+											right: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = buzzerPitchTimer
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerWaveTimer
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzerWaveTimer
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: BinOp 
+												left: Constant 
+													value: float = 0.5
+													kind: NoneType = None
+												op: Div 
+												right: Attribute 
+													value: Name 
+														id: str = self
+														ctx: Load 
+													attr: str = buzzerFreq
+													ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzerEdge
+										ctx: Load 
+									attr: str = trigger
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzerWaveTimer
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = buzzer
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = buzzer
+											ctx: Load 
+									element: BoolOp 
+										op: And 
+										values: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = buzzerOn
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = buzzerEdge
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = part
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Numerical display
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitIndex
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: BinOp 
+										left: BinOp 
+											left: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = digitIndex
+												ctx: Load 
+											op: Add 
+											right: Constant 
+												value: int = 1
+												kind: NoneType = None
+										op: Mod 
+										right: Constant 
+											value: int = 4
+											kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateDigitValue
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate0Temp
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 3
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateDigitValue
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate1Temp
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 2
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateDigitValue
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate2Temp
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 1
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateDigitValue
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate3Temp
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmDigitValue
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Call 
+										func: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = digit
+											ctx: Load 
+										args: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = alarmTimeLeft
+												ctx: Load 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = digitIndex
+												ctx: Load 
+										keywords: list 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitValue
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmDigitValue
+										ctx: Load 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmSelected
+										ctx: Load 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plateDigitValue
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitDot
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate0Selected
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 3
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitDot
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate1Selected
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 2
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitDot
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate2Selected
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 1
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitDot
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = plate3Selected
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = digitIndex
+											ctx: Load 
+										ops: list 
+											element: Eq 
+										comparators: list 
+											element: Constant 
+												value: int = 0
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitDot
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: bool = True
+										kind: NoneType = None
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = childLock
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = digitDot
+										ctx: Load 
+									attr: str = mark
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: bool = False
+										kind: NoneType = None
+									element: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = alarmSelected
+										ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Name 
+										id: str = self
+										ctx: Load 
+									attr: str = part
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: str = Sweep time measurement
+										kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = sweepMin
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = world
+											ctx: Load 
+										attr: str = period
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Attribute 
+												value: Name 
+													id: str = sp
+													ctx: Load 
+												attr: str = world
+												ctx: Load 
+											attr: str = period
+											ctx: Load 
+										ops: list 
+											element: Lt 
+										comparators: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = sweepMin
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = sweepMax
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Attribute 
+										value: Attribute 
+											value: Name 
+												id: str = sp
+												ctx: Load 
+											attr: str = world
+											ctx: Load 
+										attr: str = period
+										ctx: Load 
+									element: Compare 
+										left: Attribute 
+											value: Attribute 
+												value: Name 
+													id: str = sp
+													ctx: Load 
+												attr: str = world
+												ctx: Load 
+											attr: str = period
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Attribute 
+												value: Name 
+													id: str = self
+													ctx: Load 
+												attr: str = sweepMax
+												ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = sweepWatch
+										ctx: Load 
+									attr: str = reset
+									ctx: Load 
+								args: list 
+									element: Compare 
+										left: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = sweepWatch
+											ctx: Load 
+										ops: list 
+											element: Gt 
+										comparators: list 
+											element: Constant 
+												value: int = 2
+												kind: NoneType = None
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = sweepMin
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 1000
+										kind: NoneType = None
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = sweepWatch
+											ctx: Load 
+								keywords: list 
+						element: Expr 
+							value: Call 
+								func: Attribute 
+									value: Attribute 
+										value: Name 
+											id: str = self
+											ctx: Load 
+										attr: str = sweepMax
+										ctx: Load 
+									attr: str = set
+									ctx: Load 
+								args: list 
+									element: Constant 
+										value: int = 0
+										kind: NoneType = None
+									element: UnaryOp 
+										op: Not 
+										operand: Attribute 
+											value: Name 
+												id: str = self
+												ctx: Load 
+											attr: str = sweepWatch
+											ctx: Load 
+								keywords: list 
+					decorator_list: list 
+					returns: NoneType = None
+					type_comment: NoneType = None
+			decorator_list: list 
+	type_ignores: list 

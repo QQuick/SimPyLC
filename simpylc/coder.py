@@ -55,7 +55,11 @@ class Coder:
         print ('Code generation started')
         tailArgs = argv [1:]
         
-        self.moduleNameList = [module._name for module in modules] if ('*' in tailArgs or 'world.py' in tailArgs) else [arg for arg in tailArgs if not '=' in arg]
+        self.moduleNames =  (
+                [module.__module__ for module in modules]
+            if ('*' in tailArgs or 'world.py' in tailArgs) else
+                [arg for arg in tailArgs if not '=' in arg]
+        )
         '''
         Linux will expand '*' to all file names in the current directory, this is called 'globbing'.
         By checking on 'world.py' we know that globbing took place, and pretend we saw the '*' instead.
@@ -66,7 +70,7 @@ class Coder:
         argDict = dict ([arg.split ('=') for arg in tailArgs if '=' in arg])        
         self.plcPrefix = '{0}_'.format (argDict ['prefix']) if 'prefix' in argDict else ''
         self.device = argDict ['device'] if 'device' in argDict else 'arduino'
-        self.addModulePrefix = len (self.moduleNameList) > 1
+        self.addModulePrefix = len (self.moduleNames) > 1
         
         self.cSymbols = {
             UnaryOp: {Not: '!', UAdd: '+', USub: '-'},
@@ -87,7 +91,7 @@ class Coder:
             with open (fileName) as file:
                 return file.read ()
     
-        self.moduleFileNames = ['{0}.py'.format (moduleName) for moduleName in self.moduleNameList]
+        self.moduleFileNames = ['{0}.py'.format (moduleName) for moduleName in self.moduleNames]
         self.sourceCodes = [getContent (moduleFileName) for moduleFileName in self.moduleFileNames]
         self.parseTrees = [parse (sourceCode) for sourceCode in self.sourceCodes]
                     
@@ -410,7 +414,7 @@ class GeneratingVisitor (NodeVisitor):
                 self.surpressSemicolon = True
             else:
                 if (
-                    type (node.func.value) == Attribute and node.func.value.value.id in coder.moduleNameList + ['self']
+                    type (node.func.value) == Attribute and node.func.value.value.id in coder.moduleNames + ['self']
                     and (
                         not node.args
                         or 
@@ -418,7 +422,7 @@ class GeneratingVisitor (NodeVisitor):
                         or
                         type (node.args [0].value) != Attribute
                         or
-                        node.args [0].value.attr in coder.moduleNameList + ['self']
+                        node.args [0].value.attr in coder.moduleNames + ['self']
                     )
                 ):
                     self.emit ('{0}'.format (self.getIndent ()))
