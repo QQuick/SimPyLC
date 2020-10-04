@@ -1,6 +1,6 @@
 # ====== Legal notices
 #
-# Copyright (C) 2013 - 2018 GEATEC engineering
+# Copyright (C) 2013 - 2020 GEATEC engineering
 #
 # This program is free software.
 # You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
@@ -29,7 +29,7 @@ from math import *
 from inspect import *
 
 programName = 'SimPyLC'
-programVersion = '3.7.04'
+programVersion = '3.8.00'
 programNameAndVersion = '{0} {1}'.format (programName, programVersion)
 programDir = os.getcwd () .replace ('\\', '/') .rsplit ('/', 3) [-1]
 

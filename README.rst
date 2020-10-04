@@ -18,7 +18,7 @@ SimPyLC does not attempt to mimic any particular PLC instruction set or graphica
 What it is
 ----------
 
-SimPyLC functionally behaves like a PLC or a set of interconnected PLC's and controlled systems. It is a very powerful tool to gain insight in the behaviour of real time controls and controlled systems. It allows you to force values, to freeze time, to draw timing charts and to visualize your system. This is all done in a very simple and straightforward way. But make no mistake, simulating systems in this way has a track record of reducing months of commissioning time to mere days. SimPyLC is Form Follows Function at its best, it does what it has to do in a robust no-nonsense way. Its sourcecode is tiny and fully open to understanding. The accompanying document `simpylc_howto <http://www.qquick.org/simpylc_howto>`_ condenses decenia of practical experience in control systems in a few clear design rules that can save you lots of trouble and prevent accidents. In addition to this SimPyLC can generate C code for the Arduino processor boards.
+SimPyLC functionally behaves like a PLC or a set of interconnected PLC's and controlled systems. It is a very powerful tool to gain insight in the behaviour of real time controls and controlled systems. It allows you to force values, to freeze time, to draw timing charts and to visualize your system. This is all done in a very simple and straightforward way. But make no mistake, simulating systems in this way has a track record of reducing months of commissioning time to mere days. SimPyLC is Form Follows Function at its best, it does what it has to do in a robust no-nonsense way. Its sourcecode is tiny and fully open to understanding. The accompanying document `simpylc_howto <http://www.qquick.org/simpylc_howto/simpylc_howto>`_ condenses decenia of practical experience in control systems in a few clear design rules that can save you lots of trouble and prevent accidents. In addition to this SimPyLC can generate C code for the Arduino processor boards.
 
 .. figure:: http://www.qquick.org/simpylc/arduinodue.jpg
 	:alt: Picture of Arduino Due
@@ -44,6 +44,7 @@ What's new
 - Quaternion module added to accurately model rotational movement
 - Cones and Ellipsoids added
 - Optional moving camera added with synchroneous caching for accurate tracking
+- Pure Python controls added, just using the simulator to test without actual controlled hardware
 
 *REMARK: All complete Arduino examples were tested on the Arduino Due, since that's the one I own, but they should run on the One with only slight I/O modifications (PWM instead of true analog output, using a shift register if you run short of I/O pins etc.)*
 
@@ -57,7 +58,7 @@ Bugs fixed
 Installation
 ------------
 
-Installation for Windows, Linux and OSX is described `here <http://www.qquick.org/simpylc_howto#_Toc508123208>`_.
+Installation for Windows, Linux and OSX is described in the `sympylc_howto <http://www.qquick.org/simpylc_howto/simpylc_howto`_ document.
 
 Usage
 -----

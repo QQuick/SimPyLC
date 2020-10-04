@@ -1,6 +1,6 @@
 # ====== Legal notices
 #
-# Copyright (C) 2013 - 2018 GEATEC engineering
+# Copyright (C) 2013 - 2020 GEATEC engineering
 #
 # This program is free software.
 # You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
@@ -47,6 +47,7 @@ class Coder:
         try:
             self.nativeCode = sub (r'/\*\*.*?\*\*/', '', open ('native.cpp') .read (), flags = DOTALL)
         except:
+            print ("File 'native.cpp' missing")
             return
     
         if len (argv) < 2:
@@ -80,7 +81,9 @@ class Coder:
         }
         
         self.parse ()
-        # self.dump ()  # Leave in for debugging purposes
+        # self.dump ('original')      # Leave in for debugging purposes
+        self.transform ()
+        # self.dump ('transformed')   # Leave in for debugging purposes
         self.generate ()
         
         print ('Code generation ready')
@@ -92,10 +95,11 @@ class Coder:
                 return file.read ()
     
         self.moduleFileNames = ['{0}.py'.format (moduleName) for moduleName in self.moduleNames]
+#        self.sourceCodes = [getContent (moduleFileName) .replace ('sp.', '') for moduleFileName in self.moduleFileNames]
         self.sourceCodes = [getContent (moduleFileName) for moduleFileName in self.moduleFileNames]
         self.parseTrees = [parse (sourceCode) for sourceCode in self.sourceCodes]
                     
-    def dump (self):
+    def dump (self, fileNamePostfix):        
         def walk (name, value, tabLevel, fragments):
             fragments .append ('\n{0}{1}: {2} '.format (tabLevel * '\t', name, type (value).__name__ ))
             if isinstance (value, AST):
@@ -111,9 +115,12 @@ class Coder:
         for parseTree in self.parseTrees:
             walk ('file', parseTree, 0, fragments)
             
-        self.targetFile = open ('{0}.{1}'.format (programDir, 'tree'), 'w')
+        self.targetFile = open (f'{programDir}_{fileNamePostfix}.tree', 'w')
         self.targetFile.write (''.join (fragments) [1:])
         self.targetFile.close ()    
+
+    def transform (self):
+        [TransformingVisitor (parseTree) for parseTree in self.parseTrees]        
                 
     def generate (self):
         initCode = '\n'.join ([GeneratingVisitor (parseTree, True) .code for parseTree in self.parseTrees])
@@ -290,6 +297,17 @@ int {0}getDigit (int value, int index) {{
 
         
 coder = Coder ()
+
+class TransformingVisitor (NodeTransformer):
+    def __init__ (self, tree):
+        self.visit (tree)
+        
+    def visit_Attribute (self, node):   # Remove 'sp.' prefix
+        if type (node) == Attribute and type (node.value) == Name and node.value.id == 'sp':
+            return Name (id = node.attr, ctx = node.ctx)
+        else:
+            self.generic_visit (node)
+            return node
 
 class GeneratingVisitor (NodeVisitor):
     def __init__ (self, tree, init):

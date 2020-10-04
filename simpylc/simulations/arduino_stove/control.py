@@ -1,6 +1,6 @@
 # ====== Legal notices
 #
-# Copyright (C) 2013 - 2018 GEATEC engineering
+# Copyright (C) 2013 - 2020 GEATEC engineering
 #
 # This program is free software.
 # You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicence.
@@ -116,7 +116,6 @@ class Control (sp.Module):
         self.part ('Edge triggering of buttons')
         self.powerEdge.trigger (self.powerButton)
         self.power.mark (not self.power, not self.childLock and self.powerEdge)
-        self.alarmDelta.set (sp.world.period)
         
         self.childLockChangeTimer.reset (not (self.power and self.childLockButton))
         self.childLockEdge.trigger (self.childLockChangeTimer > 5)

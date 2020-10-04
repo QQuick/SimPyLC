@@ -1,6 +1,6 @@
 # ====== Legal notices
 #
-# Copyright (C) 2013 -2018 GEATEC engineering
+# Copyright (C) 2013 -2020 GEATEC engineering
 #
 # This program is free software.
 # You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.

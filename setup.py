@@ -11,7 +11,7 @@ def read (*paths):
 setup (
 	name = 'SimPyLC',
 	version = sp.base.programVersion,
-	description = 'SimPyLC PLC simulator, after its C++ big brother that has controlled industrial installations for more than 20 years now. ARDUINO CODE GENERATION ADDED!',
+	description = 'SimPyLC PLC simulator, after its C++ big brother that has controlled industrial installations for more than 25 years now. ARDUINO CODE GENERATION ADDED!',
 	long_description = (
 		read ('README.rst') + '\n\n' +
 		read ('qQuickLicense.txt')
@@ -33,6 +33,6 @@ setup (
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Operating System :: Microsoft :: Windows',
 		'Operating System :: POSIX :: Linux',
-		'Programming Language :: Python :: 3.7',
+		'Programming Language :: Python :: 3.8',
 	],
 )
