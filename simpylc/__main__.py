@@ -31,7 +31,7 @@ import webbrowser as wb
 
 simulationsSubdirName = 'simulations'
 accessoriesSubdirName = 'accessories'
-howtoFileName = 'simpylc_howto.html'
+howtoFileName = 'simpylc_howto.pdf'
 
 class CommandArgs :
     def __init__ (self):

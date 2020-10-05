@@ -16,14 +16,18 @@ setup (
 		read ('README.rst') + '\n\n' +
 		read ('qQuickLicense.txt')
 	),
-	keywords = ['PLC', 'Arduino','simulator', 'SimPyLC', 'emulator', 'GEATEC', 'opy', 'eden'],
+	keywords = ['PLC', 'Arduino','simulator', 'SimPyLC', 'emulator', 'GEATEC'],
 	url = 'http://www.qquick.org/educational',
 	license = 'qQuickLicence',
 	author = 'Jacques de Hooge',
 	author_email = 'jacques.de.hooge@qquick.org',
 	packages = ['simpylc'],	
 	include_package_data = True,
-	install_requires = ['numpy', 'pyopengl'],
+	install_requires = [
+        'numpy',
+        'pyopengl',
+        'windows-curses; platform_system == "Windows"'
+    ],
 	entry_points = {},    
 	classifiers = [
 		'Development Status :: 5 - Production/Stable',
@@ -33,6 +37,7 @@ setup (
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Operating System :: Microsoft :: Windows',
 		'Operating System :: POSIX :: Linux',
+		'Operating System :: MacOS',
 		'Programming Language :: Python :: 3.8',
 	],
 )
