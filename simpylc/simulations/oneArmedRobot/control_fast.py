@@ -49,8 +49,8 @@ class Control (sp.Module):
 #		self.torSpeedMax = sp.Register (20)
 #		self.torSpeedSet = sp.Register()
 		self.torSpeed = sp.Register ()
-		self.torBrakeFac = sp.Register (0.3)
-		self.torBrakeDist = sp.Register ()	# New
+		self.torBrakeFac = sp.Register (0.3)   # New
+		self.torBrakeDist = sp.Register ()	   # New
 #		self.torSpeedDif = sp.Register ()
 
 		self.group ('general')

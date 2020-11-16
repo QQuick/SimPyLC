@@ -26,6 +26,7 @@
 
 import time as tm
 import traceback as tb
+import math as mt
 
 import simpylc as sp
 
@@ -77,7 +78,7 @@ class LidarPilot:
         self.targetObstacleAngle = (self.nearestObstacleAngle + self.nextObstacleAngle) / 2
         
         self.steeringAngle = self.targetObstacleAngle
-        self.targetVelocity = (sp.abs (90 - self.steeringAngle) / 80) if self.driveEnabled else 0
+        self.targetVelocity = ((90 - abs (self.steeringAngle)) / 60) if self.driveEnabled else 0
     
     def output (self):  # Output to simulator
         sp.world.physics.steeringAngle.set (self.steeringAngle)
