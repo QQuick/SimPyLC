@@ -34,6 +34,7 @@ class LidarPilotSimulatedIo (lb.LidarPilotBase):
         super () .__init__ ()
         
     def input (self):   # Input from simulator
+        super () .input ()
         key = sp.getKey ()
         
         if key == 'KEY_UP':
@@ -45,6 +46,7 @@ class LidarPilotSimulatedIo (lb.LidarPilotBase):
         self.lidarHalfApertureAngle = sp.world.visualisation.lidar.halfApertureAngle
         
     def output (self):  # Output to simulator
+        super () .output ()
         sp.world.physics.steeringAngle.set (self.steeringAngle)
         sp.world.physics.targetVelocity.set (self.targetVelocity)
         

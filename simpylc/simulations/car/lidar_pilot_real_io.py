@@ -27,13 +27,12 @@
 import lidar_pilot_base as lb
 
 class LidarPilotRealIo (lb.LidarPilotBase):
-
-            def __init__ (self):
+    def __init__ (self):
         self.finity = 1_000_000_000        
         super () .__init__ ()
         
     def input (self):   # Input from hardware
-        pass
+        super() .input ()
     
     def output (self):  # Output to hardware
-        pass
+        super () .output ()
