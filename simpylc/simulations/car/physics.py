@@ -58,6 +58,10 @@ class Physics (sp.Module):
         self.positionX = sp.Register ()
         self.positionY = sp.Register ()
         
+        self.focusDist = sp.Register (2)
+        self.focusX = sp.Register ()
+        self.focusY = sp.Register ()
+        
         self.radialAcceleration = sp.Register ()
         self.slipping = sp.Marker ()
         self.radialVelocity = sp.Register ()
@@ -88,4 +92,7 @@ class Physics (sp.Module):
         
         self.positionX.set (self.positionX + self.velocityX * sp.world.period)
         self.positionY.set (self.positionY + self.velocityY * sp.world.period)
+        
+        self.focusX.set (self.positionX + self.focusDist * sp.cos (self.attitudeAngle))
+        self.focusY.set (self.positionY + self.focusDist * sp.sin (self.attitudeAngle))
         
