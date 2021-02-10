@@ -44,15 +44,15 @@ class Coder:
     def code (self, world):
         modules = world._modules
         
-        try:
-            self.nativeCode = sub (r'/\*\*.*?\*\*/', '', open ('native.cpp') .read (), flags = DOTALL)
-        except:
-            print ("File 'native.cpp' missing")
-            return
-    
         if len (argv) < 2:
             return False
 
+        try:
+            self.nativeCode = sub (r'/\*\*.*?\*\*/', '', open ('native.cpp') .read (), flags = DOTALL)
+        except:
+            print ("File 'naaative.cpp' missing")
+            return
+    
         print ('Code generation started')
         tailArgs = argv [1:]
         

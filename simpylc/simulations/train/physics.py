@@ -33,13 +33,13 @@ class Physics (sp.Module):
         self.page ('train physics')
         
         self.group ('control signals', True)
-        self.brakeLift = sp.Marker
+        self.brakeLift = sp.Marker ()
         self.driveEnable = sp.Marker ()
     
         self.group ('state')
-        self.accel = sp.Register ()
+        self.targetAccel = sp.Register ()
         self.speed = sp.Register ()
-        self.position = sp.Marker ()
+        self.position = sp.Register ()
 
         self.group ('limits', True)
         self.maxBrakeDecel = sp.Register (5)
@@ -51,15 +51,14 @@ class Physics (sp.Module):
         self.group ('auxiliary')
         self.brakeAccel = sp.Register ()
         self.driveAccel = sp.Register ()
-        self.actualAccel = sp.Register ()
         
     def sweep (self):
         self.part ('acceleration')
-        self.brakeAccel.set (0, self.brakeLift, -self.brakeDecel)
+        self.brakeAccel.set (0, self.brakeLift, -self.maxBrakeDecel)
         self.driveAccel.set (self.maxDriveAccel, self.driveEnable, -self.maxDriveDecel)
-        self.totalAccel.set (self.brakeAccel + self.driveAccel)
+        self.targetAccel.set (self.brakeAccel + self.driveAccel)
 
         self.part ('integration')
-        self.speed.set (sp.limit (self.speed + self.totalAccel * sp.world.period, 0, self.maxSpeed))
+        self.speed.set (sp.limit (self.speed + self.targetAccel * sp.world.period, 0, self.maxSpeed))
         self.position.set (self.position + self.speed * sp.world.period)
         

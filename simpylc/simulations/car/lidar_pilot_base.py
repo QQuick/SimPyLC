@@ -31,7 +31,6 @@ import multiprocessing.shared_memory as sm
 
 import timer as tr
 import pid_controller as pc
-import scada_common as sc
 
 class LidarPilotBase:
     def __init__ (self):
@@ -40,7 +39,6 @@ class LidarPilotBase:
         
         self.timer = tr.Timer ()
         self.steeringPidController = pc.PidController (1.05, 0, -0.03)
-        self.scadaList = sm.ShareableList (sc.listValues, name = sc.listName)
         
         while True:
             self.timer.tick ()
@@ -48,13 +46,7 @@ class LidarPilotBase:
             self.sweep ()
             self.output ()
             tm.sleep (0.02)
-    
-    def input (self):
-        if self.scadaList [sc.enableDriveIndex]:
-            self.driveEnabled = True
-        elif self.scadaList [sc.disableDriveIndex]:
-            self.driveEnabled = False
-    
+            
     def sweep (self):   # Control algorithm to be tested
         self.nearestObstacleDistance = self.finity
         self.nearestObstacleAngle = 0
@@ -80,12 +72,4 @@ class LidarPilotBase:
         self.targetObstacleAngle = (self.nearestObstacleAngle + self.nextObstacleAngle) / 2
         
         self.steeringAngle = self.steeringPidController.getY (self.timer.deltaTime, self.targetObstacleAngle, 0)
-        # print (f'{self.targetObstacleAngle:5.3f} {self.steeringAngle:5.3f}', '\r')
-        # self.steeringAngle = self.targetObstacleAngle
         self.targetVelocity = ((90 - abs (self.steeringAngle)) / 60) if self.driveEnabled else 0
-
-    def output (self):
-        self.scadaList [sc.driveEnabledIndex] = self.driveEnabled
-        self.scadaList [sc.steeringAngleIndex] = self.steeringAngle
-        self.scadaList [sc.targetVelocityIndex] = self.targetVelocity
-        
