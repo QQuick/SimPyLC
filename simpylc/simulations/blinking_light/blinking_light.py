@@ -29,18 +29,16 @@ import simpylc as sp
 class BlinkingLight (sp.Module):
     def __init__ (self):
         sp.Module.__init__ (self)
-        self.blinkingTimer = sp.Timer ()
-        self.blinkingLight = sp.Marker ()
+        
+        self.blinkTimer = sp.Timer ()
         self.pulse = sp.Oneshot ()
         self.counter = sp.Register ()
+        self.led = sp.Marker ()
         self.run = sp.Runner ()
-        
-    def input (self):   
-        pass
     
     def sweep (self):
-        self.blinkingTimer.reset (self.blinkingTimer > 8)
-        self.blinkingLight.mark (not self.blinkingLight, not self.blinkingTimer)
-        self.pulse.trigger (self.blinkingTimer > 3)
+        self.blinkTimer.reset (self.blinkTimer > 8)
+        self.pulse.trigger (self.blinkTimer > 3)
         self.counter.set (self.counter + 1, self.pulse)
+        self.led.mark (not self.led, self.pulse)
         

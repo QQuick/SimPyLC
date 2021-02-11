@@ -31,8 +31,8 @@ class Timing (sp.Chart):
         sp.Chart.__init__ (self)
         
     def define (self):
-        self.channel (sp.world.blinkingLight.blinkingTimer, sp.red, 0, 12, 50)
-        self.channel (sp.world.blinkingLight.blinkingLight, sp.lime, 0, 1, 50)
+        self.channel (sp.world.blinkingLight.blinkTimer, sp.red, 0, 12, 50)
         self.channel (sp.world.blinkingLight.pulse, sp.blue, 0, 1, 50)
         self.channel (sp.world.blinkingLight.counter, sp.yellow, 0, 20, 100)
+        self.channel (sp.world.blinkingLight.led, sp.lime, 0, 1, 50)
         

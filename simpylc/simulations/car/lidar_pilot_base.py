@@ -27,7 +27,6 @@
 import time as tm
 import traceback as tb
 import math as mt
-import multiprocessing.shared_memory as sm
 
 import timer as tr
 import pid_controller as pc

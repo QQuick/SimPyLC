@@ -24,13 +24,14 @@
 # Removing this header ends your licence.
 #
 
+import multiprocessing.shared_memory as sm
 import lidar_pilot_base as lb
 import scada_common as sc
 
 class LidarPilotScadaIo (lb.LidarPilotBase):
     def __init__ (self):
+        self.scadaList = sm.ShareableList (sc.listValues, name = sc.listName)
         super () .__init__ ()
-        self.scadaList = sc.ShareableList (sc.listValues, name = sc.listName)
         
     def input (self):   # Input from scada system
         if self.scadaList [sc.enableDriveIndex]:

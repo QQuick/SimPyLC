@@ -33,7 +33,7 @@ class Timing (sp.Chart):
     def define (self):
         self.channel (sp.world.ledTimer.rampTimer, sp.red, 0, 9, 180)
         self.channel (sp.world.ledTimer.direction, sp.white, 0, 1, 20)
-        self.channel (sp.world.ledTimer.oneshot, sp.aqua, 0, 1, 20)
+        self.channel (sp.world.ledTimer.pulse, sp.aqua, 0, 1, 20)
         self.channel (sp.world.ledTimer.blinkTime, sp.blue, 0, 3, 60)
         self.channel (sp.world.ledTimer.blinkTimer, sp.yellow, 0, 3, 60)
         self.channel (sp.world.ledTimer.led, sp.green, 0, 1, 20)

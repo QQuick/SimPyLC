@@ -167,13 +167,18 @@ class Visualisation (sp.Scene):
             sp.world.physics.positionX.set (self.startX) 
             sp.world.physics.positionY.set (self.startY)
         
-        
-        self.camera (
+        '''
+        self.camera (   # First person
             position = sp.tEva ((sp.world.physics.positionX, sp.world.physics.positionY, 1)),
             focus = sp.tEva ((sp.world.physics.focusX, sp.world.physics.focusY, 0))
         )
         '''
-        self.camera (
+        self.camera (   # Soccer match
+            position = sp.tEva ((sp.world.physics.positionX + 2, sp.world.physics.positionY, 2)),
+            focus = sp.tEva ((sp.world.physics.positionX + 0.001, sp.world.physics.positionY, 0))
+        )
+        '''
+        self.camera (   # Helicopter
             position = sp.tEva ((0.0000001, 0, 12)),
             focus = sp.tEva ((0, 0, 0))
         )
