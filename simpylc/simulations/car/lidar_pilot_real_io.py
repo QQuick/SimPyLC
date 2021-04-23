@@ -24,9 +24,9 @@
 # Removing this header ends your licence.
 #
 
-import lidar_pilot_scada_io as ls
+import lidar_pilot_base as lb
 
-class LidarPilotRealIo (ls.LidarPilotScadaIo):
+class LidarPilotRealIo (lb.LidarPilotBase):
     def __init__ (self):
         super () .__init__ ()
         self.finity = 1_000_000_000        

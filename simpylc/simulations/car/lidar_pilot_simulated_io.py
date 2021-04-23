@@ -25,9 +25,9 @@
 #
 
 import simpylc as sp
-import lidar_pilot_scada_io as ls
+import lidar_pilot_base as lb
 
-class LidarPilotSimulatedIo (ls.LidarPilotScadaIo):
+class LidarPilotSimulatedIo (lb.LidarPilotBase):
     def __init__ (self):
         print ('Use up arrow to start, down arrow to stop')
         self.finity = sp.finity

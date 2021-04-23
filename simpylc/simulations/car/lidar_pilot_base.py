@@ -45,6 +45,9 @@ class LidarPilotBase:
             self.sweep ()
             self.output ()
             tm.sleep (0.02)
+
+    def input (self):   # Play nice in class hierarchy
+        pass
             
     def sweep (self):   # Control algorithm to be tested
         self.nearestObstacleDistance = self.finity
@@ -72,3 +75,6 @@ class LidarPilotBase:
         
         self.steeringAngle = self.steeringPidController.getY (self.timer.deltaTime, self.targetObstacleAngle, 0)
         self.targetVelocity = ((90 - abs (self.steeringAngle)) / 60) if self.driveEnabled else 0
+
+    def output (self):  # Play nice in class hierarchy
+        pass

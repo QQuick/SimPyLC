@@ -48,6 +48,8 @@ class Physics (sp.Module):
         self.inverseMidCurveRadius = sp.Register (20)       
         self.midAngularVelocity = sp.Register ()
         
+        self.group ('position', True)
+
         self.attitudeAngle = sp.Register (50)
         self.courseAngle = sp.Register ()
         
@@ -58,13 +60,17 @@ class Physics (sp.Module):
         self.positionX = sp.Register ()
         self.positionY = sp.Register ()
         
-        self.focusDist = sp.Register (2)
-        self.focusX = sp.Register ()
-        self.focusY = sp.Register ()
-        
+        self.group('slip', True)
+
         self.radialAcceleration = sp.Register ()
         self.slipping = sp.Marker ()
         self.radialVelocity = sp.Register ()
+
+        self.group ('camera')
+
+        self.focusDist = sp.Register (2)
+        self.focusX = sp.Register ()
+        self.focusY = sp.Register ()
         
     def sweep (self):
         self.page ('traction')  
