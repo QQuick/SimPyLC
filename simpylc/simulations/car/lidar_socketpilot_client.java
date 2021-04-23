@@ -12,16 +12,19 @@ class Client {
     public static void main (String args []) {
         try {
             final var finity = 1e20;
-            final var maxMessageLength = 4096;
-            var socket = new Socket ("", 50008);
+            final var maxMessageLength = 1024;
+            var socket = new Socket ("localhost", 50012);
             var sensorStream = new DataInputStream (socket.getInputStream ());
             var actuatorStream = new DataOutputStream (socket.getOutputStream ());
-            
+
             while (true) {
                 var sensorBytes = new byte [maxMessageLength];
                 sensorStream.readFully (sensorBytes, 0, maxMessageLength);
                 var sensorString = new String (sensorBytes, "ASCII");
                 sensorString = sensorString.replaceAll (" ", "");
+
+                // System.out.println (sensorString);
+
                 var sensorParser = new JSONParser ();
                 var sensorObject = (JSONObject) sensorParser.parse (sensorString);
                 var rawLidarDistances = (JSONArray) sensorObject.get ("lidarDistances");
@@ -31,7 +34,8 @@ class Client {
                     lidarDistances [distanceIndex] = (double) rawLidarDistances.get (distanceIndex);
                 }
 
-                var lidarHalfApertureAngle = (int)(long) sensorObject.get ("lidarHalfApertureAngle");
+                var lidarHalfApertureAngle = (long) sensorObject.get ("lidarHalfApertureAngle");
+                var lidarApertureAngle = 2 * lidarHalfApertureAngle;
 
                 // ====== BEGIN of control algorithm
 
@@ -41,9 +45,9 @@ class Client {
                 var nextObstacleDistance = finity;
                 var nextObstacleAngle = 0.;
 
-                for (int lidarAngle = -lidarHalfApertureAngle; lidarAngle < lidarHalfApertureAngle; lidarAngle++) {
-                    int distanceIndex = lidarAngle < 0 ? lidarAngle + lidarHalfApertureAngle : lidarAngle;
-                    var lidarDistance = lidarDistances [distanceIndex];
+                for (long lidarAngle = -lidarHalfApertureAngle; lidarAngle < lidarHalfApertureAngle; lidarAngle++) {
+                    long distanceIndex = lidarAngle < 0 ? lidarAngle + lidarApertureAngle : lidarAngle;
+                    var lidarDistance = lidarDistances [(int) distanceIndex];
                     
                     if (lidarDistance < nearestObstacleDistance) {
                         nextObstacleDistance = nearestObstacleDistance;
@@ -60,9 +64,9 @@ class Client {
                 
                 var targetObstacleDistance = (nearestObstacleDistance + nextObstacleDistance) / 2;
                 var targetObstacleAngle = (nearestObstacleAngle + nextObstacleAngle) / 2;
-                
+
                 var steeringAngle = targetObstacleAngle;
-                var targetVelocity = (90 - Math.abs (steeringAngle) / 60) / 2;
+                var targetVelocity = (90 - Math.abs (steeringAngle)) / 60;
 
                 // ====== END of control algorithm
 

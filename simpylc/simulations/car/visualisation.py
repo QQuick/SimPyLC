@@ -55,26 +55,19 @@ class Lidar:
         
     def scan (self, mountPosition, mountAngle):
         self.distances = [sp.finity for angle in range (self.apertureAngle)]
-        all = [(sp.finity, angle) for angle in range (-180, 180)]
         
         for obstacle in self.obstacles:
             relativePosition = sp.tSub (obstacle.center, mountPosition) 
             distance = sp.tNor (relativePosition)
             absoluteAngle = sp.atan2 (relativePosition [1], relativePosition [0])
-            relativeAngle = (round (absoluteAngle - mountAngle) + 180) % 360 - 180
-
-            if distance < all [relativeAngle][0]:
-                all [relativeAngle] = (distance, relativeAngle)   # In case of coincidence, favor nearby obstacle  
+            relativeAngle = (round (absoluteAngle - mountAngle) + 180) % 360 - 180 
                 
             if -self.halfApertureAngle <= relativeAngle < self.halfApertureAngle - 1:
-                self.distances [relativeAngle] = min (distance, self.distances [relativeAngle])    # In case of coincidence, favor nearby obstacle
-
-        #print (all)
+                self.distances [relativeAngle] = round (min (distance, self.distances [relativeAngle]), 4)    # In case of coincidence, favor nearby obstacle
 
 class Line (sp.Cylinder):
     def __init__ (self, **arguments):
        super () .__init__ (size = (0.01, 0.01, 0), axis = (1, 0, 0), angle = 90, color = (0, 1, 1), **arguments)
-
 
 class BodyPart (sp.Beam):
     def __init__ (self, **arguments):
@@ -179,7 +172,7 @@ class Visualisation (sp.Scene):
         )
         '''
         self.camera (   # Helicopter
-            position = sp.tEva ((0.0000001, 0, 12)),
+            position = sp.tEva ((0.0000001, 0, 20)),
             focus = sp.tEva ((0, 0, 0))
         )
         '''

@@ -25,15 +25,16 @@
 #
 
 import socket as sc
+import time as tm
 import json as js
 import simpylc as sp
 import lidar_pilot_base as lb
 
 class LidarSocketpilotServer:
-    address = '', 50008
+    address = 'localhost', 50012
     socketType = sc.AF_INET, sc.SOCK_STREAM
     maxNrOfConnectionRequests = 5
-    maxMessageLength = 4096
+    maxMessageLength = 1024
 
     def __init__ (self):
         with sc.socket (*self.socketType) as serverSocket:
@@ -50,6 +51,8 @@ class LidarSocketpilotServer:
                             'lidarHalfApertureAngle': sp.world.visualisation.lidar.halfApertureAngle
                         }
                         self.send (sensors)
+
+                        tm.sleep (0.02)
 
                         actuators = self.recv ()
                         sp.world.physics.steeringAngle.set (actuators ['steeringAngle'])
