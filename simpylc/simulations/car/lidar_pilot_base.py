@@ -37,7 +37,7 @@ class LidarPilotBase:
         self.steeringAngle = 0
         
         self.timer = tr.Timer ()
-        self.steeringPidController = pc.PidController (1.05, 0, -0.03)
+        self.steeringPidController = pc.PidController (1.05, 0.05, 0.03)
         
         while True:
             self.timer.tick ()
