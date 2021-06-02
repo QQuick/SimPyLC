@@ -1,35 +1,36 @@
-# ====== Legal notices
-#
-# Copyright (C) 2013 - 2020 GEATEC engineering
-#
-# This program is free software.
-# You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY, without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the QQuickLicense for details.
-#
-# The QQuickLicense can be accessed at: http://www.qquick.org/license.html
-#
-# __________________________________________________________________________
-#
-#
-#  THIS PROGRAM IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS !!
-#
-# __________________________________________________________________________
-#
-# It is meant for training purposes only.
-#
-# Removing this header ends your license.
-#
+'''
+====== Legal notices
+
+Copyright (C) 2013 - 2021 GEATEC engineering
+
+This program is free software.
+You can use, redistribute and/or modify it, but only under the terms stated in the QQuickLicense.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY, without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the QQuickLicense for details.
+
+The QQuickLicense can be accessed at: http://www.qquick.org/license.html
+
+__________________________________________________________________________
+
+
+ THIS PROGRAM IS FUNDAMENTALLY UNSUITABLE FOR CONTROLLING REAL SYSTEMS !!
+
+__________________________________________________________________________
+
+It is meant for training purposes only.
+
+Removing this header ends your license.
+'''
 
 import os
 from math import *
 from inspect import *
 
 programName = 'SimPyLC'
-programVersion = '3.9.4'
+programVersion = '3.9.5'
 programNameAndVersion = '{0} {1}'.format (programName, programVersion)
 programDir = os.getcwd () .replace ('\\', '/') .rsplit ('/', 3) [-1]
 
