@@ -36,19 +36,23 @@ Removing this header ends your license.
 '''
 
 import random as rd
+import os
 
 import simpylc as sp
 
 import parameters as pm
 
-normalFloorColor = (0, 0.003, 0)
+normalFloorColor = (0, 0.001, 0)
 collisionFloorColor = (1, 0, 0.3)
+normalTireColor = (0.03, 0.03, 0.03)
 nrOfObstacles = 64
 
-class Lidar:
+class Lidar (sp.Cylinder):
     # 0, ...,  halfApertureAngle - 1, -halfApertureAngle, ..., -1
     
-    def __init__ (self, apertureAngle, obstacles):
+    def __init__ (self, apertureAngle, obstacles, **arguments):
+        super () .__init__ (color = (0, 0, 0), **arguments)
+
         self.apertureAngle = apertureAngle
         self.halfApertureAngle = self.apertureAngle // 2
         self.obstacles = obstacles
@@ -72,42 +76,42 @@ class Line (sp.Cylinder):
 
 class BodyPart (sp.Beam):
     def __init__ (self, **arguments):
-        super () .__init__ (color = (1, 0, 0), **arguments)
+        super () .__init__ (color = (0.7, 0, 0), **arguments)
 
 class Wheel:
     def __init__ (self, **arguments): 
         self.suspension = sp.Cylinder (size = (0.01, 0.01, 0.001), axis = (1, 0, 0), angle = 90, pivot = (0, 0, 1), **arguments)
-        self.rim = sp.Beam (size = (0.08, 0.06, 0.02), pivot = (0, 1, 0), color = (0, 0, 0))
-        self.tire = sp.Cylinder (size = (pm.wheelDiameter, pm.wheelDiameter, 0.04), axis = (1, 0, 0), angle = 90, color = (1, 1, 0))
+        self.rim = sp.Beam (size = (0.08, 0.06, 0.02), pivot = (0, 1, 0), color = (0.2, 0, 0))
+        self.tire = sp.Cylinder (size = (pm.wheelDiameter, pm.wheelDiameter, 0.04), axis = (1, 0, 0), angle = 90, color = normalTireColor)
         self.line = Line ()
         
     def __call__ (self, wheelAngle, slipping, steeringAngle = 0):
         return self.suspension (rotation = steeringAngle, parts = lambda:
             self.rim (rotation = wheelAngle, parts = lambda:
-                self.tire (color = (rd.random (), rd.random (), rd.random ()) if slipping else (1, 1, 0)) +
+                self.tire (color = (rd.random (), 0.5 * rd.random (), 0.5 * rd.random ()) if slipping else normalTireColor) +
                 self.line ()
         )   )
         
 class Window (sp.Beam):
     def __init__ (self, **arguments):
-        super () .__init__ (axis = (0, 1, 0), color = (0, 0, 1), **arguments)
+        super () .__init__ (axis = (0, 1, 0), color = (0, 0, 0.2), **arguments)
         
 class Floor (sp.Beam):
     side = 16
-    spacing = 0.2
+    spacing = 0.5
     halfSteps = round (0.5 * side / spacing)
 
     class Stripe (sp.Beam):
         def __init__ (self, **arguments):
-            super () .__init__ (size = (0.01, Floor.side, 0.001), **arguments)
+            super () .__init__ (size = (0.003, Floor.side, 0.001), **arguments)
             
     def __init__ (self, **arguments):
         super () .__init__ (size = (self.side, self.side, 0.0005), color = normalFloorColor)
-        self.xStripes = [self.Stripe (center = (0, nr * self.spacing, 0.0001), angle = 90, color = (1, 1, 1)) for nr in range (-self.halfSteps, self.halfSteps)]
-        self.yStripes = [self.Stripe (center = (nr * self.spacing, 0, 0), color = (0, 0, 0)) for nr in range (-self.halfSteps, self.halfSteps)]
+        self.xStripes = [self.Stripe (center = (0, nr * self.spacing, 0.0001), angle = 90, color = (0, 0.004, 0)) for nr in range (-self.halfSteps, self.halfSteps)]
+        self.yStripes = [self.Stripe (center = (nr * self.spacing, 0, 0), color = (0, 0.004, 0)) for nr in range (-self.halfSteps, self.halfSteps)]
         
     def __call__ (self, parts):
-        return super () .__call__ (color = collisionFloorColor if self.scene.collided else  normalFloorColor, parts = lambda:
+        return super () .__call__ (color = collisionFloorColor if self.scene.collided else normalFloorColor, parts = lambda:
             parts () +
             sum (xStripe () for xStripe in self.xStripes) +
             sum (yStripe () for yStripe in self.yStripes)
@@ -116,26 +120,9 @@ class Floor (sp.Beam):
 class Visualisation (sp.Scene):
     def __init__ (self):
         super () .__init__ ()
-        
-        self.camera = sp.Camera ()
-        
-        self.floor = Floor (scene = self)
-        
-        self.fuselage = BodyPart (size = (0.70, 0.16, 0.08), center = (0, 0, 0.07), pivot = (0, 0, 1), group = 0)
-        self.fuselageLine = Line ()
-        self.cabin = BodyPart (size = (0.20, 0.16, 0.06), center = (-0.06, 0, 0.07))
-        
-        self.wheelFrontLeft = Wheel (center = (pm.wheelShift, 0.08, -0.02))
-        self.wheelFrontRight = Wheel (center = (pm.wheelShift, -0.08, -0.02))
-        
-        self.wheelRearLeft = Wheel (center = (-pm.wheelShift, 0.08, -0.02))
-        self.wheelRearRight = Wheel (center = (-pm.wheelShift, -0.08, -0.02))
-        
-        self.windowFront = Window (size = (0.05, 0.14, 0.14), center = (0.14, 0, -0.025), angle = -60)    
-        self.windowRear = Window (size = (0.05, 0.14, 0.18), center = (-0.18, 0, -0.025),angle = 72) 
 
         self.roadCones = []
-        track = open ('default.track')
+        track = open (f'{os.path.dirname (os.path.abspath (__file__))}/default.track')
         
         for rowIndex, row in enumerate (track):
             for columnIndex, column in enumerate (row):
@@ -153,7 +140,23 @@ class Visualisation (sp.Scene):
                     
         track.close ()
         
-        self.lidar = Lidar (120, self.roadCones)
+        self.camera = sp.Camera ()
+        
+        self.floor = Floor (scene = self)
+        
+        self.fuselage = BodyPart (size = (0.65, 0.165, 0.09), center = (0, 0, 0.07), pivot = (0, 0, 1), group = 0)
+        self.fuselageLine = Line ()
+
+        self.wheelFrontLeft = Wheel (center = (pm.wheelShift, 0.08, -0.02))
+        self.wheelFrontRight = Wheel (center = (pm.wheelShift, -0.08, -0.02))
+        
+        self.wheelRearLeft = Wheel (center = (-pm.wheelShift, 0.08, -0.02))
+        self.wheelRearRight = Wheel (center = (-pm.wheelShift, -0.08, -0.02))
+        
+        self.cabin = BodyPart (size = (0.20, 0.16, 0.06), center = (-0.06, 0, 0.07))        
+        self.windowFront = Window (size = (0.045, 0.158, 0.14), center = (0.15, 0, -0.025), angle = -56)    
+        self.windowRear = Window (size = (0.042, 0.158, 0.18), center = (-0.18, 0, -0.025),angle = 72) 
+        self.lidar = Lidar (120, self.roadCones, size = (0.02, 0.02, 0.03), center = (0.05, 0, 0.03))
         
     def display (self):
         if self.init:
@@ -182,7 +185,8 @@ class Visualisation (sp.Scene):
             self.fuselage (position = (sp.world.physics.positionX, sp.world.physics.positionY, 0), rotation = sp.world.physics.attitudeAngle, parts = lambda:
                 self.cabin (parts = lambda:
                     self.windowFront () +
-                    self.windowRear ()
+                    self.windowRear () +
+                    self.lidar ()
                 ) +
                 
                 self.wheelFrontLeft (

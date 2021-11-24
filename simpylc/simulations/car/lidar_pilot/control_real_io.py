@@ -25,29 +25,15 @@ It is meant for training purposes only.
 Removing this header ends your license.
 '''
 
-import simpylc as sp
-import lidar_pilot_base as lb
+import control_base as bs
 
-class LidarPilotSimulatedIo (lb.LidarPilotBase):
+class ControlRealIo (lb.ControlBase):
     def __init__ (self):
-        print ('Use up arrow to start, down arrow to stop')
-        self.finity = sp.finity
         super () .__init__ ()
+        self.finity = 1_000_000_000        
         
-    def input (self):   # Input from simulator
-        super () .input ()
-        key = sp.getKey ()
-        
-        if key == 'KEY_UP':
-            self.driveEnabled = True
-        elif key == 'KEY_DOWN':
-            self.driveEnabled = False
-        
-        self.lidarDistances = sp.world.visualisation.lidar.distances
-        self.lidarHalfApertureAngle = sp.world.visualisation.lidar.halfApertureAngle
-        
-    def output (self):  # Output to simulator
+    def input (self):   # Input from hardware
+        super() .input ()
+    
+    def output (self):  # Output to hardware
         super () .output ()
-        sp.world.physics.steeringAngle.set (self.steeringAngle)
-        sp.world.physics.targetVelocity.set (self.targetVelocity)
-        

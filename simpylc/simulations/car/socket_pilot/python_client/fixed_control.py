@@ -28,33 +28,43 @@ Removing this header ends your license.
 import time as tm
 import traceback as tb
 import math as mt
+import sys as ss
+import os
+import socket as sc
 
-import timer as tr
-import pid_controller as pc
+ss.path +=  [os.path.abspath (relPath) for relPath in  ('..',)] 
 
-class LidarPilotBase:
+import socket_wrapper as sw
+
+finity = 1e20
+
+class FixedControl:
     def __init__ (self):
-        self.driveEnabled = False
         self.steeringAngle = 0
-        
-        self.timer = tr.Timer ()
-        self.steeringPidController = pc.PidController (1.05, 0.05, 0.03)
-        
-        while True:
-            self.timer.tick ()
-            self.input ()
-            self.sweep ()
-            self.output ()
-            tm.sleep (0.02)
 
-    def input (self):   # Play nice in class hierarchy
-        pass
+        with sc.socket (*sw.socketType) as self.clientSocket:
+            self.clientSocket.connect (sw.address)
+            self.socketWrapper = sw.SocketWrapper (self.clientSocket)
+            self.lidarHalfApertureAngle = False
+
+            while True:
+                tm.sleep (0.02)
+                self.input ()
+                self.sweep ()
+                self.output ()
+
+    def input (self):
+        sensors = self.socketWrapper.recv ()
+        self.lidarDistances = sensors ['lidarDistances']
+
+        if not self.lidarHalfApertureAngle:
+            self.lidarHalfApertureAngle = sensors ['lidarHalfApertureAngle']
             
-    def sweep (self):   # Control algorithm to be tested
-        self.nearestObstacleDistance = self.finity
+    def sweep (self):
+        self.nearestObstacleDistance = finity
         self.nearestObstacleAngle = 0
         
-        self.nextObstacleDistance = self.finity
+        self.nextObstacleDistance = finity
         self.nextObstacleAngle = 0
 
         for lidarAngle in range (-self.lidarHalfApertureAngle, self.lidarHalfApertureAngle):
@@ -72,10 +82,16 @@ class LidarPilotBase:
                 self.nextObstacleAngle = lidarAngle
            
         self.targetObstacleDistance = (self.nearestObstacleDistance + self.nextObstacleDistance) / 2
-        self.targetObstacleAngle = (self.nearestObstacleAngle + self.nextObstacleAngle) / 2
-        
-        self.steeringAngle = self.steeringPidController.getY (self.timer.deltaTime, self.targetObstacleAngle, 0)
-        self.targetVelocity = ((90 - abs (self.steeringAngle)) / 60) if self.driveEnabled else 0
 
-    def output (self):  # Play nice in class hierarchy
-        pass
+        self.steeringAngle = (self.nearestObstacleAngle + self.nextObstacleAngle) / 2
+        self.targetVelocity = (90 - abs (self.steeringAngle)) / 60
+
+    def output (self):
+        actuators = {
+            'steeringAngle': self.steeringAngle,
+            'targetVelocity': self.targetVelocity
+        }
+
+        self.socketWrapper.send (actuators)
+
+FixedControl ()

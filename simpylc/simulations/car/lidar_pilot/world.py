@@ -28,16 +28,16 @@ Removing this header ends your license.
 import os
 import sys as ss
 
-ss.path.append (os.path.abspath ('../../..')) # If you want to store your simulations somewhere else, put SimPyLC in your PYTHONPATH environment variable
+ss.path +=  [os.path.abspath (relPath) for relPath in  ('../../..', '..')]   # If you want to store your simulations somewhere else, put SimPyLC in your PYTHONPATH environment variable
 
 import simpylc as sp
 
-import lidar_socketpilot_server as ls
+import control_simulated_io as cs
 import physics as ps
 import visualisation as vs
 
 sp.World (
-    ls.LidarSocketpilotServer,
+    cs.ControlSimulatedIo,
     ps.Physics,
     vs.Visualisation
 )

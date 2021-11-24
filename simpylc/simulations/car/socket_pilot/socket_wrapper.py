@@ -26,45 +26,23 @@ Removing this header ends your license.
 '''
 
 import socket as sc
-import time as tm
 import json as js
-import simpylc as sp
-import lidar_pilot_base as lb
 
-class LidarSocketpilotServer:
-    address = 'localhost', 50012
-    socketType = sc.AF_INET, sc.SOCK_STREAM
-    maxNrOfConnectionRequests = 5
-    maxMessageLength = 1024
+address = 'localhost', 50012
+socketType = sc.AF_INET, sc.SOCK_STREAM
+maxNrOfConnectionRequests = 5
+maxMessageLength = 1024
 
-    def __init__ (self):
-        with sc.socket (*self.socketType) as serverSocket:
-            serverSocket.bind (self.address)
-            serverSocket.listen (self.maxNrOfConnectionRequests)
+class SocketWrapper:
+    def __init__ (self, clientSocket):
+        self.clientSocket = clientSocket
 
-            while True:
-                self.clientSocket, address = serverSocket.accept ()
-
-                with self.clientSocket:
-                    while True:
-                        sensors = {
-                            'lidarDistances': sp.world.visualisation.lidar.distances,
-                            'lidarHalfApertureAngle': sp.world.visualisation.lidar.halfApertureAngle
-                        }
-                        self.send (sensors)
-
-                        tm.sleep (0.02)
-
-                        actuators = self.recv ()
-                        sp.world.physics.steeringAngle.set (actuators ['steeringAngle'])
-                        sp.world.physics.targetVelocity.set (actuators ['targetVelocity'])
-
-    def send (self, sensors):
-        buffer = bytes (f'{js.dumps (sensors):<{self.maxMessageLength}}', 'ascii')
+    def send (self, anObject):
+        buffer = bytes (f'{js.dumps (anObject):<{maxMessageLength}}', 'ascii')
 
         totalNrOfSentBytes = 0
 
-        while totalNrOfSentBytes < self.maxMessageLength:
+        while totalNrOfSentBytes < maxMessageLength:
             nrOfSentBytes = self.clientSocket.send (buffer [totalNrOfSentBytes:])
 
             if not nrOfSentBytes:
@@ -76,8 +54,8 @@ class LidarSocketpilotServer:
         totalNrOfReceivedBytes = 0
         receivedChunks = []
 
-        while totalNrOfReceivedBytes < self.maxMessageLength:
-            receivedChunk = self.clientSocket.recv (self.maxMessageLength - totalNrOfReceivedBytes)
+        while totalNrOfReceivedBytes < maxMessageLength:
+            receivedChunk = self.clientSocket.recv (maxMessageLength - totalNrOfReceivedBytes)
 
             if not receivedChunk:
                 self.raiseConnectionError ()
@@ -89,4 +67,3 @@ class LidarSocketpilotServer:
 
     def raiseConnectionError (self):
         raise RuntimeError ('Socket connection broken')
-    
