@@ -33,30 +33,21 @@ class Physics (sp.Module):
     def __init__ (self):
         sp.Module.__init__ (self)
 
-        self.page ('car physics')
+        self.page ('car physics dashboard')
         
         self.group ('wheels', True)
         
         self.acceleration = sp.Register (2)
+
         self.targetVelocity= sp.Register ()
         self.velocity = sp.Register ()
-        self.midWheelAngularVelocity = sp.Register ()
-        self.midWheelAngle = sp.Register (30)
-        
+
         self.steeringAngle = sp.Register ()
-        self.midSteeringAngle = sp.Register ()
-        
-        self.inverseMidCurveRadius = sp.Register (20)       
-        self.midAngularVelocity = sp.Register ()
         
         self.group ('position', True)
 
         self.attitudeAngle = sp.Register (50)
         self.courseAngle = sp.Register ()
-        
-        self.tangentialVelocity = sp.Register ()
-        self.velocityX = sp.Register ()
-        self.velocityY = sp.Register ()
 
         self.positionX = sp.Register ()
         self.positionY = sp.Register ()
@@ -65,23 +56,56 @@ class Physics (sp.Module):
 
         self.radialAcceleration = sp.Register ()
         self.slipping = sp.Marker ()
+
+        self.group ('camera')
+
+        self.soccerView = sp.Latch (True)
+        self.heliView = sp.Latch ()
+        self.driverView = sp.Latch ()
+
+        self.driverFocusDist = sp.Register (2)
+
+        self.page ('car physics internals')
+
+        self.group ('wheels', True)
+        
+        self.midWheelAngularVelocity = sp.Register ()
+        self.midWheelAngle = sp.Register (30)
+
+        self.midSteeringAngle = sp.Register ()
+        self.inverseMidCurveRadius = sp.Register (20)       
+        self.midAngularVelocity = sp.Register ()
+        
+        self.group ('position', True)
+        
+        self.tangentialVelocity = sp.Register ()
+        self.velocityX = sp.Register ()
+        self.velocityY = sp.Register ()
+        
+        self.group('slip', True)
         self.radialVelocity = sp.Register ()
 
         self.group ('camera')
 
-        self.focusDist = sp.Register (2)
-        self.focusX = sp.Register ()
-        self.focusY = sp.Register ()
+        self.soccerViewOneshot = sp.Oneshot ()
+        self.heliViewOneshot = sp.Oneshot ()
+        self.driverViewOneshot = sp.Oneshot ()
+
+        self.driverFocusX = sp.Register ()
+        self.driverFocusY = sp.Register ()
         
     def sweep (self):
-        self.page ('traction')  
-        self.group ('wheels', True)
+        self.page ('car physics')
+
+        self.group ('speed')
         
         self.velocity.set (self.velocity + self.acceleration * sp.world.period, self.velocity < self.targetVelocity, self.velocity - self.acceleration * sp.world.period)
         self.midWheelAngularVelocity.set (self.velocity / pm.displacementPerWheelAngle)
         self.midWheelAngle.set (self.midWheelAngle + self.midWheelAngularVelocity * sp.world.period)
         self.tangentialVelocity.set (self.midWheelAngularVelocity * pm.displacementPerWheelAngle) 
         
+        self.group ('direction')
+
         self.midSteeringAngle.set (sp.atan (0.5 * sp.tan (self.steeringAngle)))
         
         self.inverseMidCurveRadius.set (sp.sin (self.midSteeringAngle) / pm.wheelShift)
@@ -97,9 +121,21 @@ class Physics (sp.Module):
         self.velocityX.set (self.tangentialVelocity * sp.cos (self.courseAngle) + self.radialVelocity * sp.sin (self.courseAngle))
         self.velocityY.set (self.tangentialVelocity * sp.sin (self.courseAngle) + self.radialVelocity * sp.cos (self.courseAngle))
         
+        self.group ('position')
+
         self.positionX.set (self.positionX + self.velocityX * sp.world.period)
         self.positionY.set (self.positionY + self.velocityY * sp.world.period)
+
+        self.group ('camera')
+
+        self.soccerView.unlatch (self.heliViewOneshot or self.driverViewOneshot)
+        self.heliView.unlatch (self.soccerViewOneshot or self.driverViewOneshot)
+        self.driverView.unlatch (self.soccerViewOneshot or self.heliViewOneshot)
+
+        self.soccerViewOneshot.trigger (self.soccerView)
+        self.heliViewOneshot.trigger (self.heliView)
+        self.driverViewOneshot.trigger (self.driverView)
         
-        self.focusX.set (self.positionX + self.focusDist * sp.cos (self.attitudeAngle))
-        self.focusY.set (self.positionY + self.focusDist * sp.sin (self.attitudeAngle))
+        self.driverFocusX.set (self.positionX + self.driverFocusDist * sp.cos (self.attitudeAngle))
+        self.driverFocusY.set (self.positionY + self.driverFocusDist * sp.sin (self.attitudeAngle))
         

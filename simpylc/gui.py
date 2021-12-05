@@ -33,6 +33,12 @@ from tkinter import *
 
 from .base import *
 
+global en
+
+def setEngine (engine):
+    global en
+    en = engine
+
 class Cell:
     pageCaption, groupCaption, circuit, filler = range (4)
 
@@ -41,7 +47,7 @@ class Cell:
         self.module = module
         self.element = element
 
-        if self.element._isA ('_PageCaption'):
+        if isinstance (self.element, en._PageCaption):
             self.kind = Cell.pageCaption
             self.label =  Label (self.moduleWindow, text = self.element (), justify = CENTER, width = Gui.windowWidth)
             self.label.grid (row = 0, column = 0, columnspan = 2 * self.module._maxNrOfColumns)
@@ -49,13 +55,13 @@ class Cell:
             self.label.bind ('<ButtonPress-1>', lambda event: self.moduleWindow.goPage (self.moduleWindows.pageIndex - 1))
             self.label.bind ('<ButtonPress-2>', lambda event: self.moduleWindow.goPage (self.moduleWindows.pageIndex + 1))
         
-        elif self.element._isA ('_GroupCaption'):
+        elif isinstance (self.element, en._GroupCaption):
             self.kind = Cell.groupCaption
             self.label = Label (self.moduleWindow, text = self.element (), justify = CENTER, width = Gui.labelWidth + Gui.entryWidth)
             self.label.grid (row = self.element._rowIndex + 1, column = 2 * self.element._columnIndex, columnspan = 2)
             self.label.configure (foreground = groupCaptionForegroundColorHex, background = groupCaptionBackgroundColorHex)
         
-        elif self.element._isA ('_Circuit'):        
+        elif isinstance (self.element, en._Circuit):
             self.kind = Cell.circuit
             self.label =  Label (self.moduleWindow, text = self.element._name, anchor = 'e', justify = RIGHT, width = Gui.labelWidth)
             
@@ -88,7 +94,7 @@ class Cell:
             self.entry.configure (foreground = entryReleasedForegroundColorHex, background = entryReleasedBackgroundColorHex)
             self.label.configure (foreground = hexFromRgb (self.element.color) if self.element.color else labelForegroundColorHex, background = labelBackgroundColorHex)
             
-        elif self.element._isA ('_Filler'):
+        elif isInstance (self.element, _Filler):
             self.kind = Cell.filler
             self.label0 = Label (self.moduleWindow, text = '', width = Gui.labelWidth)
             self.label1 = Label (self.moduleWindow, text = '', width = Gui.entryWidth)
@@ -122,15 +128,22 @@ class Cell:
         self.entry.configure (foreground = entryReleasedForegroundColorHex, background = entryReleasedBackgroundColorHex)
     
     def set1 (self, event):
-        if self.element._isA ('Marker', 'Runner', 'Oneshot', 'Latch'):
-            self.element._write (1)
+        if isinstance (self.element, en.Marker):   # A Runner is a Marker
+            self.element.mark (True)
+        elif isinstance (self.element, en.Oneshot):
+            self.element.trigger ()
+        elif isinstance (self.element, en.Latch):
+            if self.element:
+                self.element.unlatch ()
+            else:
+                self.element.latch ()
 
     def set0 (self, event):
-        if self.element._isA ('Marker', 'Runner', 'Oneshot', 'Latch'):
-            self.element._write (0)
+        if isinstance (self.element, en.Marker):   # A Runner is a Marker
+            self.element.mark (False)
     
     def adapt (self, delta):
-        if self.element._isA ('Register', 'Timer'):
+        if isinstance (self.element, en.Register) or isinstance (self.element, en.Timer):
             try:
                 self.element._write (round (eval (self.entry.get ())) + delta)
             except:     # Why is this needed under Linux?
@@ -141,9 +154,6 @@ class _Filler:
     def __init__ (self, columnIndex):
         self._columnIndex = columnIndex
         self._rowIndex = 2
-        
-    def _isA (self, *ClassNames):
-        return '_Filler' in ClassNames
         
 class ModuleWindow (Toplevel):
     def __init__ (self, module):

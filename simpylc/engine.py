@@ -40,6 +40,8 @@ from .graphics import *
 from .scene import *
 from .chart import *
 from .coder import *
+
+setEngine (ss.modules [__name__])
             
 class _Functor:
     def __init__  (self, state):
@@ -113,12 +115,6 @@ class _Element:
         self._pageIndex, self._rowIndex, self._columnIndex = Module._pageIndex, Module._rowIndex, Module._columnIndex 
         Module._current._maxNrOfRows = max (Module._current._maxNrOfRows, self._rowIndex + 2)  # Leave room for page caption
         Module._current._maxNrOfColumns = max (Module._current._maxNrOfColumns, self._columnIndex + 1)
-            
-    def _isA (self, *classNames):
-        for className in classNames:
-            if isinstance (self, eval (className)):
-                return True
-        return False
         
 class _Caption (_Element):
     def __init__ (self, text):
