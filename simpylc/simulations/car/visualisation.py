@@ -40,36 +40,55 @@ import os
 
 import simpylc as sp
 
-import parameters as pm
+import dimensions as dm
 
 normalFloorColor = (0, 0.001, 0)
 collisionFloorColor = (1, 0, 0.3)
 normalTireColor = (0.03, 0.03, 0.03)
-nrOfObstacles = 64
 
-class Lidar (sp.Cylinder):
-    # 0, ...,  halfApertureAngle - 1, -halfApertureAngle, ..., -1
-    
-    def __init__ (self, apertureAngle, obstacles, **arguments):
+class Scanner (sp.Cylinder):
+    def __init__ (self, apertureAngle, middleApertureAngle, obstacles, **arguments):
         super () .__init__ (color = (0, 0, 0), **arguments)
 
         self.apertureAngle = apertureAngle
         self.halfApertureAngle = self.apertureAngle // 2
+
+        self.middleApertureAngle = middleApertureAngle
+        self.halfMiddleApertureAngle = self.middleApertureAngle // 2
+
         self.obstacles = obstacles
-        self.distances = [sp.finity for angle in range (self.apertureAngle)]
+
+        if scannerType == 'lidar':
+            self.lidarDistances = [sp.finity for angle in range (self.apertureAngle)]            # 0, ...,  halfApertureAngle - 1, -halfApertureAngle, ..., -1
+        else:
+            self.sonarDistances = [sp.finity for sectorIndex in range (3)]
         
     def scan (self, mountPosition, mountAngle):
-        self.distances = [sp.finity for angle in range (self.apertureAngle)]
+        if scannerType == 'lidar':
+            self.lidarDistances = [sp.finity for angle in range (self.apertureAngle)]
+        else:
+            self.sonarDistances = [sp.finity for sectorIndex in range (3)]
         
         for obstacle in self.obstacles:
             relativePosition = sp.tSub (obstacle.center, mountPosition) 
             distance = sp.tNor (relativePosition)
             absoluteAngle = sp.atan2 (relativePosition [1], relativePosition [0])
             relativeAngle = (round (absoluteAngle - mountAngle) + 180) % 360 - 180 
-                
-            if -self.halfApertureAngle <= relativeAngle < self.halfApertureAngle - 1:
-                self.distances [relativeAngle] = round (min (distance, self.distances [relativeAngle]), 4)    # In case of coincidence, favor nearby obstacle
 
+            if -self.halfApertureAngle <= relativeAngle < self.halfApertureAngle - 1:       # In case of coincidence, favor nearby obstacle
+                if scannerType == 'lidar':
+                    self.lidarDistances [relativeAngle] = round (min (distance, self.lidarDistances [relativeAngle]), 4)
+                else:
+                    sectorIndex = (
+                            -1
+                        if relativeAngle < -self.halfMiddleApertureAngle else
+                            0
+                        if relativeAngle < self.halfMiddleApertureAngle else
+                            1
+                    )
+
+                    self.sonarDistances [sectorIndex] = round (min (distance, self.sonarDistances [sectorIndex]), 4)
+ 
 class Line (sp.Cylinder):
     def __init__ (self, **arguments):
        super () .__init__ (size = (0.01, 0.01, 0), axis = (1, 0, 0), angle = 90, color = (0, 1, 1), **arguments)
@@ -82,7 +101,7 @@ class Wheel:
     def __init__ (self, **arguments): 
         self.suspension = sp.Cylinder (size = (0.01, 0.01, 0.001), axis = (1, 0, 0), angle = 90, pivot = (0, 0, 1), **arguments)
         self.rim = sp.Beam (size = (0.08, 0.06, 0.02), pivot = (0, 1, 0), color = (0.2, 0, 0))
-        self.tire = sp.Cylinder (size = (pm.wheelDiameter, pm.wheelDiameter, 0.04), axis = (1, 0, 0), angle = 90, color = normalTireColor)
+        self.tire = sp.Cylinder (size = (dm.wheelDiameter, dm.wheelDiameter, 0.04), axis = (1, 0, 0), angle = 90, color = normalTireColor)
         self.line = Line ()
         
     def __call__ (self, wheelAngle, slipping, steeringAngle = 0):
@@ -103,7 +122,7 @@ class Floor (sp.Beam):
 
     class Stripe (sp.Beam):
         def __init__ (self, **arguments):
-            super () .__init__ (size = (0.003, Floor.side, 0.001), **arguments)
+            super () .__init__ (size = (0.004, Floor.side, 0.001), **arguments)
             
     def __init__ (self, **arguments):
         super () .__init__ (size = (self.side, self.side, 0.0005), color = normalFloorColor)
@@ -120,26 +139,26 @@ class Floor (sp.Beam):
 class Visualisation (sp.Scene):
     def __init__ (self):
         super () .__init__ ()
-
         self.roadCones = []
-        track = open (f'{os.path.dirname (os.path.abspath (__file__))}/default.track')
-        
-        for rowIndex, row in enumerate (track):
-            for columnIndex, column in enumerate (row):
-                if column == '*':
-                    self.roadCones.append (sp.Cone (
-                        size = (0.07, 0.07, 0.15),
-                        center = (columnIndex / 4 - 8, rowIndex / 2 - 8, 0.15),
-                        color = (1, 0.3, 0),
-                        group = 1
-                    ))
-                elif column == "@":
-                    self.startX = columnIndex / 4 - 8
-                    self.startY = rowIndex / 2 - 8
-                    self.init = True
+        trackFileName = 'lidar.track' if scannerType == 'lidar' else 'sonar.track'
+
+        with open (f'{os.path.dirname (os.path.abspath (__file__))}/{trackFileName}') as trackFile:
+            track = trackFile.readlines ()
+            
+            for rowIndex, row in enumerate (track):
+                for columnIndex, column in enumerate (row):
+                    if column == '*':
+                        self.roadCones.append (sp.Cone (
+                            size = (0.07, 0.07, 0.15),
+                            center = (columnIndex / 4 - 7.75, rowIndex / 2 - 7.75, 0.15),
+                            color = (1, 0.3, 0),
+                            group = 1
+                        ))
+                    elif column == "@":
+                        self.startX = columnIndex / 4 - 8
+                        self.startY = rowIndex / 2 - 8
+                        self.init = True
                     
-        track.close ()
-        
         self.camera = sp.Camera ()
         
         self.floor = Floor (scene = self)
@@ -147,16 +166,17 @@ class Visualisation (sp.Scene):
         self.fuselage = BodyPart (size = (0.65, 0.165, 0.09), center = (0, 0, 0.07), pivot = (0, 0, 1), group = 0)
         self.fuselageLine = Line ()
 
-        self.wheelFrontLeft = Wheel (center = (pm.wheelShift, 0.08, -0.02))
-        self.wheelFrontRight = Wheel (center = (pm.wheelShift, -0.08, -0.02))
+        self.wheelFrontLeft = Wheel (center = (dm.wheelShift, 0.08, -0.02))
+        self.wheelFrontRight = Wheel (center = (dm.wheelShift, -0.08, -0.02))
         
-        self.wheelRearLeft = Wheel (center = (-pm.wheelShift, 0.08, -0.02))
-        self.wheelRearRight = Wheel (center = (-pm.wheelShift, -0.08, -0.02))
+        self.wheelRearLeft = Wheel (center = (-dm.wheelShift, 0.08, -0.02))
+        self.wheelRearRight = Wheel (center = (-dm.wheelShift, -0.08, -0.02))
         
         self.cabin = BodyPart (size = (0.20, 0.16, 0.06), center = (-0.06, 0, 0.07))        
         self.windowFront = Window (size = (0.045, 0.158, 0.14), center = (0.15, 0, -0.025), angle = -56)    
-        self.windowRear = Window (size = (0.042, 0.158, 0.18), center = (-0.18, 0, -0.025),angle = 72) 
-        self.lidar = Lidar (120, self.roadCones, size = (0.02, 0.02, 0.03), center = (0.05, 0, 0.03))
+        self.windowRear = Window (size = (0.042, 0.158, 0.18), center = (-0.18, 0, -0.025),angle = 72)
+
+        self.scanner = Scanner (dm.apertureAngle, dm.middleApertureAngle, self.roadCones, size = (0.02, 0.02, 0.03), center = (0.05, 0, 0.03))
         
     def display (self):
         if self.init:
@@ -185,7 +205,7 @@ class Visualisation (sp.Scene):
                 self.cabin (parts = lambda:
                     self.windowFront () +
                     self.windowRear () +
-                    self.lidar ()
+                    self.scanner ()
                 ) +
                 
                 self.wheelFrontLeft (
@@ -213,10 +233,6 @@ class Visualisation (sp.Scene):
             
             sum (roadCone () for roadCone in self.roadCones)
         )
-                
-        try:
-            self.lidar.scan (self.fuselage.position, self.fuselage.rotation)
-        except Exception as exception: # Initial check
-            pass
-            # print ('Visualisation.display:', exception)
-        
+
+        if hasattr (self.fuselage, 'position'):
+            self.scanner.scan (self.fuselage.position, self.fuselage.rotation)

@@ -27,7 +27,7 @@ Removing this header ends your license.
 
 import simpylc as sp
 
-import parameters as pm
+import dimensions as dm
 
 class Physics (sp.Module):
     def __init__ (self):
@@ -100,15 +100,15 @@ class Physics (sp.Module):
         self.group ('speed')
         
         self.velocity.set (self.velocity + self.acceleration * sp.world.period, self.velocity < self.targetVelocity, self.velocity - self.acceleration * sp.world.period)
-        self.midWheelAngularVelocity.set (self.velocity / pm.displacementPerWheelAngle)
+        self.midWheelAngularVelocity.set (self.velocity / dm.displacementPerWheelAngle)
         self.midWheelAngle.set (self.midWheelAngle + self.midWheelAngularVelocity * sp.world.period)
-        self.tangentialVelocity.set (self.midWheelAngularVelocity * pm.displacementPerWheelAngle) 
+        self.tangentialVelocity.set (self.midWheelAngularVelocity * dm.displacementPerWheelAngle) 
         
         self.group ('direction')
 
         self.midSteeringAngle.set (sp.atan (0.5 * sp.tan (self.steeringAngle)))
         
-        self.inverseMidCurveRadius.set (sp.sin (self.midSteeringAngle) / pm.wheelShift)
+        self.inverseMidCurveRadius.set (sp.sin (self.midSteeringAngle) / dm.wheelShift)
         self.midAngularVelocity.set (sp.degreesPerRadian * self.tangentialVelocity * self.inverseMidCurveRadius) 
         
         self.attitudeAngle.set (self.attitudeAngle + self.midAngularVelocity * sp.world.period)
