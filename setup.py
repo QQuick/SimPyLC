@@ -21,14 +21,14 @@ setup (
 	license = 'qQuickLicence',
 	author = 'Jacques de Hooge',
 	author_email = 'jacques.de.hooge@qquick.org',
-	packages = ['simpylc'],	
+	packages = ['simpylc'],
 	include_package_data = True,
 	install_requires = [
         'numpy',
         'pyopengl',
         'windows-curses; platform_system == "Windows"'
     ],
-	entry_points = {},    
+	entry_points = {},
 	classifiers = [
 		'Development Status :: 5 - Production/Stable',
 		'Intended Audience :: Developers',
@@ -38,6 +38,6 @@ setup (
 		'Operating System :: Microsoft :: Windows',
 		'Operating System :: POSIX :: Linux',
 		'Operating System :: MacOS',
-		'Programming Language :: Python :: 3.8',
+		'Programming Language :: Python :: 3.10',
 	],
 )

@@ -1,2 +1,4 @@
-rm -r ~/install/python39/lib/python3.9/site-packages/simpylc
-cp -r ../../simpylc ~/install/python39/lib/python3.9/site-packages
+rm -r ~/.local/lib/python3.10/site-packages/simpylc
+rm -r ~/.local/lib/python3.10/site-packages/SimPyLC*.dist-info
+cp -r ../../simpylc ~/.local/lib/python3.10/site-packages
+ls ~/.local/lib/python3.10/site-packages
