@@ -1,1 +1,1 @@
-py39 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+py310 -m twine upload dist/*
