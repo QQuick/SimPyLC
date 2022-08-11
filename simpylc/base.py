@@ -43,6 +43,9 @@ def evaluate (anObject):
     else:
         return anObject
 
+def eva (anObject):
+    return evaluate (anObject)
+
 def tEva (v):
     return tuple (evaluate (entry) for entry in v)
 

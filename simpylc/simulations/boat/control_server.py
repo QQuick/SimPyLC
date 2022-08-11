@@ -44,19 +44,15 @@ class ControlServer:
                 with self.clientSocket:
                     while True:
                         sensors = {
-                            'halfApertureAngle': sp.world.visualisation.scanner.halfApertureAngle,
-                            'halfMiddleApertureAngle': sp.world.visualisation.scanner.halfMiddleApertureAngle
-                        } | (
-                                {'lidarDistances': sp.world.visualisation.scanner.lidarDistances}
-                            if hasattr (sp.world.visualisation.scanner, 'lidarDistances') else
-                                {'sonarDistances': sp.world.visualisation.scanner.sonarDistances}
-                        )
+                            'courseAngle': sp.eva (sp.world.vessel.courseAngle),
+                            'vaneAngle': sp.eva (sp.world.vessel.vaneAngle),
+                            'lattitude': sp.eva (sp.world.vessel.lattitude),
+                            'longitude': sp.eva (sp.world.vessel.longitude)
+                        }
 
                         self.socketWrapper.send (sensors)
                         tm.sleep (0.02)
                         actuators = self.socketWrapper.recv ()
-                        
-                        sp.world.physics.steeringAngle.set (actuators ['steeringAngle'])
-                        sp.world.physics.targetVelocity.set (actuators ['targetVelocity'])
+                        sp.world.vessel.rudderAngle.set (actuators ['rudderAngle'])
+                        sp.world.vessel.sheetLength.set (actuators ['sheetLength'])
 
-    

@@ -71,7 +71,7 @@ class Camera:
         if self.tracking or forced:
             glMatrixMode (GL_PROJECTION)
             glLoadIdentity()
-            gluPerspective (45, self.scene.width / float (self.scene.height), 1, 100)
+            gluPerspective (45, self.scene.width / float (self.scene.height), 1, 10000)
             gluLookAt (*self.position, *self.focus, *self.up)
             glMatrixMode (GL_MODELVIEW)
 
@@ -138,6 +138,10 @@ class Scene:
         glLight (GL_LIGHT4, GL_POSITION, (0, 0, -1, 0))
         glLight (GL_LIGHT4, GL_DIFFUSE, (0.05, 0, 0))
         glEnable (GL_LIGHT4)
+
+        glLight (GL_LIGHT5, GL_POSITION, (1000, 1000, 1000, 0))
+        glLight (GL_LIGHT5, GL_DIFFUSE, (0.2, 0.2, 0.2))
+        glEnable (GL_LIGHT5)
 
         glutDisplayFunc (self._display)
         glutReshapeFunc (self._reshape)

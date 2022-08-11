@@ -476,11 +476,11 @@ def atan (anObject):
 def atan2 (object0, object1):
     return math.atan2 (evaluate (object0), evaluate (object1)) * degreesPerRadian
 
-def sym (anObject):
-    return asym (anObject + 180) - 180
-
 def asym (anObject):
-    return evaluate (anObject) % 360
+    return evaluate (anObject) % 360    # 0 <= asym < 360
+
+def sym (anObject):
+    return 180 - asym (180 - anObject)  # -180 < sym <= 180
 
 def limit (anObject, limit0, limit1 = None):
     if limit1 is None:

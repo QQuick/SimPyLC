@@ -26,6 +26,10 @@ It is meant for training purposes only.
 Removing this header ends your license.
 '''
 
+import os
+
 import simpylc as sp
 
-boomLength = 0.5
+finity = 1e20
+boomLength = 1.5
+waypointsFilename = 'current.waypoints'

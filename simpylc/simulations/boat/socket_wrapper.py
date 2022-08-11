@@ -47,7 +47,7 @@ class SocketWrapper:
 
             if not nrOfSentBytes:
                 self.raiseConnectionError ()
-                
+
             totalNrOfSentBytes += nrOfSentBytes
 
     def recv (self):
@@ -62,7 +62,7 @@ class SocketWrapper:
 
             receivedChunks.append (receivedChunk)
             totalNrOfReceivedBytes += len (receivedChunk)
-            
+
         return js.loads (b''.join (receivedChunks) .decode ('ascii'))
 
     def raiseConnectionError (self):

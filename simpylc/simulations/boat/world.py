@@ -35,13 +35,13 @@ scannerType = 'lidar'
 import simpylc as sp
 
 import control_server as cs
-import physics as ps
+import vessel as vl
 import visualisation as vs
 
 vs.scannerType = scannerType
 
 sp.World (
     cs.ControlServer,
-    ps.Physics,
+    vl.Vessel,
     vs.Visualisation
 )
