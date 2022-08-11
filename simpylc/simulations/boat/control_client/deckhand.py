@@ -4,6 +4,16 @@ class Deckhand:
     def __init__ (self, crew):
         self.crew = crew
 
+    def work (self, sweep):
+        # Make connection
+        # In a loop, call input, sweep, output and sleep in that order
+
+    def input (self):
+        # Receive sensor data from ship
+
+    def output (self):
+        # Send actuator data to ship
+
     def getCurrentLocation (self):
         # Read out GPS data
         # ...
@@ -36,3 +46,10 @@ class Deckhand:
         # ...
         # Write to sheet winch, to sail servo or to the all encompassing nothing
         # ...
+
+    def holdPosition (self):
+        # Let sail direction freely go along with the wind direction
+        # ...
+        # Write to sheet winch, to sail servo or to the all encompassing nothing
+        # ...
+
