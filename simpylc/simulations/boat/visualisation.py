@@ -160,7 +160,7 @@ class Visualisation (sp.Scene):
         elif sp.world.vessel.helmsmanView:
             self.camera (
                 position = sp.tEva ((0, 0, 0.5)),
-                focus = sp.tEva ((sp.world.vesssel.helmsmanFocusDistX, sp.world.vessel.helmsmanFocusDistY, 0))
+                focus = sp.tEva ((sp.world.vessel.helmsmanFocusDistX, sp.world.vessel.helmsmanFocusDistY, 0))
             )
 
         self.boat ()

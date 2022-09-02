@@ -31,18 +31,18 @@ class Deckhand:
     def getVaneAngle (self):
         # Read out wind vane
         # ...
-        # Convert to signed angle between -180 and 180 degrees, stern == 0, right == 90, left == -90
+        # Convert to signed angle between -180 and 180 degrees, stern == 0, counter clockwise == 90, clockwise == -90
         # ...
         return vaneAngle
 
     def setRudderAngle (self, courseAngle):
-        # Convert from signed angle between -180 and 180 degrees, stern == 0, right == 90, left == -90
+        # Convert from signed angle between -180 and 180 degrees, stern == 0, counter clockwise == 90, clockwise == -90
         # ...
         # Write to rudder servo
         # ...
 
     def setSailAngle (self, sailAngle):
-        # Convert from signed angle between -180 and 180 degrees, stern == 0, right == 90, left == -90
+        # Convert from signed angle between -180 and 180 degrees, stern == 0, counter clockwise == 90, clockwise == -90
         # ...
         # Write to sheet winch, to sail servo or to the all encompassing nothing
         # ...
