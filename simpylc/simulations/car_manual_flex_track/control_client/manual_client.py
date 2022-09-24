@@ -37,7 +37,7 @@ ss.path +=  [os.path.abspath (relPath) for relPath in  ('..',)]
 import socket_wrapper as sw
 import parameters as pm
 
-class HardcodedClient:
+class ManualClient:
     def __init__ (self):
         self.steeringAngle = 0
 
@@ -101,4 +101,4 @@ class HardcodedClient:
         else:
             self.logSonarTraining ()
 
-HardcodedClient ()
+ManualClient ()
