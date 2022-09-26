@@ -31,6 +31,7 @@ import math as mt
 import sys as ss
 import os
 import socket as sc
+import curses as cs
 
 ss.path +=  [os.path.abspath (relPath) for relPath in  ('..',)] 
 
@@ -40,6 +41,12 @@ import parameters as pm
 class ManualClient:
     def __init__ (self):
         self.steeringAngle = 0
+        self.targetVelocity = 0
+
+        self.io = cs.initscr () # take over terminal
+        cs.noecho () # do not update terminal
+        cs.cbreak () # set direct mode (no enter needed)
+        self.io.keypad (True) # convert to key codes
 
         with open (pm.sampleFileName, 'w') as self.sampleFile:
             with sc.socket (*sw.socketType) as self.clientSocket:
@@ -49,6 +56,7 @@ class ManualClient:
 
                 while True:
                     self.input ()
+                    self.process ()
                     self.output ()
                     self.logTraining ()
                     tm.sleep (0.02)
@@ -65,6 +73,17 @@ class ManualClient:
             self.lidarDistances = sensors ['lidarDistances']
         else:
             self.sonarDistances = sensors ['sonarDistances']
+    
+    def process (self):
+        key = self.io.getch ()
+        if key == cs.KEY_UP:
+            self.targetVelocity += pm.speedDelta
+        elif key == cs.KEY_DOWN:
+            self.targetVelocity -= pm.speedDelta
+        elif key == cs.KEY_RIGHT:
+            self.steeringAngle += pm.steerDelta
+        elif key == cs.KEY_LEFT:
+            self.steeringAngle -= pm.steerDelta
 
     def output (self):
         actuators = {

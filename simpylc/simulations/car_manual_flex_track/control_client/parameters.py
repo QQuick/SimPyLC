@@ -30,6 +30,9 @@ finity = 20.0   # Needs to be float to obtain ditto numpy array
 lidarInputDim = 16
 sonarInputDim = 3
 
+speedDelta = +0.2
+steerDelta = -5.0
+
 sampleFileName = 'default.samples'
 
 def getTargetVelocity (steeringAngle):
