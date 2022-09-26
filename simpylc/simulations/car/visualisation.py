@@ -140,7 +140,7 @@ class Visualisation (sp.Scene):
     def __init__ (self):
         super () .__init__ ()
         self.roadCones = []
-        trackFileName = 'easy.track' if trackType == 'easy' else 'hard.track'
+        trackFileName = 'lidar.track' if scannerType == 'lidar' else 'sonar.track'
 
         with open (f'{os.path.dirname (os.path.abspath (__file__))}/{trackFileName}') as trackFile:
             track = trackFile.readlines ()
