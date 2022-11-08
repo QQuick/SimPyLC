@@ -7,12 +7,17 @@ while True:
     if '<coordinates>' in line:
         break
 
-line = kmlFile.readline ()
-triplets = [item.split (',') for item in line.split ()]
-waypoints = [(lattitude, longitude) for longitude, lattitude, height in triplets]
-
 waypointsFile = open (filePrename + '.waypoints', 'w')
-for waypoint in waypoints:
-    print (waypoint [0], waypoint [1], file = waypointsFile)
+
+while True:
+    line = kmlFile.readline ()
+    if '</coordinates>' in line:
+        break
+
+    triplets = [item.split (',') for item in line.split ()]
+    waypoints = [(lattitude, longitude) for longitude, lattitude, height in triplets]
+
+    for waypoint in waypoints:
+        print (waypoint [0], waypoint [1], file = waypointsFile)
 
 print (f'Conversion from {filePrename}.kml to {filePrename}.waypoints done.')
