@@ -30,7 +30,7 @@ from math import *
 from inspect import *
 
 programName = 'SimPyLC'
-programVersion = '3.10.0'
+programVersion = '3.10.1'
 programNameAndVersion = '{0} {1}'.format (programName, programVersion)
 programDir = os.getcwd () .replace ('\\', '/') .rsplit ('/', 3) [-1]
 
